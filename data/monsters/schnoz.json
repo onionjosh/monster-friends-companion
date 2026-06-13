@@ -30,5 +30,6 @@
       "text": "Roll a d8, then consult the following chart to see what Schnoz finds:\n\n- **1: Bleghf** — Schnoz finds something bad to eat, like a car battery or a rock. It takes d3 damage.\n- **2-4: Tasty Treat** — Schnoz finds something good to eat. Select a friendly monster within 6\" of Schnoz. They heal d8 HP.\n- **5-7: Energy Drink** — Schnoz finds an energy drink, which they share with those around them (either willingly or by force, depending on how well behaved your Schnoz is). Choose a monster within 6\" of Schnoz (or Schnoz themself) to give the energy drink to. That monster gains +1 Action Token. Gain +2 [[kw:energy|Energy]].\n- **8: Confusing Snack** — Schnoz finds an extremely powerful mystery snack not made by any natural force within this world. Choose a friendly monster within 9\" of Schnoz (or Schnoz themself). That monster gains +2 Action Tokens. At the end of this action, your turn is over. Immediately take a second turn. You must activate that monster."
     }
   ],
+  "image": "schnoz.webp",
   "unverified": []
 }

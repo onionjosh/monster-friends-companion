@@ -40,5 +40,6 @@
       "text": "Select any small monster or [[kw:small-obstacle|Small Obstacle]] within 1\" of Bucket Troll. Then, \"throw\" (move) it 8+d6\" horizontally in any direction (ignore all heights up to 3\", or slightly taller if Bucket Troll thinks it is funny).\n\nThe thrown monster takes damage equal to the result of the d6. If they end the move in base contact with any enemy monsters, those monsters take that much damage as well.\n\n**Dis Might Hurt:** Bucket Troll can choose to tell any monster he tosses to brace for impact. If he does so, the damage they take is reduced by half (round fractions up)."
     }
   ],
+  "image": "bucket-troll.webp",
   "unverified": []
 }

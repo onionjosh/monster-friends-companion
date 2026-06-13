@@ -52,6 +52,15 @@ export function MonsterDetail() {
         </div>
       </header>
 
+      {monster.image && (
+        <img
+          src={`${import.meta.env.BASE_URL}monsters/${monster.image}`}
+          alt={`${monster.name} miniature`}
+          loading="lazy"
+          className="mb-4 aspect-[4/3] w-full rounded-2xl border-2 border-zinc-900 object-cover dark:border-zinc-100"
+        />
+      )}
+
       <div className="grid gap-2.5">
         <StatRow monster={monster} />
         <DefenseLine monster={monster} />

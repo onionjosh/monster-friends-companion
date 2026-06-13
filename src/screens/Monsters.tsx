@@ -66,6 +66,18 @@ export function Monsters() {
             className="flex items-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900"
           >
             <Link href={`/monsters/${m.id}`} className="flex min-w-0 flex-1 items-center gap-3">
+              {m.image ? (
+                <img
+                  src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
+                  alt=""
+                  loading="lazy"
+                  className="h-12 w-12 shrink-0 rounded-lg border-2 border-zinc-900 object-cover dark:border-zinc-100"
+                />
+              ) : (
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 text-lg opacity-40 dark:border-zinc-700">
+                  👾
+                </div>
+              )}
               <div className="min-w-0 flex-1">
                 <div className="font-display flex items-center gap-2 font-bold">
                   <span className="truncate">{m.name}</span>
