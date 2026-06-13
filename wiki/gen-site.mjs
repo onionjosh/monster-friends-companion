@@ -64,6 +64,7 @@ ${nav(base, active)}
 <main class="content">${heroCrumb}${content}</main>
 </div>
 <div class="lightbox" id="lightbox"><img id="lightboxImg" alt=""></div>
+<script src="${base}assets/search-index.js"></script>
 <script src="${base}assets/app.js"></script>
 </body>
 </html>`
@@ -293,7 +294,9 @@ function searchIndex() {
   for (const k of data.keywords) idx.push({ t: k.name, u: `glossary.html#${k.id}`, k: k.category === 'keyword' ? 'Keyword' : 'Term', s: k.short.slice(0, 90) })
   for (const s of data.scenarios) idx.push({ t: s.name, u: `scenarios.html#${s.id}`, k: 'Scenario', s: s.summary.slice(0, 90) })
   for (const a of data.genericAbilities) idx.push({ t: a.name, u: `generic-abilities.html`, k: 'Generic ability', s: a.text.slice(0, 90) })
-  writeFileSync(join(SITE, 'search-index.json'), JSON.stringify(idx))
+  // Inlined as a JS global (not fetched) so search works from file:// — i.e. when
+  // the site is shared as a folder/zip and opened directly, not just when hosted.
+  writeFileSync(join(SITE, 'assets', 'search-index.js'), `window.SEARCH_INDEX=${JSON.stringify(idx)};`)
 }
 
 // --------------------------------------------------------------------- assets
@@ -399,18 +402,15 @@ document.addEventListener('click',function(e){
   else if(e.target===lb||e.target===li){lb.classList.remove('open');}
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open');});
-// search
-var inp=document.getElementById('searchInput'),res=document.getElementById('searchResults'),IDX=null;
+// search (index is inlined via search-index.js, so this works from file:// too)
+var inp=document.getElementById('searchInput'),res=document.getElementById('searchResults'),IDX=window.SEARCH_INDEX||[];
 function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
-function load(cb){if(IDX){cb();return}fetch(B+'search-index.json').then(function(r){return r.json()}).then(function(j){IDX=j;cb()}).catch(function(){IDX=[]})}
 function run(){
   var q=inp.value.trim().toLowerCase();
   if(!q){res.classList.remove('open');res.innerHTML='';return}
-  load(function(){
-    var hits=IDX.filter(function(e){return e.t.toLowerCase().indexOf(q)>=0||(e.s&&e.s.toLowerCase().indexOf(q)>=0)}).slice(0,12);
-    res.innerHTML=hits.length?hits.map(function(e){return '<a href="'+B+e.u+'"><span class="sr-k">'+esc(e.k)+'</span><div>'+esc(e.t)+'</div><div class="sr-s">'+esc(e.s||'')+'</div></a>'}).join(''):'<a><div class="sr-s">No matches</div></a>';
-    res.classList.add('open');
-  });
+  var hits=IDX.filter(function(e){return e.t.toLowerCase().indexOf(q)>=0||(e.s&&e.s.toLowerCase().indexOf(q)>=0)}).slice(0,12);
+  res.innerHTML=hits.length?hits.map(function(e){return '<a href="'+B+e.u+'"><span class="sr-k">'+esc(e.k)+'</span><div>'+esc(e.t)+'</div><div class="sr-s">'+esc(e.s||'')+'</div></a>'}).join(''):'<a><div class="sr-s">No matches</div></a>';
+  res.classList.add('open');
 }
 if(inp){inp.addEventListener('input',run);inp.addEventListener('focus',run);
   document.addEventListener('click',function(e){if(!e.target.closest('.search'))res.classList.remove('open')});}
