@@ -14,6 +14,7 @@ export function PartyEditor() {
   const party = usePartiesStore((s) => (params ? s.parties[params.id] : undefined))
   const updateParty = usePartiesStore((s) => s.updateParty)
   const setEntryCount = usePartiesStore((s) => s.setEntryCount)
+  const deleteParty = usePartiesStore((s) => s.deleteParty)
   const [adding, setAdding] = useState(false)
   const [sharing, setSharing] = useState(false)
 
@@ -139,6 +140,19 @@ export function PartyEditor() {
         </button>
       </div>
 
+      <button
+        type="button"
+        onClick={() => {
+          if (confirm(`Delete "${party.name}"? This can't be undone.`)) {
+            navigate('/parties')
+            deleteParty(party.id)
+          }
+        }}
+        className="mt-2 w-full rounded-xl border-2 border-red-300 py-2.5 text-sm font-bold text-red-600 dark:border-red-900 dark:text-red-400"
+      >
+        Delete party
+      </button>
+
       {/* sticky points total */}
       <div className="fixed right-0 bottom-14 left-0 z-30 mx-auto max-w-lg px-4">
         <div
@@ -156,10 +170,12 @@ export function PartyEditor() {
       <AddMonsterSheet
         open={adding}
         onClose={() => setAdding(false)}
-        onAdd={(id) => {
-          const cur = party.entries.find((e) => e.monsterId === id)?.count ?? 0
-          setEntryCount(party.id, id, cur + 1)
-        }}
+        total={check.totalPoints}
+        budget={party.budget}
+        modelCount={check.modelCount}
+        over={over}
+        countOf={(id) => party.entries.find((e) => e.monsterId === id)?.count ?? 0}
+        onSet={(id, n) => setEntryCount(party.id, id, n)}
       />
       <ShareSheet party={party} open={sharing} onClose={() => setSharing(false)} />
     </div>
@@ -190,32 +206,78 @@ function BudgetInput({ value, onCommit }: { value: number; onCommit: (b: number)
   )
 }
 
-function AddMonsterSheet({ open, onClose, onAdd }: { open: boolean; onClose: () => void; onAdd: (id: string) => void }) {
+function AddMonsterSheet({
+  open,
+  onClose,
+  total,
+  budget,
+  modelCount,
+  over,
+  countOf,
+  onSet,
+}: {
+  open: boolean
+  onClose: () => void
+  total: number
+  budget: number
+  modelCount: number
+  over: boolean
+  countOf: (id: string) => number
+  onSet: (id: string, count: number) => void
+}) {
   const [q, setQ] = useState('')
   const list = monsters.filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
   return (
-    <Sheet open={open} onClose={onClose} title="Add a monster">
+    <Sheet open={open} onClose={onClose}>
+      {/* sticky budget header — stays visible while you scroll and pick */}
+      <div className="sticky top-0 z-10 -mx-4 border-b border-zinc-200 bg-white px-4 pb-2.5 dark:border-zinc-800 dark:bg-zinc-900">
+        <h2 className="font-display mb-1.5 text-lg font-bold">Add monsters</h2>
+        <div
+          className={`rounded-lg px-3 py-2 text-center font-bold ${
+            over ? 'bg-amber-300 text-amber-950' : 'bg-zinc-100 dark:bg-zinc-800'
+          }`}
+        >
+          <span className="font-display text-lg">
+            {total} / {budget}
+          </span>{' '}
+          Party Points · {modelCount} monster{modelCount === 1 ? '' : 's'}
+          {over && ' · over budget'}
+        </div>
+      </div>
+
       <input
         type="search"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search…"
-        className="mb-2 w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900"
+        className="my-2 w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900"
       />
       <div className="grid gap-1.5">
-        {list.map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            onClick={() => onAdd(m.id)}
-            className="flex items-center justify-between rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 text-left active:bg-amber-200 dark:border-zinc-100 dark:bg-zinc-900 dark:active:bg-amber-800"
-          >
-            <span className="font-bold">
-              {m.name} <SizeBadge size={m.size} />
-            </span>
-            <span className="font-display font-black">{m.partyPoints} PP</span>
-          </button>
-        ))}
+        {list.map((m) => {
+          const count = countOf(m.id)
+          return (
+            <div
+              key={m.id}
+              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 ${
+                count > 0
+                  ? 'border-amber-500 bg-amber-50 dark:border-amber-500 dark:bg-amber-950/40'
+                  : 'border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900'
+              }`}
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 font-bold">
+                  <span className="truncate">{m.name}</span>
+                  <SizeBadge size={m.size} />
+                </div>
+                <div className="text-xs opacity-70">
+                  {m.partyPoints} PP each{count > 0 ? ` · ${m.partyPoints * count} in party` : ''}
+                </div>
+              </div>
+              <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+            </div>
+          )
+        })}
+        {list.length === 0 && <p className="py-6 text-center text-sm opacity-70">No monsters match.</p>}
       </div>
     </Sheet>
   )
