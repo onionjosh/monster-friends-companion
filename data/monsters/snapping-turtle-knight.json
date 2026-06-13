@@ -1,0 +1,41 @@
+{
+  "id": "snapping-turtle-knight",
+  "name": "Snapping Turtle Knight",
+  "size": "M",
+  "partyPoints": 18,
+  "act": 3,
+  "movement": 6,
+  "emi": 6,
+  "hp": 18,
+  "defense": { "die": "d8", "bonus": 0, "critBonus": 4 },
+  "attacks": [
+    {
+      "name": "Snapping Turtle Bonk",
+      "type": "melee",
+      "die": "d8",
+      "swings": 1,
+      "bonus": 2,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": ["hard-to-kill"],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "fealty-of-the-turtle",
+      "name": "Fealty of The Turtle",
+      "cost": { "energy": 2, "text": "2 Energy per redirected attack" },
+      "reaction": true,
+      "text": "At the start of deployment, declare whether or not your Snapping Turtle Knight has found a monster they feel is worthy of being bonded to.\n\nIf they have, select one friendly monster for Snapping Turtle Knight to be bonded to. Snapping Turtle Knight and their chosen monster gain the [[kw:bonded|Bonded]] keyword, and become bonded to each other until the end of the game.\n\nWhenever the bonded monster is targeted by an enemy melee Basic Attack, as long as Snapping Turtle Knight is within 2\" of them, you can spend 2 energy. If you do so, that Basic Attack targets Snapping Turtle Knight instead.\n\nIf the monster Snapping Turtle Knight is bonded to is destroyed, they lose [[kw:hard-to-kill|Hard To Kill]], increase their Emotional Instability by +4, and add +2 to all Attack Dice rolls until the end of the game."
+    },
+    {
+      "id": "hurts-to-touch",
+      "name": "Hurts to Touch",
+      "cost": { "energy": 0 },
+      "reaction": true,
+      "text": "Whenever Snapping Turtle Knight is targeted by a melee Basic Attack, that monster takes d3 damage."
+    }
+  ],
+  "unverified": []
+}

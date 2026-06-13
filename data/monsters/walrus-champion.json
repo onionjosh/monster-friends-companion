@@ -1,0 +1,34 @@
+{
+  "id": "walrus-champion",
+  "name": "Walrus Champion",
+  "size": "M",
+  "partyPoints": 20,
+  "act": 3,
+  "movement": 6,
+  "emi": 7,
+  "hp": 25,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 10 },
+  "attacks": [
+    {
+      "name": "World Champion Punch",
+      "type": "melee",
+      "die": "d6",
+      "swings": 2,
+      "bonus": 3,
+      "critBonus": 6,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "number-1-world-champion",
+      "name": "#1 World Champion",
+      "cost": { "energy": 0, "text": "Passive" },
+      "reaction": false,
+      "text": "Whenever Walrus Champion deals damage to an enemy monster with a Basic Attack, give them a Championship Belt Token.\n\nWalrus Champion can only gain 1 Championship Belt Token per enemy monster they deal damage to per turn.\n\nFor every Championship Belt Token they have, add +3 to all Attack Dice rolls.\n\nWalrus Champion can have a maximum of 5 Championship Belt Tokens."
+    }
+  ],
+  "unverified": []
+}

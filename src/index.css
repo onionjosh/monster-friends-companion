@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Trebuchet MS', 'Segoe UI', ui-rounded, system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+  overscroll-behavior-y: none;
+}
+
+/* Big tap targets for at-the-table use */
+button {
+  touch-action: manipulation;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

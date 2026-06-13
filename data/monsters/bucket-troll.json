@@ -1,0 +1,44 @@
+{
+  "id": "bucket-troll",
+  "name": "Bucket Troll",
+  "size": "M",
+  "partyPoints": 18,
+  "act": 3,
+  "movement": 6,
+  "emi": 7,
+  "hp": 18,
+  "defense": { "die": "d8", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Me Throw Big Rock",
+      "type": "ranged",
+      "range": 12,
+      "die": "d8",
+      "swings": 1,
+      "bonus": 0,
+      "critBonus": 2,
+      "tags": []
+    },
+    {
+      "name": "Meaty Fists",
+      "type": "melee",
+      "die": "d8",
+      "swings": 1,
+      "bonus": 2,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "me-throw-monster",
+      "name": "Me Throw Monster",
+      "cost": { "energy": 1 },
+      "reaction": false,
+      "text": "Select any small monster or [[kw:small-obstacle|Small Obstacle]] within 1\" of Bucket Troll. Then, \"throw\" (move) it 8+d6\" horizontally in any direction (ignore all heights up to 3\", or slightly taller if Bucket Troll thinks it is funny).\n\nThe thrown monster takes damage equal to the result of the d6. If they end the move in base contact with any enemy monsters, those monsters take that much damage as well.\n\n**Dis Might Hurt:** Bucket Troll can choose to tell any monster he tosses to brace for impact. If he does so, the damage they take is reduced by half (round fractions up)."
+    }
+  ],
+  "unverified": []
+}

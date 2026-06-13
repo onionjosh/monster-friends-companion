@@ -1,0 +1,22 @@
+[
+  {
+    "id": "guarding",
+    "name": "Guarding",
+    "short": "+2 to Defense Dice rolls until the next time this monster activates (or the end of the Round, whichever comes first)."
+  },
+  {
+    "id": "rested",
+    "name": "Rested",
+    "short": "Has used the Rest action this Round (limit once per Round; Rest grants +2 Energy)."
+  },
+  {
+    "id": "last-life",
+    "name": "Last Life token",
+    "short": "Was saved by the Last Life ability. Cannot be targeted by Last Life again this game."
+  },
+  {
+    "id": "bond-broken",
+    "name": "Bond strained",
+    "short": "Separated from its Bonded partner by more than 2\": -2 to all Attack Dice rolls and +2 to all Emotional Instability tests until back within 2\"."
+  }
+]

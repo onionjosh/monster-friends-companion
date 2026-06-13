@@ -1,0 +1,16 @@
+{
+  "id": "mushroom-farmer",
+  "name": "Mushroom Farmer",
+  "size": "M",
+  "partyPoints": 20,
+  "act": 4,
+  "movement": 5,
+  "emi": 6,
+  "hp": 20,
+  "defense": { "die": "d6", "bonus": 2, "critBonus": 2 },
+  "attacks": [],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [],
+  "unverified": ["attacks and abilities not yet written in source sheet v1.4 (work in progress)"]
+}

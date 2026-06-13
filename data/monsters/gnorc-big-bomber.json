@@ -1,0 +1,41 @@
+{
+  "id": "gnorc-big-bomber",
+  "name": "Gnorc Big Bomber",
+  "size": "S",
+  "partyPoints": 10,
+  "act": 3,
+  "movement": 5,
+  "emi": 9,
+  "hp": 9,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Bomb Bonk",
+      "type": "melee",
+      "die": "d6",
+      "swings": 2,
+      "bonus": 1,
+      "critBonus": 8,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "big-bomb",
+      "name": "Big Bomb",
+      "cost": { "energy": 2, "act": 1 },
+      "reaction": false,
+      "text": "Create a Big Bomb token anywhere within 6\" of Gnorc Big Bomber.\n\nIf Gnorc Big Bomber currently has a Big Bomb on the board, they can't create a second one until their first Big Bomb explodes."
+    },
+    {
+      "id": "big-bomb-token-rules",
+      "name": "Big Bomb (Token Rules)",
+      "cost": { "energy": 0, "text": "Token" },
+      "reaction": true,
+      "text": "A Big Bomb is treated as a [[kw:small-obstacle|Small Obstacle]] for all rules purposes. At the start of each of your turns, roll a d6: on a 5+, the Big Bomb explodes.\n\nAny monster within base contact of the Big Bomb can attempt to kick it by spending an Action Token. If they do so, roll a d6: on a 1-4, move the Big Bomb up to 2x that many inches in any direction (or 2x + 2\" if they're a Medium or larger monster). On a 5+, the Big Bomb explodes.\n\nIf the Big Bomb is targeted by an ability that allows a monster to move it, roll a d6: on a 5+, the Big Bomb explodes before they do so.\n\nWhen the Big Bomb explodes, roll a d20: all monsters within 3\" take that much damage. All monsters within 6\" take that much damage, to a maximum of 6."
+    }
+  ],
+  "unverified": []
+}

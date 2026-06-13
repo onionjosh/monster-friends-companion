@@ -1,0 +1,34 @@
+{
+  "id": "tumble-stone",
+  "name": "Tumble Stone",
+  "size": "M",
+  "partyPoints": 14,
+  "act": 3,
+  "movement": 3,
+  "emi": 5,
+  "hp": 14,
+  "defense": { "die": "d8", "bonus": 2, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Big Chomp",
+      "type": "melee",
+      "die": "d6",
+      "swings": 1,
+      "bonus": 3,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "tumbling-tumble-stone",
+      "name": "Tumbling Tumble Stone",
+      "cost": { "energy": 1, "act": 1 },
+      "reaction": false,
+      "text": "Tumble Stones have a hard time rolling by themselves, but with the assistance of a friend, basically become a living bowling ball.\n\nThis ability can only be used if there is a friendly monster within 1\" of the Tumble Stone who wants to be pushed.\n\nMove Tumble Stone 8\"+d6\" in a straight line. If the d6 result is a 1-3, Tumble Stone will stop if it collides with a piece of Impassable Terrain or enemy monster. If the result is a 4+, Tumble Stone has enough momentum to barrel through all obstacles in its path, and will plow a hole straight through anything it touches. Ignore all terrain and models while moving Tumble Stone.\n\nEvery enemy monster who the Tumble Stone's base collides with takes d6 damage, or d6+2 if the result was a 4+ (roll separately for every monster hit).\n\nThen, if any of the enemy monsters Tumble Stone collided with are small or medium sized monsters, you can move those monsters 3\" in any direction as they are scattered like bowling pins. If this causes them to fall off a ledge, they take [[rule:falling|Falling Damage]] as normal."
+    }
+  ],
+  "unverified": []
+}

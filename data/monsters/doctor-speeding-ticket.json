@@ -1,0 +1,42 @@
+{
+  "id": "doctor-speeding-ticket",
+  "name": "Doctor Speeding Ticket",
+  "size": "M",
+  "partyPoints": 11,
+  "act": 3,
+  "movement": 5,
+  "emi": 6,
+  "hp": 12,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Doctor Punch",
+      "type": "melee",
+      "die": "d6",
+      "swings": 2,
+      "bonus": 0,
+      "critBonus": 2,
+      "tags": [],
+      "notes": "If this attack deals damage to an enemy monster, heal a monster within 3\" for d3 HP."
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "doctor",
+      "name": "Doctor",
+      "cost": { "energy": 2, "act": 1 },
+      "reaction": false,
+      "text": "Heal target monster within 6\" of Doctor Speeding Ticket for d10 HP."
+    },
+    {
+      "id": "speeding-ticket",
+      "name": "Speeding Ticket",
+      "cost": { "energy": 0, "text": "Passive" },
+      "reaction": true,
+      "text": "Enemy monsters cannot start Move or [[kw:charge|Charge]] actions while within 2\" of Doctor Speeding Ticket.\n\n**Contest in Court:** If an enemy within 2\" of Doctor Speeding Ticket targets him with a Charge action, ignore this rule until the end of the action."
+    }
+  ],
+  "unverified": []
+}

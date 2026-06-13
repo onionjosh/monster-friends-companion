@@ -1,0 +1,187 @@
+[
+  {
+    "id": "bonded",
+    "name": "Bonded",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "Bonded monsters must remain within 2\" of each other at all times. Whenever either monster makes a move action, the other can make a free move action. If either monster makes a Charge Action, increase the Movement stat of the other monster by 2x until the end of the turn; then move them anywhere within 2\" of the monster who charged (if this cannot legally be done, they cannot charge). If they are separated by more than 2\" for any reason, both monsters receive -2 to all Attack Dice rolls and add +2 to all Emotional Instability tests until they are back within 2\". If either monster is destroyed, they are no longer Bonded. A monster can never be Bonded to more than one other monster."
+  },
+  {
+    "id": "crit-bonus",
+    "name": "Crit Bonus",
+    "category": "keyword",
+    "ruleRef": "critical-hits-ranged-los",
+    "short": "When an attack with this ability scores a Critical Hit, it deals bonus damage to the target equal to its Crit Bonus."
+  },
+  {
+    "id": "duelist",
+    "name": "Duelist",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "You can choose to re-roll Attack Dice made by this Basic Attack (the re-roll cannot be re-rolled)."
+  },
+  {
+    "id": "executioner",
+    "name": "Executioner",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "Monsters who are reduced to 0 HP from an attack with this ability cannot use the Last Life ability."
+  },
+  {
+    "id": "follow-along",
+    "name": "Follow Along",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "This monster does not like to be alone, and can follow other monsters around the board even when it's not their turn. If a friendly monster starts or ends a move action within 6\" of a monster with Follow Along, when their friend is done moving, they can perform a free Move action. They must end this move action within 1\" of their friend, otherwise this ability cannot be used."
+  },
+  {
+    "id": "glide-hop",
+    "name": "Glide / Hop",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "When this monster moves, it can ignore all terrain features and enemy models. This monster does not take fall damage."
+  },
+  {
+    "id": "hard-to-kill",
+    "name": "Hard To Kill",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "You can choose to re-roll Defense Dice rolls made by this monster (the re-roll cannot be re-rolled)."
+  },
+  {
+    "id": "redirect",
+    "name": "Redirect",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "Redirect allows monsters to intercept basic attacks that target their friends. Whenever an ability with the Redirect keyword is used, choose a friendly monster within 1\" of the monster who used that ability. Until the end of the turn, whenever that monster is targeted by an enemy Basic Attack, those Basic Attacks instead target the monster who used this ability."
+  },
+  {
+    "id": "reposition",
+    "name": "Reposition",
+    "category": "keyword",
+    "ruleRef": "endgame-and-keywords",
+    "short": "When an attack or ability with the Reposition keyword is used, your monster can make a free Move equal to the distance specified in that attack or ability's description. The Reposition move is made at the end of that attack/ability."
+  },
+  {
+    "id": "siphon",
+    "name": "Siphon",
+    "category": "keyword",
+    "short": "When an attack with Siphon deals damage, the attacking Monster heals HP equal to the damage dealt."
+  },
+  {
+    "id": "yank",
+    "name": "Yank",
+    "category": "keyword",
+    "short": "Whenever this attack inflicts damage on an enemy Small or Medium monster, you can move that monster anywhere in base contact with the attacker."
+  },
+  {
+    "id": "late-arrival",
+    "name": "Late Arrival",
+    "category": "keyword",
+    "short": "A monster with the Late Arrival special rule starts the game off the table and is set up later by the ability that granted it."
+  },
+  {
+    "id": "free-action",
+    "name": "Free Action",
+    "category": "term",
+    "short": "Using this ability does not cost an Action Token."
+  },
+  {
+    "id": "critical-hit",
+    "name": "Critical Hit",
+    "category": "term",
+    "ruleRef": "critical-hits-ranged-los",
+    "short": "If you roll the maximum number value on the dice you are using (6 for d6, 8 for d8, 10 for d10, etc.), that attack is considered to be a Critical Hit: it deals bonus damage equal to the Crit Bonus stat of the attack being rolled. If this isn't enough to beat your opponent's Defense Dice, the attack still does a minimum of 1 damage, unless they rolled a Crit on their Defense Dice roll as well. Rolling the maximum value always counts as a Critical Hit even if the roll was affected by a negative modifier."
+  },
+  {
+    "id": "cover",
+    "name": "Cover",
+    "category": "term",
+    "ruleRef": "critical-hits-ranged-los",
+    "short": "If a piece of terrain prevents a monster from seeing over half of a monster they want to target with a Ranged Basic Attack, the target is in Cover. Monsters receive +2 to Defense Dice rolls while in cover. If you can't agree whether a monster is in cover, roll a d6: on a 4+, they are."
+  },
+  {
+    "id": "outnumbered",
+    "name": "Outnumbered!",
+    "category": "term",
+    "ruleRef": "critical-hits-ranged-los",
+    "short": "If two or more other friendly monsters are within 1\" of an enemy you target with a melee Basic Attack, add +2 to the Attack Dice roll."
+  },
+  {
+    "id": "line-of-sight",
+    "name": "Line of Sight",
+    "category": "term",
+    "ruleRef": "critical-hits-ranged-los",
+    "short": "A monster can see another monster if a line can be drawn from their model's head to any part of the model they want to target."
+  },
+  {
+    "id": "surrounded",
+    "name": "Surrounded!",
+    "category": "term",
+    "ruleRef": "moving",
+    "short": "If at the start of their move, your monster would have to move over an enemy model to make a legal move and wants to do so, every enemy monster within 1\" of them is allowed to make a free Basic Attack."
+  },
+  {
+    "id": "charge",
+    "name": "Charge",
+    "category": "term",
+    "ruleRef": "activating-a-monster",
+    "short": "Costs 2 Action Tokens. Only usable if no enemy monsters are within 1\". Double the monster's Movement until the end of the Charge action, perform a free Move that must end within 1\" of an enemy, then perform a free Basic Attack with a +2 Bonus Modifier."
+  },
+  {
+    "id": "guard",
+    "name": "Guard",
+    "category": "term",
+    "ruleRef": "activating-a-monster",
+    "short": "The monster receives a +2 bonus to Defense Dice rolls until the next time they activate (or until the end of the Round, whichever comes first)."
+  },
+  {
+    "id": "rest",
+    "name": "Rest",
+    "category": "term",
+    "ruleRef": "activating-a-monster",
+    "short": "Gain +2 Energy. Each monster can only Rest once per Round."
+  },
+  {
+    "id": "energy",
+    "name": "Energy",
+    "category": "term",
+    "ruleRef": "important-terms",
+    "short": "Both players start the game with 10 Energy. Energy is shared between all monsters on your team and is spent on Special Abilities. Both players refill to 10 Energy at the start of each Round, and a player can never have more than 10 Energy."
+  },
+  {
+    "id": "emotional-instability",
+    "name": "Emotional Instability (EmI)",
+    "category": "term",
+    "ruleRef": "important-terms",
+    "short": "When a monster takes an Emotional Instability test, roll 2d6: if the result is equal to or greater than their EmI stat, the test is passed. If not, the test is failed, and your monster is having a rough time."
+  },
+  {
+    "id": "action-tokens",
+    "name": "Action Tokens (AcT)",
+    "category": "term",
+    "ruleRef": "stats-rounds-turns",
+    "short": "At the start of each Round, every monster receives Action Tokens equal to their AcT stat (most monsters have 3). Actions cost 1 Action Token (Charge costs 2). There is no limit to how many Action Tokens a monster can have, but they only refill to their stat at the start of a Round."
+  },
+  {
+    "id": "party-points",
+    "name": "Party Points (PP)",
+    "category": "term",
+    "ruleRef": "choosing-your-friends",
+    "short": "The cost of including a monster in your party. Players agree on a total Party Point budget before the game (50 recommended for new players; 51-100 for experienced players). There is no maximum number of models."
+  },
+  {
+    "id": "small-obstacle",
+    "name": "Small Obstacle",
+    "category": "term",
+    "ruleRef": "the-battleground",
+    "short": "Things like barrels, crates, and any small object that could reasonably be moved or carried if a medium sized monster really tried to throw it."
+  },
+  {
+    "id": "last-life",
+    "name": "Last Life",
+    "category": "term",
+    "ruleRef": "generic-abilities",
+    "short": "A generic ability (3 Energy): when a monster is reduced to 0 HP, reduce them to 1 HP instead. They can't take any more damage until the start of the next turn. Give them a Last Life token; monsters with a Last Life token cannot be targeted by this ability again. Every use increases your cost by +1 Energy for the rest of the game."
+  }
+]

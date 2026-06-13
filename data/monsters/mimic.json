@@ -1,0 +1,58 @@
+{
+  "id": "mimic",
+  "name": "Mimic",
+  "size": "L",
+  "partyPoints": 22,
+  "act": 4,
+  "movement": 0,
+  "emi": 7,
+  "hp": 19,
+  "defense": { "die": "d6", "bonus": 2, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Chomp",
+      "type": "melee",
+      "die": "d12",
+      "swings": 1,
+      "bonus": 2,
+      "critBonus": 2,
+      "tags": []
+    },
+    {
+      "name": "Tongue Lash",
+      "type": "ranged",
+      "range": 6,
+      "die": "d8",
+      "swings": 1,
+      "bonus": 2,
+      "critBonus": 2,
+      "tags": [{ "tag": "yank", "value": 6 }]
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "i-am-a-building",
+      "name": "I am a building!",
+      "cost": { "energy": 0, "text": "Passive" },
+      "reaction": false,
+      "text": "Mimic cannot perform Move actions."
+    },
+    {
+      "id": "has-this-always-been-here",
+      "name": "Has This Always Been Here???",
+      "cost": { "energy": 0, "act": 1, "text": "0 or 2 Energy + 1 Action Token" },
+      "reaction": false,
+      "text": "Mimic is an ambush predator that stalks vulnerable prey.\n\nIf there are no enemy monsters within 6\", and Mimic is within 3\" of the edge of the battlefield, this ability costs 0 to activate. Otherwise, it costs 2.\n\nMimic can only use this ability if it is not within 1\" of any enemy Monsters.\n\nRemove Mimic from the board, then place them anywhere on the board more than 3\" away from enemy models."
+    },
+    {
+      "id": "insatiable-horror",
+      "name": "Insatiable Horror",
+      "cost": { "energy": 0 },
+      "reaction": false,
+      "text": "Whenever Mimic reduces an enemy monster to 0 HP with a Basic Attack, increase their current HP by d6. This can cause Mimic to have more HP than their maximum HP."
+    }
+  ],
+  "unverified": []
+}

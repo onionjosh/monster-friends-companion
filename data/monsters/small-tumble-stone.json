@@ -1,0 +1,34 @@
+{
+  "id": "small-tumble-stone",
+  "name": "Small Tumble Stone",
+  "size": "S",
+  "partyPoints": 5,
+  "act": 3,
+  "movement": 3,
+  "emi": 5,
+  "hp": 6,
+  "defense": { "die": "d6", "bonus": 2, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Chomp",
+      "type": "melee",
+      "die": "d6",
+      "swings": 1,
+      "bonus": 0,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "tumbling-tumble-stone-small",
+      "name": "Tumbling Tumble Stone",
+      "cost": { "energy": 1, "act": 1 },
+      "reaction": false,
+      "text": "Tumble Stones have a hard time rolling by themselves, but with the assistance of a friend, become a living bowling ball.\n\nThis ability can only be used if there is a friendly monster within 1\" of the Tumble Stone who wants to be pushed.\n\nMove the Tumble Stone who is getting pushed 8\"+d6\" in a straight line. The Tumble Stone will stop if it hits an enemy model or piece of Impassable Terrain.\n\nEvery monster who the Tumble Stone's base collides with takes d3 damage."
+    }
+  ],
+  "unverified": []
+}

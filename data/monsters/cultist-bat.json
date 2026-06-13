@@ -1,0 +1,34 @@
+{
+  "id": "cultist-bat",
+  "name": "Cultist Bat",
+  "size": "S",
+  "partyPoints": 10,
+  "act": 3,
+  "movement": 6,
+  "emi": 7,
+  "hp": 11,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Bite",
+      "type": "melee",
+      "die": "d6",
+      "swings": 3,
+      "bonus": 1,
+      "critBonus": 2,
+      "tags": [{ "tag": "siphon" }]
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "blood-boost",
+      "name": "Blood Boost",
+      "cost": { "energy": 1, "act": 1 },
+      "reaction": false,
+      "text": "Select a friendly monster within 6\" of Cultist Bat. They lose d6 HP. Then, give a friendly monster within 6\" of Cultist Bat a Blood Boost Token.\n\n**Blood Boost Token:** A monster with Blood Boost Tokens can spend one or more before making a melee Attack Dice roll. For each Blood Boost Token they spend, add d6 to the result of their next Attack Dice roll. After rolling, you can choose to re-roll the result, but must re-roll all of the dice if you do so. Then, remove all Blood Boost Tokens spent from play.\n\nEach Cultist Bat can have a maximum of 3 Blood Boost Tokens in play. There is no limit to how many Blood Boost Tokens a monster can have."
+    }
+  ],
+  "unverified": []
+}

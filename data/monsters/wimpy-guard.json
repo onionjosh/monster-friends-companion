@@ -1,0 +1,41 @@
+{
+  "id": "wimpy-guard",
+  "name": "Wimpy Guard",
+  "size": "S",
+  "partyPoints": 10,
+  "act": 3,
+  "movement": 6,
+  "emi": 8,
+  "hp": 12,
+  "defense": { "die": "d6", "bonus": 2, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Frantic Bone Swing",
+      "type": "melee",
+      "die": "d10",
+      "swings": 1,
+      "bonus": 3,
+      "critBonus": 100,
+      "tags": [{ "tag": "executioner" }]
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "cowardly-martyr",
+      "name": "Cowardly Martyr",
+      "cost": { "energy": 1 },
+      "reaction": true,
+      "text": "Whenever a friendly model within 6\" of Wimpy Guard is targeted by a Basic Attack, Wimpy Guard can make an [[kw:emotional-instability|EmI]] test.\n\nIf successful, move Wimpy Guard anywhere within 1\" of both that enemy and their friend if they aren't already. That attack targets Wimpy Guard instead.\n\nAdd +2 to Defense Dice rolls Wimpy Guard makes until the end of the turn."
+    },
+    {
+      "id": "strengthened-by-trauma",
+      "name": "Strengthened By Trauma",
+      "cost": { "energy": 2 },
+      "reaction": true,
+      "text": "Whenever a friendly model (including Wimpy Guard) takes damage from an enemy Basic Attack or Special Ability within 9\" of Wimpy Guard, you can use this ability. Wimpy Guard gains an Action Token."
+    }
+  ],
+  "unverified": []
+}

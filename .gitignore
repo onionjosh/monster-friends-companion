@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dev-dist/
+src/data/generated/
+*.local
+.DS_Store
+
+# source game documents & extraction scratch — distributed separately, not in the repo
+*.pdf
+_*.txt
+.claude/

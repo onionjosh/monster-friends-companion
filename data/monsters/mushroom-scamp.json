@@ -1,0 +1,19 @@
+{
+  "id": "mushroom-scamp",
+  "name": "Mushroom Scamp",
+  "size": "S",
+  "partyPoints": 4,
+  "act": 2,
+  "movement": 5,
+  "emi": 6,
+  "hp": 3,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [],
+  "unverified": [
+    "size (blank in source sheet; assuming Small from stats)",
+    "attacks and abilities not yet written in source sheet v1.4 (work in progress)"
+  ]
+}

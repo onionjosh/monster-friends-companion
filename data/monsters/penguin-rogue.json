@@ -1,0 +1,51 @@
+{
+  "id": "penguin-rogue",
+  "name": "Penguin Rogue",
+  "size": "S",
+  "partyPoints": 10,
+  "act": 3,
+  "movement": 6,
+  "emi": 6,
+  "hp": 10,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Throwing Knife",
+      "type": "ranged",
+      "range": 6,
+      "die": "d6",
+      "swings": 2,
+      "bonus": 1,
+      "critBonus": 2,
+      "tags": []
+    },
+    {
+      "name": "Dagger",
+      "type": "melee",
+      "die": "d6",
+      "swings": 4,
+      "bonus": 0,
+      "critBonus": 2,
+      "tags": [{ "tag": "reposition", "value": 3 }]
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "shadow-waddle",
+      "name": "Shadow Waddle",
+      "cost": { "energy": 1, "act": 1, "text": "1 Energy; counts as a Move action" },
+      "reaction": false,
+      "text": "Remove Penguin Rogue from the board, then place them anywhere more than 3\" away from all enemy monsters, or within 1\" of an enemy monster with no other enemy monsters within 6\" of them.\n\nThis counts as a Move action."
+    },
+    {
+      "id": "nimble-feathered-dodging-machine",
+      "name": "Nimble Feathered Dodging Machine",
+      "cost": { "energy": 2 },
+      "reaction": true,
+      "text": "This ability can be used after a Penguin Rogue is targeted by an enemy Basic Attack (but before the Attack Dice roll). Add +4 to their Defense Dice roll.\n\nThen, they can make a free Move action."
+    }
+  ],
+  "unverified": []
+}

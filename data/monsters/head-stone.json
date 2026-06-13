@@ -1,0 +1,34 @@
+{
+  "id": "head-stone",
+  "name": "Head Stone",
+  "size": "M",
+  "partyPoints": 14,
+  "act": 3,
+  "movement": 3,
+  "emi": 5,
+  "hp": 14,
+  "defense": { "die": "d8", "bonus": 2, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Big Chomp",
+      "type": "melee",
+      "die": "d6",
+      "swings": 1,
+      "bonus": 3,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "rise-in-peace",
+      "name": "Rise in Peace",
+      "cost": { "energy": 1, "text": "1 or 2 Energy (see text)" },
+      "reaction": true,
+      "text": "You can choose not to deploy Head Stone at the start of the game. If you do, they gain the [[kw:late-arrival|Late Arrival]] special rule.\n\nAt the start of your turn, you can spend 2 Energy. Set up a Head Stone in Late Arrival anywhere on the table more than 1\" away from enemy monsters. You must then immediately activate that Head Stone.\n\nWhenever a monster is destroyed, before removing them from the table, you can spend 1 Energy. Set up a Head Stone in Late Arrival anywhere in base contact with them, then remove the destroyed monster from the table."
+    }
+  ],
+  "unverified": []
+}

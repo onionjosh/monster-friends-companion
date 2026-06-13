@@ -1,0 +1,11 @@
+[
+  {
+    "id": "fighting-is-fun",
+    "name": "Fighting is Fun!",
+    "summary": "The recommended scenario for your first games of Monster Friends. Last party standing wins.",
+    "setup": "Place a small handful of terrain wherever you and your opponent decide would be most fun. The player whose birthday is closest to today's date is Player 1 (if both players have the same birthday, THIS GAME CANNOT BE PLAYED). Starting with Player 1, players alternate placing monsters one by one, anywhere wholly within 4\" of their respective table edges, until both parties are fully deployed. Then roll off: the winner decides who goes first. Player 1 receives +1 to the roll. At the start of every subsequent round, the player who ran out of action tokens first receives +1 to the roll.",
+    "winCondition": "If your opponent has 0 monsters left on the field, you win.",
+    "specialRules": [],
+    "recommendedPoints": 50
+  }
+]

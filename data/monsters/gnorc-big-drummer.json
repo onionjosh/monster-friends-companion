@@ -1,0 +1,41 @@
+{
+  "id": "gnorc-big-drummer",
+  "name": "Gnorc Big Drummer",
+  "size": "S",
+  "partyPoints": 9,
+  "act": 3,
+  "movement": 6,
+  "emi": 9,
+  "hp": 9,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Bang! Bang! Bang!",
+      "type": "melee",
+      "die": "d6",
+      "swings": 2,
+      "bonus": 1,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "bang-bang-bang-aura",
+      "name": "Bang! Bang! Bang!",
+      "cost": { "energy": 0, "text": "Passive" },
+      "reaction": true,
+      "text": "Friendly Gnorcs within 9\" of Gnorc Big Drummer add +2 to all Attack Dice Rolls. Friendly non-Gnorc small monsters add +1 to all Attack Dice Rolls.\n\nIf a monster is affected by this aura from multiple Gnorc Big Drummers, add +1 for every subsequent drummer (instead of +2)."
+    },
+    {
+      "id": "bang-bang-bang-loud",
+      "name": "BANG! BANG! BANG!",
+      "cost": { "energy": 2, "act": 1 },
+      "reaction": false,
+      "text": "As long as Gnorc Big Drummer is alive, all friendly Gnorc and Small monsters add +2 to all Attack Dice Rolls until the end of the round.\n\nIf a monster is affected by this aura from multiple Gnorc Big Drummers, add +1 for every subsequent drummer (instead of +2).\n\nWhen activated, this replaces Bang! Bang! Bang! until the end of the round. This ability can only be used once per Gnorc Big Drummer per round."
+    }
+  ],
+  "unverified": []
+}

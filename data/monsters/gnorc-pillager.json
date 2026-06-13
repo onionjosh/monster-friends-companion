@@ -1,0 +1,49 @@
+{
+  "id": "gnorc-pillager",
+  "name": "Gnorc Pillager",
+  "size": "S",
+  "partyPoints": 6,
+  "act": 2,
+  "movement": 6,
+  "emi": 9,
+  "hp": 6,
+  "defense": { "die": "d6", "bonus": 0, "critBonus": 2 },
+  "attacks": [
+    {
+      "name": "Gnorc Bonk",
+      "type": "melee",
+      "die": "d6",
+      "swings": 2,
+      "bonus": 1,
+      "critBonus": 2,
+      "tags": []
+    }
+  ],
+  "keywords": [],
+  "bondedWith": null,
+  "abilities": [
+    {
+      "id": "rarely-alone",
+      "name": "Rarely Alone",
+      "cost": { "energy": 1 },
+      "reaction": false,
+      "text": "Gnorcs are very miserable and socially ill adjusted creatures, but rarely travel alone.\n\nWhenever you finish activating a Gnorc Pillager, you may immediately make a free Move action with a second Gnorc Pillager (if you control any) before the end of your turn."
+    },
+    {
+      "id": "territorial-brazen-idiots",
+      "name": "Territorial, Brazen Idiots",
+      "cost": { "energy": 0 },
+      "reaction": true,
+      "text": "Gnorcs are extremely territorial and will fight anything that comes near them. This sometimes works out, but they are also very stupid, and often backfires.\n\nWhenever an enemy ends a move (or is thrown, etc) within 6\" of one or more Gnorc Pillagers who aren't already within 1\" of an enemy monster, they must use this ability. If this would put your Gnorc in grave danger and you are concerned for their safety, you can make that Gnorc pass an [[kw:emotional-instability|emotional instability]] test: on a 9+, this ability doesn't trigger.\n\nIf multiple Gnorc Pillagers are in range, this ability can trigger a maximum of 2 times per turn (if two Gnorcs are in range, resolve the first Gnorc, then repeat the process for the second).\n\nImmediately move the Gnorc Pillager 6\". They must end this move within 1\" of the enemy who triggered the ability. Then, make a free Basic Attack against that enemy."
+    },
+    {
+      "id": "a-distant-snorting-from-beyond-the-hills",
+      "name": "A Distant Snorting From Beyond The Hills",
+      "cost": { "energy": 1 },
+      "reaction": true,
+      "text": "Wherever a Gnorc is found, even a dead one, there is a high chance another is closeby.\n\nWhenever a Gnorc Pillager is destroyed, immediately roll a d6: on a 4+, set up a new Gnorc Pillager anywhere on the board within 2\" of a table edge."
+    }
+  ],
+  "flavor": "Gnorcs are territorial little beasts who seldom travel alone. If you see one be wary of more lurking in the hills!",
+  "unverified": []
+}
