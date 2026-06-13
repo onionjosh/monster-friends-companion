@@ -26,6 +26,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      # Build the static wiki from committed data + image assets and publish it at /wiki/.
+      - run: npm run wiki
+      - run: cp -r wiki/site dist/wiki
       - uses: actions/upload-pages-artifact@v5
         if: github.ref == 'refs/heads/main'
         with:

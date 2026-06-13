@@ -35,6 +35,9 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,webp,woff2}'],
         navigateFallback: 'index.html',
+        // The static wiki is published alongside the app at /wiki/ — don't let the
+        // app's SPA navigation fallback hijack its pages.
+        navigateFallbackDenylist: [/\/wiki\//],
       },
     }),
   ],

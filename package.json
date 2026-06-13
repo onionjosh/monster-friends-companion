@@ -9,7 +9,9 @@
     "build": "npm run build:data && tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "npm run build:data && vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "wiki:images": "node wiki/process-images.mjs",
+    "wiki": "node wiki/generate.mjs"
   },
   "dependencies": {
     "qrcode": "^1.5.4",

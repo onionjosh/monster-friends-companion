@@ -9,3 +9,12 @@ src/data/generated/
 *.pdf
 _*.txt
 .claude/
+
+# wiki: generated output is rebuilt by `npm run wiki`; the source generators and
+# the processed image assets (which need ffmpeg + the photo originals) are committed.
+wiki/site/
+wiki/upload/pages/
+wiki/upload/MonsterFriendsWiki.xml
+wiki/upload/IMAGE_UPLOAD_GUIDE.md
+wiki/upload/PAGES.tsv
+wiki/_shots/

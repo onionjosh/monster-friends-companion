@@ -1,0 +1,473 @@
+{
+  "monsters": {
+    "bucket-troll": {
+      "primary": "images/gallery/bucket-troll/bucket-troll-hero.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-3-4-front-b.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-3-4-front.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-3-4.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/bucket-troll/bucket-troll-3-4-back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Bucket Troll",
+      "uploadFile": "Bucket Troll.jpg"
+    },
+    "gnorc-pillager": {
+      "primary": "images/gallery/gnorc-pillager/gnorc-pillager-hero.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/gnorc-pillager/gnorc-pillager-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/hammer-gnorc-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/morning-star-gnorc-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/hammer-gnorc-3-4-front.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/morning-star-gnorc-3-4.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/hammer-gnorc-side.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/hammer-gnorc-back.webp",
+          "angle": "back",
+          "label": "back"
+        },
+        {
+          "src": "images/gallery/gnorc-pillager/morning-star-gnorc-back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Gnorc Pillager",
+      "uploadFile": "Gnorc Pillager.jpg"
+    },
+    "mr-devil": {
+      "primary": "images/gallery/mr-devil/mr-devil-hero.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/mr-devil/mr-devil-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/mr-devil/mr-devil-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/mr-devil/mr-devil-unpainted-front-square.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/mr-devil/mr-devil-unpainted-3-4-b-square.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/mr-devil/mr-devil-unpainted-3-4-square.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/mr-devil/mr-devil-unpainted-back-square-1.webp",
+          "angle": "back",
+          "label": "back"
+        },
+        {
+          "src": "images/gallery/mr-devil/p1055826.webp",
+          "angle": "other",
+          "label": "other"
+        },
+        {
+          "src": "images/gallery/mr-devil/p1055827.webp",
+          "angle": "other",
+          "label": "other"
+        },
+        {
+          "src": "images/gallery/mr-devil/p1055828.webp",
+          "angle": "other",
+          "label": "other"
+        },
+        {
+          "src": "images/gallery/mr-devil/p1055829.webp",
+          "angle": "other",
+          "label": "other"
+        }
+      ],
+      "source": "Mr Devil",
+      "uploadFile": "Mr. Devil.jpg"
+    },
+    "penguin-rogue": {
+      "primary": "images/gallery/penguin-rogue/penguin-rogue-hero.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/penguin-rogue/penguin-rogue-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/penguin-rogue/penguin-rogue-front-square.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/penguin-rogue/penguin-rogue-3-4-square.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/penguin-rogue/penguin-rogue-side-square.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/penguin-rogue/penguin-rogueback-square.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Penguin Rogue",
+      "uploadFile": "Penguin Rogue.jpg"
+    },
+    "schnoz": {
+      "primary": "images/gallery/schnoz/schnoz-hero.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/schnoz/schnoz-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/schnoz/3-4-a.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/schnoz/3-4-b.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/schnoz/side-2.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/schnoz/side.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/schnoz/back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Schnoz",
+      "uploadFile": "Schnoz.jpg"
+    },
+    "snapping-turtle-knight": {
+      "primary": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-hero-copy.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-hero-copy.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-hero-web.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/napping-turtle-knight-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/napping-turtle-knight-3-4-side-b.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-3-4-front.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/napping-turtle-knight-side-b.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/napping-turtle-knight-side.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/napping-turtle-knight-back.webp",
+          "angle": "back",
+          "label": "back"
+        },
+        {
+          "src": "images/gallery/snapping-turtle-knight/snapping-turtle-knight-shot-2.webp",
+          "angle": "other",
+          "label": "other"
+        }
+      ],
+      "source": "Snapping Turtle Knight",
+      "uploadFile": "Snapping Turtle Knight.jpg"
+    },
+    "tumble-stone": {
+      "primary": "images/gallery/tumble-stone/tumblestone-smiling-hero-shot.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-hero-shot.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-3-4.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-side-b.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Tumblestone (Smiling)",
+      "uploadFile": "Tumble Stone.jpg"
+    },
+    "wimpy-guard": {
+      "primary": "images/gallery/wimpy-guard/wimpy-guard-hero-web.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-hero-web.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-hero.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-3-4.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-side.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/wimpy-guard/wimpy-guard-back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Wimpy Guard",
+      "uploadFile": "Wimpy Guard.jpg"
+    },
+    "small-tumble-stone": {
+      "primary": "images/gallery/tumble-stone/tumblestone-smiling-hero-shot.webp",
+      "primaryKind": "hero",
+      "gallery": [
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-hero-shot.webp",
+          "angle": "hero",
+          "label": "hero"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-front.webp",
+          "angle": "front",
+          "label": "front"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-3-4.webp",
+          "angle": "three-quarter",
+          "label": "three-quarter"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-side-b.webp",
+          "angle": "side",
+          "label": "side"
+        },
+        {
+          "src": "images/gallery/tumble-stone/tumblestone-smiling-back.webp",
+          "angle": "back",
+          "label": "back"
+        }
+      ],
+      "source": "Tumblestone (Smiling)",
+      "uploadFile": "Tumble Stone.jpg",
+      "aliasOf": "tumble-stone"
+    }
+  },
+  "variants": {
+    "tumble-stone": [
+      {
+        "src": "images/variants/tumble-stone/smiling.webp",
+        "label": "Smiling"
+      },
+      {
+        "src": "images/variants/tumble-stone/screaming.webp",
+        "label": "Screaming"
+      },
+      {
+        "src": "images/variants/tumble-stone/spiky.webp",
+        "label": "Spiky"
+      },
+      {
+        "src": "images/variants/tumble-stone/swirly-eyes.webp",
+        "label": "Swirly Eyes"
+      }
+    ]
+  },
+  "site": {
+    "starter-group": {
+      "src": "images/site/starter-group.webp",
+      "uploadFile": "Monster Friends group.jpg"
+    }
+  },
+  "starterGallery": [
+    {
+      "src": "images/gallery/starter-set/3-4-a.webp",
+      "label": "3-4-a"
+    },
+    {
+      "src": "images/gallery/starter-set/bucket-troll-front.webp",
+      "label": "bucket-troll-front"
+    },
+    {
+      "src": "images/gallery/starter-set/defenders-of-the-south-coast-mall.webp",
+      "label": "defenders-of-the-south-coast-mall"
+    },
+    {
+      "src": "images/gallery/starter-set/group-shot-hero.webp",
+      "label": "group-shot-hero"
+    },
+    {
+      "src": "images/gallery/starter-set/hammer-gnorc-front.webp",
+      "label": "hammer-gnorc-front"
+    },
+    {
+      "src": "images/gallery/starter-set/muckland-dirt-scamps.webp",
+      "label": "muckland-dirt-scamps"
+    },
+    {
+      "src": "images/gallery/starter-set/napping-turtle-knight-front.webp",
+      "label": "napping-turtle-knight-front"
+    },
+    {
+      "src": "images/gallery/starter-set/penguin-rogue-front-square.webp",
+      "label": "penguin-rogue-front-square"
+    },
+    {
+      "src": "images/gallery/starter-set/tumblestone-smiling-front.webp",
+      "label": "tumblestone-smiling-front"
+    },
+    {
+      "src": "images/gallery/starter-set/wimpy-guard-front.webp",
+      "label": "wimpy-guard-front"
+    }
+  ],
+  "merch": [
+    {
+      "src": "images/gallery/merch/bdcf-monster.webp",
+      "label": "bdcf-monster"
+    },
+    {
+      "src": "images/gallery/merch/bolt-thrower-ii-world-tour-back.webp",
+      "label": "bolt-thrower-ii-world-tour-back"
+    },
+    {
+      "src": "images/gallery/merch/bolt-thrower-ii-world-tour-front.webp",
+      "label": "bolt-thrower-ii-world-tour-front"
+    },
+    {
+      "src": "images/gallery/merch/i-came-here-to-make-friends-front.webp",
+      "label": "i-came-here-to-make-friends-front"
+    },
+    {
+      "src": "images/gallery/merch/skeleton-siege-front.webp",
+      "label": "skeleton-siege-front"
+    }
+  ],
+  "generatedFrom": "C:/Users/josh/Pictures/orc the brand/monster friends/Product Photos"
+}
