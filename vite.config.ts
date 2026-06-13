@@ -10,7 +10,10 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'prompt',
+      // autoUpdate (not 'prompt') so the corrected service worker — including the
+      // /wiki/ navigation-fallback exclusion — propagates to returning visitors
+      // without needing them to tap an in-app "update" banner.
+      registerType: 'autoUpdate',
       manifest: {
         name: 'Monster Friends Companion',
         short_name: 'Monster Friends',
