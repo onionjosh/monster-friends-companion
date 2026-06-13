@@ -63,40 +63,44 @@ export function Monsters() {
         {results.map((m) => (
           <div
             key={m.id}
-            className="flex items-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900"
+            className="flex items-stretch overflow-hidden rounded-xl border-2 border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900"
           >
-            <Link href={`/monsters/${m.id}`} className="flex min-w-0 flex-1 items-center gap-3">
+            <Link href={`/monsters/${m.id}`} className="flex min-w-0 flex-1 items-stretch gap-3">
               {m.image ? (
-                <img
-                  src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
-                  alt=""
-                  loading="lazy"
-                  className="h-12 w-12 shrink-0 rounded-lg border-2 border-zinc-900 object-cover dark:border-zinc-100"
-                />
+                <div className="relative aspect-square shrink-0 self-stretch border-r-2 border-zinc-900 dark:border-zinc-100">
+                  <img
+                    src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
               ) : (
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-zinc-300 text-lg opacity-40 dark:border-zinc-700">
+                <div className="flex aspect-square shrink-0 self-stretch items-center justify-center border-r-2 border-dashed border-zinc-300 text-2xl opacity-40 dark:border-zinc-700">
                   👾
                 </div>
               )}
-              <div className="min-w-0 flex-1">
-                <div className="font-display flex items-center gap-2 font-bold">
-                  <span className="truncate">{m.name}</span>
-                  <SizeBadge size={m.size} />
+              <div className="flex min-w-0 flex-1 items-center gap-3 py-3">
+                <div className="min-w-0 flex-1">
+                  <div className="font-display flex items-center gap-2 font-bold">
+                    <span className="truncate">{m.name}</span>
+                    <SizeBadge size={m.size} />
+                  </div>
+                  <div className="text-xs opacity-70">
+                    HP {m.hp} · AcT {m.act} · Move {m.movement > 0 ? `${m.movement}"` : '—'} · {m.abilities.length} abilit{m.abilities.length === 1 ? 'y' : 'ies'}
+                  </div>
                 </div>
-                <div className="text-xs opacity-70">
-                  HP {m.hp} · AcT {m.act} · Move {m.movement > 0 ? `${m.movement}"` : '—'} · {m.abilities.length} abilit{m.abilities.length === 1 ? 'y' : 'ies'}
+                <div className="text-right">
+                  <div className="font-display text-xl font-black">{m.partyPoints}</div>
+                  <div className="text-[10px] font-bold uppercase opacity-70">PP</div>
                 </div>
-              </div>
-              <div className="text-right">
-                <div className="font-display text-xl font-black">{m.partyPoints}</div>
-                <div className="text-[10px] font-bold uppercase opacity-70">PP</div>
               </div>
             </Link>
             <button
               type="button"
               onClick={() => toggleFav(m.id)}
               aria-label={favs.includes(m.id) ? 'remove favorite' : 'add favorite'}
-              className={`text-2xl ${favs.includes(m.id) ? 'text-amber-500' : 'opacity-30'}`}
+              className={`flex items-center px-3 text-2xl ${favs.includes(m.id) ? 'text-amber-500' : 'opacity-30'}`}
             >
               ★
             </button>
