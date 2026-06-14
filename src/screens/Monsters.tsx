@@ -9,12 +9,11 @@ import { Icon } from '../components/Icon'
 type SizeFilter = 'all' | Monster['size']
 type TypeFilter = 'all' | 'melee' | 'ranged'
 
-function MonsterRow({ m, fav, onFav, cut }: { m: Monster; fav: boolean; onFav: () => void; cut: number }) {
+function MonsterRow({ m, fav, onFav }: { m: Monster; fav: boolean; onFav: () => void }) {
   const ranged = m.attacks.some((a) => a.type === 'ranged')
-  const cutCls = cut % 3 === 1 ? 'mf-torn-card--2' : cut % 3 === 2 ? 'mf-torn-card--3' : ''
   return (
     <div className="relative">
-      <Link href={`/monsters/${m.id}`} className={`mf-torn-card ${cutCls} flex items-stretch overflow-hidden`}>
+      <Link href={`/monsters/${m.id}`} className="mf-torn-card mf-torn-card--row flex items-stretch overflow-hidden">
         <div className="relative shrink-0 self-stretch" style={{ width: 84, background: 'var(--surface-sunk)', borderRight: '2px solid var(--border)' }}>
           {m.image ? (
             <img
@@ -156,8 +155,8 @@ export function Monsters() {
       </div>
 
       <div className="grid gap-3">
-        {results.map((m, i) => (
-          <MonsterRow key={m.id} m={m} fav={favs.includes(m.id)} onFav={() => toggleFav(m.id)} cut={i} />
+        {results.map((m) => (
+          <MonsterRow key={m.id} m={m} fav={favs.includes(m.id)} onFav={() => toggleFav(m.id)} />
         ))}
         {results.length === 0 && (
           <p className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>

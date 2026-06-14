@@ -47,6 +47,9 @@
   --clip-torn-3: polygon(2% 2%, 25% 7%, 50% 1%, 76% 6%, 100% 2%, 99% 33%, 100% 66%, 98% 98%, 73% 94%, 49% 100%, 22% 95%, 1% 98%, 0% 64%, 2% 31%);
   --clip-tag: polygon(0% 8%, 96% 0%, 100% 84%, 90% 100%, 4% 94%);
   --clip-callout: polygon(0% 6%, 18% 0%, 52% 5%, 84% 0%, 100% 7%, 99% 70%, 100% 96%, 70% 100%, 35% 95%, 8% 100%, 1% 64%);
+  /* Monster row: STRAIGHT left wall (protects the photo) + flat top/bottom over
+     the photo column; torn only on the text side & right edge. */
+  --clip-torn-row: polygon(0% 0%, 22% 0%, 40% 3%, 60% 0%, 80% 4%, 95% 1%, 100% 6%, 99% 38%, 100% 70%, 99% 93%, 100% 100%, 80% 97%, 60% 100%, 38% 96%, 22% 100%, 0% 100%);
   --tilt-sm: -1.5deg;
   --tilt-md: -2.5deg;
   --tilt-rev: 2deg;
@@ -218,17 +221,17 @@ button {
   align-items: center;
   gap: 0.4em;
   clip-path: var(--clip-torn-2);
-  background: var(--surface);
+  background: var(--surface-sunk);
   color: var(--text);
   cursor: pointer;
   font-family: var(--font-body);
   font-weight: 700;
   -webkit-tap-highlight-color: transparent;
-  filter: var(--torn-edge) drop-shadow(2px 2px 0 var(--shadow-ink));
+  filter: drop-shadow(2px 2px 0 var(--shadow-ink));
   transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
-.mf-btn:hover { filter: var(--torn-edge) drop-shadow(3px 3px 0 var(--shadow-ink)); }
-.mf-btn:active { transform: translate(2px, 2px); filter: var(--torn-edge); }
+.mf-btn:hover { filter: drop-shadow(3px 3px 0 var(--shadow-ink)); }
+.mf-btn:active { transform: translate(2px, 2px); filter: none; }
 .mf-btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; }
 
 /* ---- Torn frame: ragged-edge clickable card/row/tile (zine sticker). The bone
@@ -241,14 +244,15 @@ button {
   text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  filter: var(--torn-edge) drop-shadow(3px 3px 0 var(--shadow-ink));
+  filter: drop-shadow(3px 3px 0 var(--shadow-ink));
   transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
-.mf-torn-card:hover { filter: var(--torn-edge) drop-shadow(5px 5px 0 var(--shadow-ink)); }
-.mf-torn-card:active { transform: translate(3px, 3px); filter: var(--torn-edge); }
+.mf-torn-card:hover { filter: drop-shadow(5px 5px 0 var(--shadow-ink)); }
+.mf-torn-card:active { transform: translate(3px, 3px); filter: none; }
 .mf-torn-card:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 4px; }
 .mf-torn-card--2 { clip-path: var(--clip-torn-2); }
 .mf-torn-card--3 { clip-path: var(--clip-torn-3); }
+.mf-torn-card--row { clip-path: var(--clip-torn-row); }
 
 /* Selected torn frame: gold ragged outline (party picks, active choices). */
 .mf-pick--on {
