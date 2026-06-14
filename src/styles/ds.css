@@ -195,13 +195,16 @@ button {
    COMPONENT CLASSES
    ============================================================ */
 
-/* ---- Card ---- */
+/* ---- Card (torn info box, no white outline) ---- */
 .mf-card {
   background: var(--surface);
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sticker);
+  clip-path: var(--clip-torn-2);
+  filter: drop-shadow(3px 3px 0 var(--shadow-ink));
 }
+/* Inside a scrolling sheet, drop the offset shadow on torn boxes — the
+   clip-path + drop-shadow combo leaves stray shadow-line artifacts there. */
+.mf-sheet .mf-card,
+.mf-sheet .mf-statpill { filter: none; }
 .mf-card--interactive {
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
@@ -327,10 +330,9 @@ button {
   align-items: center;
   justify-content: center;
   background: var(--surface);
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 7px 8px;
-  box-shadow: var(--shadow-sticker-sm);
+  clip-path: var(--clip-torn-3);
+  padding: 8px;
+  filter: drop-shadow(2px 2px 0 var(--shadow-ink));
   text-align: center;
 }
 .mf-statpill__label {
@@ -377,7 +379,7 @@ button {
 
 /* ---- Badge ---- */
 .mf-badge { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--font-body); font-weight: 700; line-height: 1; font-size: var(--text-xs); white-space: nowrap; }
-.mf-badge--outline { border: var(--border-w-thin) solid var(--text-muted); color: var(--text); border-radius: var(--radius-sm); padding: 3px 7px; text-transform: uppercase; letter-spacing: 0.04em; }
+.mf-badge--outline { background: var(--surface-sunk); color: var(--text); clip-path: var(--clip-torn-soft); padding: 3px 8px; text-transform: uppercase; letter-spacing: 0.04em; }
 .mf-badge--solid { background: var(--text); color: var(--text-inverse); border-radius: var(--radius-pill); padding: 3px 9px; }
 
 /* ---- Section header (torn red icon bump + caps label) ---- */
