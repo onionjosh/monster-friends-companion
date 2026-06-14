@@ -281,26 +281,43 @@ function AddMonsterSheet({
         placeholder="Search…"
         className="mf-input my-2.5"
       />
-      <div className="grid gap-1.5">
-        {list.map((m, i) => {
+      <div className="grid gap-3">
+        {list.map((m) => {
           const count = countOf(m.id)
           return (
-            <div
-              key={m.id}
-              className={`mf-torn-card ${['', 'mf-torn-card--2', 'mf-torn-card--3'][i % 3]} ${count > 0 ? 'mf-pick--on' : ''} flex items-center gap-2 p-3`}
-            >
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-                    {m.name}
+            <div key={m.id} className="mf-torn-card mf-torn-card--row flex items-stretch overflow-hidden">
+              <div
+                className="relative shrink-0 self-stretch"
+                style={{ width: 60, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
+              >
+                {m.image ? (
+                  <img
+                    src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="absolute inset-0 flex items-center justify-center" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>
+                    <Icon name="ghost" size={24} />
                   </span>
-                  <SizeBadge size={m.size} />
-                </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-                  {m.partyPoints} PP each{count > 0 ? ` · ${m.partyPoints * count} in party` : ''}
-                </div>
+                )}
               </div>
-              <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+              <div className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
+                      {m.name}
+                    </span>
+                    <SizeBadge size={m.size} />
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+                    {m.partyPoints} PP each
+                    {count > 0 && <span style={{ color: 'var(--accent-text)' }}> · {count} in party</span>}
+                  </div>
+                </div>
+                <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+              </div>
             </div>
           )
         })}
