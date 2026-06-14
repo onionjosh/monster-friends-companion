@@ -42,14 +42,11 @@ export function Home() {
           }}
         >
           <span
-            className="flex items-center gap-1.5"
-            style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-muted)' }}
+            className="flex items-center justify-center gap-2"
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-base)', letterSpacing: '.04em', textTransform: 'uppercase', color: 'var(--text)' }}
           >
-            <Icon name="star" size={13} /> News &amp; Updates
+            <Icon name="star" size={16} /> Wave 2 Coming Soon!
           </span>
-          <p style={{ marginTop: 5, fontFamily: 'var(--font-body)', fontSize: 13, lineHeight: 1.45, color: 'var(--text)' }}>
-            v{gameData.dataVersion} is live — a fresh zine redesign across the app. More monsters coming soon.
-          </p>
         </div>
 
         {/* hero — official logo */}
