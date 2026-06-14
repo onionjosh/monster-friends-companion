@@ -307,7 +307,7 @@ function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () 
       {m && (
         <div className="grid gap-2.5">
           {m.image && (
-            <div style={{ clipPath: 'var(--clip-torn-soft)', aspectRatio: '4 / 3', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}>
+            <div style={{ clipPath: 'var(--clip-torn-photo)', aspectRatio: '4 / 3', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}>
               <img
                 src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
                 alt={m.name}

@@ -72,7 +72,7 @@ export function MonsterDetail() {
         {monster.image && (
           <div
             style={{
-              clipPath: 'var(--clip-torn-soft)',
+              clipPath: 'var(--clip-torn-photo)',
               filter: 'drop-shadow(4px 4px 0 var(--shadow-ink))',
               aspectRatio: '4 / 3',
               background: 'var(--surface)',

@@ -16,7 +16,7 @@ function MonsterRow({ m, fav, onFav }: { m: Monster; fav: boolean; onFav: () => 
       <Link href={`/monsters/${m.id}`} className="mf-torn-card mf-torn-card--row flex items-stretch overflow-hidden">
         <div
           className="relative shrink-0 self-stretch"
-          style={{ width: 84, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-soft)' }}
+          style={{ width: 84, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
         >
           {m.image ? (
             <img
