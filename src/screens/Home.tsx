@@ -60,12 +60,12 @@ export function Home() {
             src={`${import.meta.env.BASE_URL}brand/logo.webp`}
             alt="Monster Friends — Battle for New Florida"
             className="mx-auto block"
-            style={{ width: '100%', maxWidth: 300 }}
+            style={{ width: '100%', maxWidth: 380 }}
           />
         </div>
 
         {/* actions — one per row, tall torn buttons; Build a Party & Monsters lead */}
-        <div className="grid gap-3 w-4/5 mx-auto">
+        <div className="grid gap-3 w-[76%] mx-auto">
           {ACTIONS.slice(0, 2).map((b) => (
             <TornButton
               key={b.href}
@@ -74,7 +74,7 @@ export function Home() {
               cut={b.cut}
               tilt="none"
               onClick={() => navigate(b.href)}
-              style={{ width: '100%', padding: '22px 18px' }}
+              style={{ width: '100%', padding: '28px 18px' }}
             >
               {b.label}
             </TornButton>
@@ -93,7 +93,7 @@ export function Home() {
                 justifyContent: 'flex-start',
                 whiteSpace: 'normal',
                 gap: 12,
-                padding: '20px 18px',
+                padding: '26px 18px',
               }}
             >
               <Icon name="dice" size={22} />
@@ -114,7 +114,7 @@ export function Home() {
               cut={b.cut}
               tilt="none"
               onClick={() => navigate(b.href)}
-              style={{ width: '100%', padding: '22px 18px' }}
+              style={{ width: '100%', padding: '28px 18px' }}
             >
               {b.label}
             </TornButton>
