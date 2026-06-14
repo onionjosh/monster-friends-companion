@@ -68,7 +68,7 @@ export function Home() {
         </div>
 
         {/* actions — one per row, tall torn buttons; Build a Party & Monsters lead */}
-        <div className="grid gap-3">
+        <div className="grid gap-3 w-4/5 mx-auto">
           {ACTIONS.slice(0, 2).map((b) => (
             <TornButton
               key={b.href}
