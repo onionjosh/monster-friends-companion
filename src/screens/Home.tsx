@@ -10,17 +10,16 @@ type BtnSpec = {
   label: string
   variant: 'red' | 'cream' | 'gold'
   cut: 1 | 2 | 3
-  tilt: 'sm' | 'rev' | 'md'
 }
 
-// All home actions, stacked one per row. Build a Party + Monsters lead;
-// colors alternate so no two neighbours share a fill.
+// All home actions, stacked one per row, sitting straight for a neat stack.
+// Build a Party + Monsters lead; colors alternate so no two neighbours match.
 const ACTIONS: BtnSpec[] = [
-  { href: '/builder', icon: 'roster', label: 'Build a Party', variant: 'red', cut: 1, tilt: 'sm' },
-  { href: '/monsters', icon: 'ghost', label: 'Monsters', variant: 'cream', cut: 2, tilt: 'rev' },
-  { href: '/play', icon: 'dice', label: 'Play', variant: 'gold', cut: 3, tilt: 'sm' },
-  { href: '/rules', icon: 'book', label: 'Rules', variant: 'red', cut: 1, tilt: 'rev' },
-  { href: '/scenarios', icon: 'trophy', label: 'Scenarios', variant: 'cream', cut: 2, tilt: 'md' },
+  { href: '/builder', icon: 'roster', label: 'Build a Party', variant: 'red', cut: 1 },
+  { href: '/monsters', icon: 'ghost', label: 'Monsters', variant: 'cream', cut: 2 },
+  { href: '/play', icon: 'dice', label: 'Play', variant: 'gold', cut: 3 },
+  { href: '/rules', icon: 'book', label: 'Rules', variant: 'red', cut: 1 },
+  { href: '/scenarios', icon: 'trophy', label: 'Scenarios', variant: 'cream', cut: 2 },
 ]
 
 export function Home() {
@@ -36,8 +35,6 @@ export function Home() {
           style={{
             clipPath: 'var(--clip-torn-3)',
             background: 'var(--surface-sunk)',
-            backgroundImage: 'radial-gradient(rgba(255,255,255,.05) 1px, transparent 1.3px)',
-            backgroundSize: '7px 7px',
             padding: '13px 16px',
           }}
         >
@@ -55,8 +52,6 @@ export function Home() {
           style={{
             clipPath: 'var(--clip-torn-1)',
             background: 'var(--poster-black)',
-            backgroundImage: 'radial-gradient(rgba(255,255,255,.05) 1.1px, transparent 1.2px)',
-            backgroundSize: '8px 8px',
             padding: '20px 18px 22px',
             filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))',
           }}
@@ -80,7 +75,7 @@ export function Home() {
               variant={b.variant}
               leftIcon={b.icon}
               cut={b.cut}
-              tilt={b.tilt}
+              tilt="none"
               onClick={() => navigate(b.href)}
               style={{ width: '100%', padding: '22px 18px' }}
             >
@@ -97,8 +92,7 @@ export function Home() {
               style={{
                 width: '100%',
                 clipPath: 'var(--clip-torn-2)',
-                transform: 'rotate(var(--tilt-rev))',
-                ['--_tilt' as string]: 'var(--tilt-rev)',
+                ['--_tilt' as string]: '0deg',
                 justifyContent: 'flex-start',
                 whiteSpace: 'normal',
                 gap: 12,
@@ -121,7 +115,7 @@ export function Home() {
               variant={b.variant}
               leftIcon={b.icon}
               cut={b.cut}
-              tilt={b.tilt}
+              tilt="none"
               onClick={() => navigate(b.href)}
               style={{ width: '100%', padding: '22px 18px' }}
             >

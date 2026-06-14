@@ -161,9 +161,7 @@
    ============================================================ */
 body {
   margin: 0;
-  background:
-    radial-gradient(rgba(255, 255, 255, 0.045) 1.1px, transparent 1.2px) 0 0 / 9px 9px,
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -313,6 +311,7 @@ button {
   filter: drop-shadow(3px 3px 0 var(--shadow-ink));
   transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
+.mf-torn:hover { transform: translate(-1px, -1px) rotate(var(--_tilt, 0deg)); filter: drop-shadow(5px 5px 0 var(--shadow-ink)); }
 .mf-torn:active { transform: translate(3px, 3px) rotate(var(--_tilt, 0deg)) !important; filter: none; }
 .mf-torn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; }
 .mf-torn--red { background: var(--punk-red); color: #fff; }
