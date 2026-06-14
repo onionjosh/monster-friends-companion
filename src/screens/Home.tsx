@@ -13,12 +13,14 @@ type BtnSpec = {
   tilt: 'sm' | 'rev' | 'md'
 }
 
-// Secondary actions — same torn-button style as the primary "Build a Party" CTA.
+// All home actions, stacked one per row. Build a Party + Monsters lead;
+// colors alternate so no two neighbours share a fill.
 const ACTIONS: BtnSpec[] = [
+  { href: '/builder', icon: 'roster', label: 'Build a Party', variant: 'red', cut: 1, tilt: 'sm' },
   { href: '/monsters', icon: 'ghost', label: 'Monsters', variant: 'cream', cut: 2, tilt: 'rev' },
-  { href: '/play', icon: 'dice', label: 'Play', variant: 'red', cut: 3, tilt: 'sm' },
-  { href: '/rules', icon: 'book', label: 'Rules', variant: 'cream', cut: 1, tilt: 'rev' },
-  { href: '/scenarios', icon: 'trophy', label: 'Scenarios', variant: 'gold', cut: 2, tilt: 'md' },
+  { href: '/play', icon: 'dice', label: 'Play', variant: 'gold', cut: 3, tilt: 'sm' },
+  { href: '/rules', icon: 'book', label: 'Rules', variant: 'red', cut: 1, tilt: 'rev' },
+  { href: '/scenarios', icon: 'trophy', label: 'Scenarios', variant: 'cream', cut: 2, tilt: 'md' },
 ]
 
 export function Home() {
@@ -28,6 +30,28 @@ export function Home() {
   return (
     <div className="mx-auto max-w-lg p-4">
       <div className="grid gap-4">
+        {/* news / updates — reserved space; flat & textured (not a button) */}
+        <div
+          className="relative"
+          style={{
+            clipPath: 'var(--clip-torn-3)',
+            background: 'var(--surface-sunk)',
+            backgroundImage: 'radial-gradient(rgba(255,255,255,.05) 1px, transparent 1.3px)',
+            backgroundSize: '7px 7px',
+            padding: '13px 16px',
+          }}
+        >
+          <span
+            className="flex items-center gap-1.5"
+            style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--text-muted)' }}
+          >
+            <Icon name="star" size={13} /> News &amp; Updates
+          </span>
+          <p style={{ marginTop: 5, fontFamily: 'var(--font-body)', fontSize: 13, lineHeight: 1.45, color: 'var(--text)' }}>
+            v{gameData.dataVersion} is live — a fresh zine redesign across the app. More monsters coming soon.
+          </p>
+        </div>
+
         {/* hero — official logo */}
         <div
           className="relative"
@@ -51,48 +75,9 @@ export function Home() {
           </p>
         </div>
 
-        {/* resume — matching torn button */}
-        {game && (
-          <button
-            type="button"
-            onClick={() => navigate('/play')}
-            className="mf-torn mf-torn--red mf-torn--btn"
-            style={{
-              width: '100%',
-              clipPath: 'var(--clip-torn-2)',
-              transform: 'rotate(var(--tilt-rev))',
-              ['--_tilt' as string]: 'var(--tilt-rev)',
-              justifyContent: 'flex-start',
-              whiteSpace: 'normal',
-              gap: 12,
-              padding: '14px 18px',
-            }}
-          >
-            <Icon name="dice" size={22} />
-            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, lineHeight: 1.1 }}>
-              <span>Resume Game</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 400, fontSize: 11, textTransform: 'none', letterSpacing: 0, opacity: 0.9 }}>
-                Round {game.round} · {game.mine.name} vs {game.theirs.name}
-              </span>
-            </span>
-          </button>
-        )}
-
-        {/* primary action — full-width torn button */}
-        <TornButton
-          variant="red"
-          leftIcon="roster"
-          cut={1}
-          tilt="sm"
-          onClick={() => navigate('/builder')}
-          style={{ width: '100%', padding: '18px 16px' }}
-        >
-          Build a Party
-        </TornButton>
-
-        {/* secondary actions — same torn style */}
-        <div className="grid grid-cols-2 gap-3.5">
-          {ACTIONS.map((b) => (
+        {/* actions — one per row, tall torn buttons; Build a Party & Monsters lead */}
+        <div className="grid gap-3">
+          {ACTIONS.slice(0, 2).map((b) => (
             <TornButton
               key={b.href}
               variant={b.variant}
@@ -100,14 +85,65 @@ export function Home() {
               cut={b.cut}
               tilt={b.tilt}
               onClick={() => navigate(b.href)}
-              style={{ width: '100%', padding: '18px 12px' }}
+              style={{ width: '100%', padding: '22px 18px' }}
+            >
+              {b.label}
+            </TornButton>
+          ))}
+
+          {/* resume — contextual continue, just after the two leads (red: never neighbours a same fill) */}
+          {game && (
+            <button
+              type="button"
+              onClick={() => navigate('/play')}
+              className="mf-torn mf-torn--red mf-torn--btn"
+              style={{
+                width: '100%',
+                clipPath: 'var(--clip-torn-2)',
+                transform: 'rotate(var(--tilt-rev))',
+                ['--_tilt' as string]: 'var(--tilt-rev)',
+                justifyContent: 'flex-start',
+                whiteSpace: 'normal',
+                gap: 12,
+                padding: '20px 18px',
+              }}
+            >
+              <Icon name="dice" size={22} />
+              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, lineHeight: 1.1 }}>
+                <span>Resume Game</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 400, fontSize: 11, textTransform: 'none', letterSpacing: 0, opacity: 0.9 }}>
+                  Round {game.round} · {game.mine.name} vs {game.theirs.name}
+                </span>
+              </span>
+            </button>
+          )}
+
+          {ACTIONS.slice(2).map((b) => (
+            <TornButton
+              key={b.href}
+              variant={b.variant}
+              leftIcon={b.icon}
+              cut={b.cut}
+              tilt={b.tilt}
+              onClick={() => navigate(b.href)}
+              style={{ width: '100%', padding: '22px 18px' }}
             >
               {b.label}
             </TornButton>
           ))}
         </div>
 
-        <TornCallout eyebrow={`Beta ${gameData.dataVersion}`} variant="gold" tilt="md" className="self-center">
+        <TornCallout
+          eyebrow={`Beta ${gameData.dataVersion}`}
+          variant="gold"
+          tilt="md"
+          className="self-center"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(0,0,0,.13) 1px, transparent 1.4px)',
+            backgroundSize: '7px 7px',
+            filter: 'drop-shadow(2px 2px 0 rgba(0,0,0,.16))',
+          }}
+        >
           Out now &amp; free to play!
         </TornCallout>
 
