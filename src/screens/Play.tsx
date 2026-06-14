@@ -54,7 +54,7 @@ function Setup() {
     startGame({ name: mine.name, entries: mine.entries }, opponent, scenarioId)
   }
 
-  const pick = (active: boolean) => `mf-card mf-card--interactive w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
+  const pick = (active: boolean) => `mf-torn-card w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
 
   return (
     <div className="mx-auto max-w-lg p-4">
@@ -70,13 +70,7 @@ function Setup() {
       </h2>
       <div className="mb-4 grid gap-1.5">
         {list.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            className={pick(mineId === p.id)}
-            style={mineId === p.id ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
-            onClick={() => setMineId(p.id)}
-          >
+          <button key={p.id} type="button" className={pick(mineId === p.id)} onClick={() => setMineId(p.id)}>
             {p.name}
           </button>
         ))}
@@ -100,7 +94,6 @@ function Setup() {
             key={p.id}
             type="button"
             className={pick(theirsId === p.id && !oppFromCode)}
-            style={theirsId === p.id && !oppFromCode ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
             onClick={() => {
               setTheirsId(p.id)
               setOppCode('')
@@ -135,13 +128,7 @@ function Setup() {
       </h2>
       <div className="mb-5 grid gap-1.5">
         {scenarios.map((s) => (
-          <button
-            key={s.id}
-            type="button"
-            className={pick(scenarioId === s.id)}
-            style={scenarioId === s.id ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
-            onClick={() => setScenarioId(s.id)}
-          >
+          <button key={s.id} type="button" className={pick(scenarioId === s.id)} onClick={() => setScenarioId(s.id)}>
             {s.name}
             <span className="block" style={{ fontWeight: 400, fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
               {s.winCondition}

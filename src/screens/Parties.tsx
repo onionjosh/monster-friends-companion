@@ -22,8 +22,8 @@ export function Parties() {
         <h1 style={{ fontSize: 'var(--text-2xl)' }}>My Parties</h1>
         <Link
           href="/builder"
-          className="mf-card mf-card--interactive flex items-center gap-1 px-3 py-1.5 font-bold"
-          style={{ background: 'var(--primary)', color: 'var(--on-primary)', borderColor: 'var(--border)' }}
+          className="mf-torn-card flex items-center gap-1 px-3 py-1.5 font-bold"
+          style={{ background: 'var(--primary)', color: 'var(--on-primary)' }}
         >
           <Icon name="plus" size={18} /> New
         </Link>
@@ -35,8 +35,8 @@ export function Parties() {
           const stale = p.dataVersion !== gameData.dataVersion
           const over = check.totalPoints > p.budget
           return (
-            <div key={p.id} className="mf-card p-3">
-              <Link href={`/parties/${p.id}`} className="mf-press block">
+            <div key={p.id} className="mf-torn-card p-3">
+              <Link href={`/parties/${p.id}`} className="block">
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
                     {p.name}

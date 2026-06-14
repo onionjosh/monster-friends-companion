@@ -15,7 +15,7 @@ export function Scenarios() {
       </p>
       <div className="grid gap-2">
         {scenarios.map((s) => (
-          <Link key={s.id} href={`/scenarios/${s.id}`} className="mf-card mf-card--interactive p-3">
+          <Link key={s.id} href={`/scenarios/${s.id}`} className="mf-torn-card p-3">
             <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>{s.name}</div>
             <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{s.summary}</div>
           </Link>

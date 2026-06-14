@@ -51,6 +51,11 @@
   --tilt-md: -2.5deg;
   --tilt-rev: 2deg;
 
+  /* Faux ragged "outline" that follows a clip-path silhouette (drop-shadow has
+     no spread, so stack 4 thin offsets in the border color). Used by torn frames. */
+  --torn-edge: drop-shadow(2px 0 0 var(--border)) drop-shadow(-2px 0 0 var(--border))
+    drop-shadow(0 2px 0 var(--border)) drop-shadow(0 -2px 0 var(--border));
+
   /* ---- TYPOGRAPHY ---- */
   --font-display: 'Baloo 2', 'Trebuchet MS', ui-rounded, system-ui, sans-serif;
   --font-body: 'Hanken Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -212,20 +217,50 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-md);
+  clip-path: var(--clip-torn-2);
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
   font-family: var(--font-body);
   font-weight: 700;
-  box-shadow: var(--shadow-sticker-sm);
   -webkit-tap-highlight-color: transparent;
-  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  filter: var(--torn-edge) drop-shadow(2px 2px 0 var(--shadow-ink));
+  transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
-.mf-btn:hover { box-shadow: var(--shadow-sticker); }
-.mf-btn:active { transform: translate(2px, 2px); box-shadow: none; }
-.mf-btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
+.mf-btn:hover { filter: var(--torn-edge) drop-shadow(3px 3px 0 var(--shadow-ink)); }
+.mf-btn:active { transform: translate(2px, 2px); filter: var(--torn-edge); }
+.mf-btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; }
+
+/* ---- Torn frame: ragged-edge clickable card/row/tile (zine sticker). The bone
+   outline + offset ink shadow follow the torn silhouette; presses into the table. */
+.mf-torn-card {
+  position: relative;
+  clip-path: var(--clip-torn-1);
+  background: var(--surface);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  filter: var(--torn-edge) drop-shadow(3px 3px 0 var(--shadow-ink));
+  transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+}
+.mf-torn-card:hover { filter: var(--torn-edge) drop-shadow(5px 5px 0 var(--shadow-ink)); }
+.mf-torn-card:active { transform: translate(3px, 3px); filter: var(--torn-edge); }
+.mf-torn-card:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 4px; }
+.mf-torn-card--2 { clip-path: var(--clip-torn-2); }
+.mf-torn-card--3 { clip-path: var(--clip-torn-3); }
+
+/* Selected torn frame: gold ragged outline (party picks, active choices). */
+.mf-pick--on {
+  filter: drop-shadow(2px 0 0 var(--primary)) drop-shadow(-2px 0 0 var(--primary))
+    drop-shadow(0 2px 0 var(--primary)) drop-shadow(0 -2px 0 var(--primary))
+    drop-shadow(3px 3px 0 var(--shadow-ink));
+}
+.mf-pick--on:hover {
+  filter: drop-shadow(2px 0 0 var(--primary)) drop-shadow(-2px 0 0 var(--primary))
+    drop-shadow(0 2px 0 var(--primary)) drop-shadow(0 -2px 0 var(--primary))
+    drop-shadow(5px 5px 0 var(--shadow-ink));
+}
 
 /* ---- Input ---- */
 .mf-input {

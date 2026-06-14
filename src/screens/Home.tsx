@@ -74,11 +74,7 @@ export function Home() {
 
         {/* resume */}
         {game && (
-          <Link
-            href="/play"
-            className="mf-card mf-card--interactive p-4"
-            style={{ background: 'var(--punk-red)', borderColor: 'var(--poster-cream)', color: '#fff' }}
-          >
+          <Link href="/play" className="mf-torn-card block p-4" style={{ background: 'var(--punk-red)', color: '#fff' }}>
             <div className="flex items-center justify-between gap-2">
               <span className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
                 <Icon name="dice" size={22} /> Resume Game
@@ -93,8 +89,8 @@ export function Home() {
 
         {/* hub grid */}
         <div className="grid grid-cols-2 gap-2.5">
-          {HUB.map((t) => (
-            <Link key={t.href} href={t.href} className="mf-card mf-card--interactive p-4">
+          {HUB.map((t, i) => (
+            <Link key={t.href} href={t.href} className={`mf-torn-card block ${i % 2 ? 'mf-torn-card--2' : 'mf-torn-card--3'} p-4`}>
               <span
                 className="inline-flex items-center justify-center"
                 style={{ width: 42, height: 42, clipPath: 'var(--clip-torn-2)', background: 'var(--punk-red)', color: '#fff' }}
@@ -109,7 +105,7 @@ export function Home() {
           ))}
         </div>
 
-        <Link href="/scenarios" className="mf-card mf-card--interactive flex items-center gap-3 p-3">
+        <Link href="/scenarios" className="mf-torn-card mf-torn-card--2 flex items-center gap-3 p-3">
           <span
             className="inline-flex items-center justify-center"
             style={{ width: 38, height: 38, clipPath: 'var(--clip-torn-1)', background: 'var(--primary)', color: 'var(--on-primary)' }}
