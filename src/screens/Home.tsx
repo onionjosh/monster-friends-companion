@@ -4,11 +4,21 @@ import { gameData } from '../data'
 import { Icon, type IconName } from '../components/Icon'
 import { TornButton, TornCallout } from '../components/Torn'
 
-const HUB: { href: string; icon: IconName; title: string; sub: string }[] = [
-  { href: '/monsters', icon: 'ghost', title: 'Monsters', sub: 'Every card' },
-  { href: '/parties', icon: 'roster', title: 'Parties', sub: 'Build & save' },
-  { href: '/play', icon: 'dice', title: 'Play', sub: 'Track a game' },
-  { href: '/rules', icon: 'book', title: 'Rules', sub: `v${gameData.rulesVersion}` },
+type BtnSpec = {
+  href: string
+  icon: IconName
+  label: string
+  variant: 'red' | 'cream' | 'gold'
+  cut: 1 | 2 | 3
+  tilt: 'sm' | 'rev' | 'md'
+}
+
+// Secondary actions — same torn-button style as the primary "Build a Party" CTA.
+const ACTIONS: BtnSpec[] = [
+  { href: '/monsters', icon: 'ghost', label: 'Monsters', variant: 'cream', cut: 2, tilt: 'rev' },
+  { href: '/play', icon: 'dice', label: 'Play', variant: 'red', cut: 3, tilt: 'sm' },
+  { href: '/rules', icon: 'book', label: 'Rules', variant: 'cream', cut: 1, tilt: 'rev' },
+  { href: '/scenarios', icon: 'trophy', label: 'Scenarios', variant: 'gold', cut: 2, tilt: 'md' },
 ]
 
 export function Home() {
@@ -39,74 +49,63 @@ export function Home() {
           <p className="mt-3 text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.5, color: 'rgba(242,236,221,.85)' }}>
             Plan an army, learn the rules, and track HP at the table. Free to play.
           </p>
-          <div className="mt-3 flex flex-wrap justify-center gap-3.5">
-            <TornButton variant="red" leftIcon="roster" cut={1} tilt="sm" onClick={() => navigate('/builder')}>
-              Build a Party
-            </TornButton>
-            <TornButton variant="cream" leftIcon="ghost" cut={2} tilt="rev" onClick={() => navigate('/monsters')}>
-              Monsters
-            </TornButton>
-          </div>
         </div>
 
-        {/* resume */}
+        {/* resume — matching torn button */}
         {game && (
-          <Link href="/play" className="mf-torn-card block" style={{ background: 'var(--punk-red)', color: '#fff', padding: 18 }}>
-            <div className="flex items-center justify-between gap-2">
-              <span className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
-                <Icon name="dice" size={22} /> Resume Game
+          <button
+            type="button"
+            onClick={() => navigate('/play')}
+            className="mf-torn mf-torn--red mf-torn--btn"
+            style={{
+              width: '100%',
+              clipPath: 'var(--clip-torn-2)',
+              transform: 'rotate(var(--tilt-rev))',
+              ['--_tilt' as string]: 'var(--tilt-rev)',
+              justifyContent: 'flex-start',
+              whiteSpace: 'normal',
+              gap: 12,
+              padding: '14px 18px',
+            }}
+          >
+            <Icon name="dice" size={22} />
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, lineHeight: 1.1 }}>
+              <span>Resume Game</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 400, fontSize: 11, textTransform: 'none', letterSpacing: 0, opacity: 0.9 }}>
+                Round {game.round} · {game.mine.name} vs {game.theirs.name}
               </span>
-              <Icon name="chevronRight" size={22} />
-            </div>
-            <div className="mt-0.5 text-left" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, opacity: 0.9 }}>
-              Round {game.round} · {game.mine.name} vs {game.theirs.name}
-            </div>
-          </Link>
+            </span>
+          </button>
         )}
 
-        {/* hub grid */}
-        <div className="grid grid-cols-2 gap-2.5">
-          {HUB.map((t, i) => (
-            <Link
-              key={t.href}
-              href={t.href}
-              className={`mf-torn-card block ${i % 2 ? 'mf-torn-card--2' : 'mf-torn-card--3'}`}
-              style={{ background: 'var(--surface-sunk)', padding: '20px 18px', minHeight: 120 }}
+        {/* primary action — full-width torn button */}
+        <TornButton
+          variant="red"
+          leftIcon="roster"
+          cut={1}
+          tilt="sm"
+          onClick={() => navigate('/builder')}
+          style={{ width: '100%', padding: '18px 16px' }}
+        >
+          Build a Party
+        </TornButton>
+
+        {/* secondary actions — same torn style */}
+        <div className="grid grid-cols-2 gap-3.5">
+          {ACTIONS.map((b) => (
+            <TornButton
+              key={b.href}
+              variant={b.variant}
+              leftIcon={b.icon}
+              cut={b.cut}
+              tilt={b.tilt}
+              onClick={() => navigate(b.href)}
+              style={{ width: '100%', padding: '18px 12px' }}
             >
-              <span
-                className="inline-flex items-center justify-center"
-                style={{ width: 48, height: 48, clipPath: 'var(--clip-torn-2)', background: 'var(--punk-red)', color: '#fff' }}
-              >
-                <Icon name={t.icon} size={26} />
-              </span>
-              <div className="mt-2.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
-                {t.title}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>{t.sub}</div>
-            </Link>
+              {b.label}
+            </TornButton>
           ))}
         </div>
-
-        <Link
-          href="/scenarios"
-          className="mf-torn-card mf-torn-card--2 flex items-center gap-3.5"
-          style={{ background: 'var(--surface-sunk)', padding: 18 }}
-        >
-          <span
-            className="inline-flex shrink-0 items-center justify-center"
-            style={{ width: 46, height: 46, clipPath: 'var(--clip-torn-1)', background: 'var(--primary)', color: 'var(--on-primary)' }}
-          >
-            <Icon name="trophy" size={26} />
-          </span>
-          <span>
-            <span className="block" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
-              Scenarios
-            </span>
-            <span className="block" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-              Game modes & win conditions
-            </span>
-          </span>
-        </Link>
 
         <TornCallout eyebrow={`Beta ${gameData.dataVersion}`} variant="gold" tilt="md" className="self-center">
           Out now &amp; free to play!
