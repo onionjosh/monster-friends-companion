@@ -137,7 +137,7 @@
 
 /* ---- DARK / ZINE (app default) ---- */
 [data-theme='dark'] {
-  --bg: var(--mf-ink-950);
+  --bg: var(--poster-black);
   --surface: #221c14;
   --surface-sunk: #2d261b;
   --border: #f4ead7;
