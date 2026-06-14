@@ -289,19 +289,19 @@ function AddMonsterSheet({
           placeholder="Search…"
           className="mf-input mb-3"
         />
-        <div>
-          {list.map((m, i) => {
+        <div className="grid gap-3">
+          {list.map((m) => {
             const count = countOf(m.id)
             const ranged = m.attacks.some((a) => a.type === 'ranged')
             return (
               <div
                 key={m.id}
-                className="flex items-center gap-3 py-2.5"
-                style={i < list.length - 1 ? { borderBottom: '1px solid var(--border-soft)' } : undefined}
+                className="flex items-stretch overflow-hidden"
+                style={{ clipPath: 'var(--clip-torn-row)', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
               >
                 <div
-                  className="relative shrink-0 overflow-hidden"
-                  style={{ width: 60, height: 60, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
+                  className="relative shrink-0 self-stretch"
+                  style={{ width: 64, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
                 >
                   {m.image ? (
                     <img
@@ -316,43 +316,45 @@ function AddMonsterSheet({
                     </span>
                   )}
                 </div>
-                <div className="min-w-0 flex-1">
-                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.2 }}>
-                    {m.name} <SizeBadge size={m.size} />
-                  </div>
-                  <div className="mt-1 flex items-center gap-2" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-                    <span>
-                      <b style={{ color: 'var(--text)' }}>{m.hp}</b> HP
-                    </span>
-                    <span>·</span>
-                    <span>
-                      <b style={{ color: 'var(--text)' }}>{m.act}</b> AcT
-                    </span>
-                    <span>·</span>
-                    <Icon name={ranged ? 'bow' : 'sword'} size={12} />
-                  </div>
-                  {count > 0 && (
-                    <div className="mt-0.5" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-text)' }}>
-                      {count} in party
+                <div className="flex min-w-0 flex-1 items-center gap-2.5 px-3 py-2.5">
+                  <div className="min-w-0 flex-1">
+                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-base)', color: 'var(--text)', lineHeight: 1.2 }}>
+                      {m.name} <SizeBadge size={m.size} />
                     </div>
-                  )}
-                </div>
-                <div className="flex shrink-0 flex-col items-end gap-1.5">
-                  <span
-                    className="inline-flex items-center gap-1"
-                    style={{
-                      clipPath: 'var(--clip-tag)',
-                      background: 'var(--primary)',
-                      color: 'var(--on-primary)',
-                      padding: '5px 11px',
-                      filter: 'drop-shadow(2px 2px 0 var(--shadow-ink))',
-                      transform: 'rotate(2deg)',
-                    }}
-                  >
-                    <b style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-base)' }}>{m.partyPoints}</b>
-                    <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em' }}>PP</span>
-                  </span>
-                  <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+                    <div className="mt-1 flex items-center gap-2" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+                      <span>
+                        <b style={{ color: 'var(--text)' }}>{m.hp}</b> HP
+                      </span>
+                      <span>·</span>
+                      <span>
+                        <b style={{ color: 'var(--text)' }}>{m.act}</b> AcT
+                      </span>
+                      <span>·</span>
+                      <Icon name={ranged ? 'bow' : 'sword'} size={12} />
+                    </div>
+                    {count > 0 && (
+                      <div className="mt-0.5" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-text)' }}>
+                        {count} in party
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex shrink-0 flex-col items-end gap-1.5">
+                    <span
+                      className="inline-flex items-center gap-1"
+                      style={{
+                        clipPath: 'var(--clip-tag)',
+                        background: 'var(--primary)',
+                        color: 'var(--on-primary)',
+                        padding: '5px 11px',
+                        filter: 'drop-shadow(2px 2px 0 var(--shadow-ink))',
+                        transform: 'rotate(2deg)',
+                      }}
+                    >
+                      <b style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-base)' }}>{m.partyPoints}</b>
+                      <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em' }}>PP</span>
+                    </span>
+                    <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+                  </div>
                 </div>
               </div>
             )
