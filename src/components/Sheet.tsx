@@ -7,12 +7,14 @@ export function Sheet({
   title,
   children,
   bg,
+  scrim,
 }: {
   open: boolean
   onClose: () => void
   title?: ReactNode
   children: ReactNode
   bg?: string
+  scrim?: string
 }) {
   useEffect(() => {
     if (!open) return
@@ -31,7 +33,7 @@ export function Sheet({
   if (!open) return null
   return (
     <div className="mf-sheet-backdrop no-print" role="dialog" aria-modal="true" onClick={onClose}>
-      <div className="mf-sheet-scrim" />
+      <div className="mf-sheet-scrim" style={scrim ? { background: scrim } : undefined} />
       <div className="mf-sheet" onClick={(e) => e.stopPropagation()} style={bg ? { background: bg } : undefined}>
         <div
           className="mx-auto mb-3 h-1.5 w-10 rounded-full sm:hidden"

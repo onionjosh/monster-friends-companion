@@ -255,7 +255,7 @@ function AddMonsterSheet({
   const [q, setQ] = useState('')
   const list = monsters.filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
   return (
-    <Sheet open={open} onClose={onClose} bg="var(--bg)">
+    <Sheet open={open} onClose={onClose} bg="var(--bg)" scrim="var(--bg)">
       <div
         className="sticky top-0 z-10 -mx-4 px-4 pb-2.5"
         style={{ borderBottom: '1px solid var(--border-soft)', background: 'var(--bg)' }}
