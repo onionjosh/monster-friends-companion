@@ -62,9 +62,6 @@ export function Home() {
             className="mx-auto block"
             style={{ width: '100%', maxWidth: 300 }}
           />
-          <p className="mt-3 text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.5, color: 'rgba(242,236,221,.85)' }}>
-            Plan an army, learn the rules, and track HP at the table. Free to play.
-          </p>
         </div>
 
         {/* actions — one per row, tall torn buttons; Build a Party & Monsters lead */}
