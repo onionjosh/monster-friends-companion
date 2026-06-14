@@ -7,6 +7,8 @@ import { Sheet } from '../components/Sheet'
 import { ShareSheet } from '../components/ShareSheet'
 import { SizeBadge } from '../components/StatBlock'
 import { Stepper } from '../components/Stepper'
+import { Icon } from '../components/Icon'
+import { TornButton } from '../components/Torn'
 
 export function PartyEditor() {
   const [, params] = useRoute('/parties/:id')
@@ -21,8 +23,10 @@ export function PartyEditor() {
   if (!party) {
     return (
       <div className="mx-auto max-w-lg p-4">
-        <p className="py-8 text-center opacity-70">This party doesn't exist (anymore).</p>
-        <Link href="/parties" className="block text-center font-medium text-amber-700 underline">
+        <p className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>
+          This party doesn't exist (anymore).
+        </p>
+        <Link href="/parties" className="block text-center font-semibold underline" style={{ color: 'var(--accent-text)' }}>
           ← My parties
         </Link>
       </div>
@@ -33,137 +37,154 @@ export function PartyEditor() {
   const over = check.totalPoints > party.budget
 
   return (
-    <div className="mx-auto max-w-lg p-4 pb-28">
-      <Link href="/parties" className="text-sm font-medium opacity-70">
-        ← My parties
-      </Link>
+    <div className="mx-auto max-w-lg p-4 pb-32">
+      <div className="grid gap-3">
+        <Link
+          href="/parties"
+          className="flex items-center gap-1"
+          style={{ color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)' }}
+        >
+          <Icon name="chevronLeft" size={18} /> MY PARTIES
+        </Link>
 
-      <div className="mt-2 mb-3 flex items-center gap-2">
         <input
           value={party.name}
           onChange={(e) => updateParty(party.id, { name: e.target.value })}
           aria-label="party name"
-          className="font-display w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 text-lg font-bold dark:border-zinc-100 dark:bg-zinc-900"
+          className="mf-input"
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', padding: '12px 14px' }}
         />
-      </div>
 
-      <div className="mb-3 flex items-center gap-2">
-        <span className="text-sm font-semibold opacity-70">Budget</span>
-        {[50, 75, 100].map((b) => (
-          <button
-            key={b}
-            type="button"
-            onClick={() => updateParty(party.id, { budget: b })}
-            className={`rounded-full border-2 px-3 py-1 text-sm font-bold ${
-              party.budget === b
-                ? 'border-zinc-900 bg-amber-300 dark:border-amber-300 dark:bg-amber-700'
-                : 'border-zinc-300 opacity-70 dark:border-zinc-700'
-            }`}
-          >
-            {b}
-          </button>
-        ))}
-        <BudgetInput
-          key={party.budget}
-          value={party.budget}
-          onCommit={(b) => updateParty(party.id, { budget: b })}
-        />
-      </div>
+        <div className="flex items-center gap-2.5">
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)' }}>
+            Budget
+          </span>
+          {[50, 75, 100].map((b, i) => (
+            <button
+              key={b}
+              type="button"
+              onClick={() => updateParty(party.id, { budget: b })}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 800,
+                fontSize: 'var(--text-base)',
+                cursor: 'pointer',
+                border: 0,
+                padding: '8px 16px',
+                clipPath: `var(--clip-torn-${(i % 3) + 1})`,
+                transform: `rotate(${i % 2 ? 1.5 : -1.5}deg)`,
+                background: party.budget === b ? 'var(--primary)' : 'var(--surface-sunk)',
+                color: party.budget === b ? 'var(--on-primary)' : 'var(--text-muted)',
+                filter: party.budget === b ? 'drop-shadow(2px 2px 0 var(--shadow-ink))' : 'none',
+              }}
+            >
+              {b}
+            </button>
+          ))}
+          <BudgetInput key={party.budget} value={party.budget} onCommit={(b) => updateParty(party.id, { budget: b })} />
+        </div>
 
-      <div className="grid gap-2">
         {party.entries.map((e) => {
           const m = monsterById.get(e.monsterId)
           return (
-            <div
-              key={e.monsterId}
-              className="flex items-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900"
-            >
+            <div key={e.monsterId} className="mf-card flex items-center gap-2.5 p-3">
               <div className="min-w-0 flex-1">
                 {m ? (
-                  <Link href={`/monsters/${m.id}`} className="font-display flex items-center gap-2 font-bold">
-                    <span className="truncate">{m.name}</span>
+                  <Link href={`/monsters/${m.id}`} className="flex items-center gap-2">
+                    <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
+                      {m.name}
+                    </span>
                     <SizeBadge size={m.size} />
                   </Link>
                 ) : (
-                  <span className="font-bold opacity-60">Unknown: {e.monsterId}</span>
+                  <span style={{ fontWeight: 700, color: 'var(--text-muted)' }}>Unknown: {e.monsterId}</span>
                 )}
-                <div className="text-xs opacity-70">{m ? `${m.partyPoints} PP each · ${m.partyPoints * e.count} PP total` : ''}</div>
+                <div className="mt-0.5" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+                  {m ? `${m.partyPoints} PP each · ${m.partyPoints * e.count} total` : ''}
+                </div>
               </div>
               <Stepper value={e.count} onChange={(n) => setEntryCount(party.id, e.monsterId, n)} />
             </div>
           )
         })}
         {party.entries.length === 0 && (
-          <p className="py-6 text-center text-sm opacity-70">No monsters yet — invite some friends to the party!</p>
+          <p className="py-6 text-center" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+            No monsters yet — invite some friends to the party!
+          </p>
         )}
+
         <button
           type="button"
           onClick={() => setAdding(true)}
-          className="rounded-xl border-2 border-dashed border-zinc-400 p-3 font-bold opacity-80"
+          className="flex w-full items-center justify-center gap-1.5 rounded-xl p-4"
+          style={{ border: '2px dashed var(--text-muted)', color: 'var(--text-muted)', fontFamily: 'var(--font-display)', fontWeight: 700, background: 'transparent' }}
         >
-          + Add a monster
+          <Icon name="plus" size={20} /> Add a monster
         </button>
-      </div>
 
-      {check.flags.length > 0 && (
-        <div className="mt-3 grid gap-1.5">
-          {check.flags.map((f, i) => (
-            <div
-              key={i}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
-                f.level === 'warn'
-                  ? 'bg-amber-200 text-amber-950 dark:bg-amber-900 dark:text-amber-100'
-                  : 'bg-zinc-200 dark:bg-zinc-800'
-              }`}
-            >
-              {f.level === 'warn' ? '⚠️ ' : 'ℹ️ '}
-              {f.message}
-            </div>
-          ))}
+        {check.flags.length > 0 && (
+          <div className="grid gap-1.5">
+            {check.flags.map((f, i) => (
+              <div
+                key={i}
+                className="rounded-lg px-3 py-1.5"
+                style={{
+                  fontSize: 'var(--text-sm)',
+                  fontWeight: 600,
+                  background: f.level === 'warn' ? 'var(--warning)' : 'var(--surface-sunk)',
+                  color: f.level === 'warn' ? '#fff' : 'var(--text)',
+                }}
+              >
+                {f.message}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-1 flex flex-wrap justify-center gap-3">
+          <TornButton variant="cream" size="sm" leftIcon="share" cut={1} tilt="sm" onClick={() => setSharing(true)}>
+            Share
+          </TornButton>
+          <TornButton variant="cream" size="sm" leftIcon="printer" cut={2} tilt="rev" onClick={() => navigate(`/parties/${party.id}/print`)}>
+            Print
+          </TornButton>
+          <TornButton
+            variant="red"
+            size="sm"
+            leftIcon="skull"
+            cut={3}
+            tilt="sm"
+            onClick={() => {
+              if (confirm(`Delete "${party.name}"? This can't be undone.`)) {
+                navigate('/parties')
+                deleteParty(party.id)
+              }
+            }}
+          >
+            Delete
+          </TornButton>
         </div>
-      )}
-
-      <div className="mt-4 flex gap-2">
-        <button
-          type="button"
-          onClick={() => setSharing(true)}
-          className="flex-1 rounded-xl border-2 border-zinc-900 bg-white py-2.5 font-bold dark:border-zinc-100 dark:bg-zinc-900"
-        >
-          Share
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate(`/parties/${party.id}/print`)}
-          className="flex-1 rounded-xl border-2 border-zinc-900 bg-white py-2.5 font-bold dark:border-zinc-100 dark:bg-zinc-900"
-        >
-          Print
-        </button>
       </div>
 
-      <button
-        type="button"
-        onClick={() => {
-          if (confirm(`Delete "${party.name}"? This can't be undone.`)) {
-            navigate('/parties')
-            deleteParty(party.id)
-          }
-        }}
-        className="mt-2 w-full rounded-xl border-2 border-red-300 py-2.5 text-sm font-bold text-red-600 dark:border-red-900 dark:text-red-400"
-      >
-        Delete party
-      </button>
-
-      {/* sticky points total */}
-      <div className="fixed right-0 bottom-14 left-0 z-30 mx-auto max-w-lg px-4">
+      {/* sticky torn total banner */}
+      <div className="no-print fixed right-0 bottom-16 left-0 z-30 mx-auto flex justify-center px-4" style={{ maxWidth: 'var(--content-max)' }}>
         <div
-          className={`rounded-xl border-2 px-4 py-2 text-center font-bold shadow-lg ${
-            over
-              ? 'border-amber-700 bg-amber-300 text-amber-950'
-              : 'border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900'
-          }`}
+          className="flex items-center gap-1.5"
+          style={{
+            clipPath: 'var(--clip-callout)',
+            padding: '14px 28px',
+            textAlign: 'center',
+            transform: 'rotate(-1deg)',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 800,
+            fontSize: 'var(--text-lg)',
+            background: over ? 'var(--punk-red)' : 'var(--primary)',
+            color: over ? '#fff' : 'var(--on-primary)',
+            filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))',
+          }}
         >
-          {check.totalPoints} / {party.budget} Party Points · {check.modelCount} monster{check.modelCount === 1 ? '' : 's'}
-          {over && ' · over budget!'}
+          {over && <Icon name="zap" size={18} />}
+          {check.totalPoints} / {party.budget} PP · {check.modelCount} monster{check.modelCount === 1 ? '' : 's'}
         </div>
       </div>
 
@@ -201,7 +222,8 @@ function BudgetInput({ value, onCommit }: { value: number; onCommit: (b: number)
         if (e.key === 'Enter') (e.target as HTMLInputElement).blur()
       }}
       aria-label="custom budget"
-      className="w-20 rounded-xl border-2 border-zinc-300 bg-white px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+      className="mf-input"
+      style={{ width: 72, padding: '8px 10px' }}
     />
   )
 }
@@ -229,15 +251,18 @@ function AddMonsterSheet({
   const list = monsters.filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
   return (
     <Sheet open={open} onClose={onClose}>
-      {/* sticky budget header — stays visible while you scroll and pick */}
-      <div className="sticky top-0 z-10 -mx-4 border-b border-zinc-200 bg-white px-4 pb-2.5 dark:border-zinc-800 dark:bg-zinc-900">
-        <h2 className="font-display mb-1.5 text-lg font-bold">Add monsters</h2>
+      <div
+        className="sticky top-0 z-10 -mx-4 px-4 pb-2.5"
+        style={{ borderBottom: '1px solid var(--border-soft)', background: 'var(--surface)' }}
+      >
+        <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
+          Add monsters
+        </h2>
         <div
-          className={`rounded-lg px-3 py-2 text-center font-bold ${
-            over ? 'bg-amber-300 text-amber-950' : 'bg-zinc-100 dark:bg-zinc-800'
-          }`}
+          className="rounded-lg px-3 py-2 text-center"
+          style={{ fontWeight: 800, background: over ? 'var(--warning)' : 'var(--surface-sunk)', color: over ? '#fff' : 'var(--text)' }}
         >
-          <span className="font-display text-lg">
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)' }}>
             {total} / {budget}
           </span>{' '}
           Party Points · {modelCount} monster{modelCount === 1 ? '' : 's'}
@@ -250,7 +275,7 @@ function AddMonsterSheet({
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search…"
-        className="my-2 w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900"
+        className="mf-input my-2.5"
       />
       <div className="grid gap-1.5">
         {list.map((m) => {
@@ -258,18 +283,17 @@ function AddMonsterSheet({
           return (
             <div
               key={m.id}
-              className={`flex items-center gap-2 rounded-xl border-2 px-3 py-2 ${
-                count > 0
-                  ? 'border-amber-500 bg-amber-50 dark:border-amber-500 dark:bg-amber-950/40'
-                  : 'border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900'
-              }`}
+              className="mf-card flex items-center gap-2 p-3"
+              style={count > 0 ? { borderColor: 'var(--primary)' } : undefined}
             >
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 font-bold">
-                  <span className="truncate">{m.name}</span>
+                <div className="flex items-center gap-2">
+                  <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
+                    {m.name}
+                  </span>
                   <SizeBadge size={m.size} />
                 </div>
-                <div className="text-xs opacity-70">
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
                   {m.partyPoints} PP each{count > 0 ? ` · ${m.partyPoints * count} in party` : ''}
                 </div>
               </div>
@@ -277,7 +301,11 @@ function AddMonsterSheet({
             </div>
           )
         })}
-        {list.length === 0 && <p className="py-6 text-center text-sm opacity-70">No monsters match.</p>}
+        {list.length === 0 && (
+          <p className="py-6 text-center" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+            No monsters match.
+          </p>
+        )}
       </div>
     </Sheet>
   )

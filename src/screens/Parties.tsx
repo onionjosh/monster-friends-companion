@@ -4,6 +4,7 @@ import { usePartiesStore } from '../stores/parties'
 import { monsterById, gameData } from '../data'
 import { checkParty } from '../lib/validation'
 import { ShareSheet } from '../components/ShareSheet'
+import { Icon } from '../components/Icon'
 import type { Party } from '../lib/types'
 
 export function Parties() {
@@ -18,12 +19,13 @@ export function Parties() {
   return (
     <div className="mx-auto max-w-lg p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h1 className="font-display text-2xl font-black">My Parties</h1>
+        <h1 style={{ fontSize: 'var(--text-2xl)' }}>My Parties</h1>
         <Link
           href="/builder"
-          className="rounded-xl border-2 border-zinc-900 bg-amber-300 px-3 py-1.5 font-bold dark:border-amber-300 dark:bg-amber-700"
+          className="mf-card mf-card--interactive flex items-center gap-1 px-3 py-1.5 font-bold"
+          style={{ background: 'var(--primary)', color: 'var(--on-primary)', borderColor: 'var(--border)' }}
         >
-          + New
+          <Icon name="plus" size={18} /> New
         </Link>
       </div>
 
@@ -31,25 +33,32 @@ export function Parties() {
         {list.map((p) => {
           const check = checkParty(p.entries, p.budget, monsterById, p.dataVersion, gameData.dataVersion)
           const stale = p.dataVersion !== gameData.dataVersion
+          const over = check.totalPoints > p.budget
           return (
-            <div key={p.id} className="rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900">
+            <div key={p.id} className="mf-card p-3">
               <Link href={`/parties/${p.id}`} className="block">
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="font-display truncate text-lg font-bold">{p.name}</span>
-                  <span className={`font-bold whitespace-nowrap ${check.totalPoints > p.budget ? 'text-amber-700 dark:text-amber-400' : ''}`}>
+                  <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
+                    {p.name}
+                  </span>
+                  <span
+                    className="mf-nums whitespace-nowrap font-bold"
+                    style={{ color: over ? 'var(--warning-text)' : 'var(--accent-text)' }}
+                  >
                     {check.totalPoints}/{p.budget} PP
                   </span>
                 </div>
-                <div className="text-xs opacity-70">
+                <div className="mt-0.5" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
                   {check.modelCount} monster{check.modelCount === 1 ? '' : 's'}
                   {stale && ` · built with cards v${p.dataVersion}`}
                 </div>
               </Link>
-              <div className="mt-2 flex flex-wrap gap-1.5 text-sm">
-                <ActionBtn onClick={() => navigate(`/parties/${p.id}`)}>Edit</ActionBtn>
-                <ActionBtn onClick={() => setSharing(p)}>Share</ActionBtn>
-                <ActionBtn onClick={() => navigate(`/parties/${p.id}/print`)}>Print</ActionBtn>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <ActionBtn icon="roster" onClick={() => navigate(`/parties/${p.id}`)}>Edit</ActionBtn>
+                <ActionBtn icon="share" onClick={() => setSharing(p)}>Share</ActionBtn>
+                <ActionBtn icon="printer" onClick={() => navigate(`/parties/${p.id}/print`)}>Print</ActionBtn>
                 <ActionBtn
+                  icon="plus"
                   onClick={() => {
                     const copy = duplicateParty(p.id)
                     if (copy) navigate(`/parties/${copy.id}`)
@@ -58,6 +67,8 @@ export function Parties() {
                   Duplicate
                 </ActionBtn>
                 <ActionBtn
+                  icon="skull"
+                  danger
                   onClick={() => {
                     if (confirm(`Delete "${p.name}"? This can't be undone.`)) deleteParty(p.id)
                   }}
@@ -69,9 +80,9 @@ export function Parties() {
           )
         })}
         {list.length === 0 && (
-          <p className="py-10 text-center opacity-70">
+          <p className="py-10 text-center" style={{ color: 'var(--text-muted)' }}>
             No parties yet.{' '}
-            <Link href="/builder" className="font-medium text-amber-700 underline dark:text-amber-400">
+            <Link href="/builder" className="font-semibold underline" style={{ color: 'var(--accent-text)' }}>
               Build your first!
             </Link>
           </p>
@@ -83,13 +94,29 @@ export function Parties() {
   )
 }
 
-function ActionBtn({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+function ActionBtn({
+  children,
+  icon,
+  danger,
+  onClick,
+}: {
+  children: React.ReactNode
+  icon: 'roster' | 'share' | 'printer' | 'plus' | 'skull'
+  danger?: boolean
+  onClick: () => void
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="rounded-lg border border-zinc-400 px-2.5 py-1 font-semibold active:bg-amber-200 dark:border-zinc-600 dark:active:bg-amber-800"
+      className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-semibold"
+      style={{
+        fontSize: 'var(--text-xs)',
+        border: '1px solid var(--border-soft)',
+        color: danger ? 'var(--warning-text)' : 'var(--text)',
+      }}
     >
+      <Icon name={icon} size={13} />
       {children}
     </button>
   )

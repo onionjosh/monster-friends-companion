@@ -9,6 +9,8 @@ import { decodeParty, DecodeError } from '../lib/codec'
 import { Sheet } from '../components/Sheet'
 import { Stepper } from '../components/Stepper'
 import { StatRow, DefenseLine, AttackCard, AbilityCard, KeywordChips } from '../components/StatBlock'
+import { Icon } from '../components/Icon'
+import { TornButton } from '../components/Torn'
 
 export function Play() {
   const game = usePlayStore((s) => s.game)
@@ -27,7 +29,6 @@ function Setup() {
   const [oppCode, setOppCode] = useState('')
   const [scenarioId, setScenarioId] = useState<string | null>(scenarios[0]?.id ?? null)
 
-  // derive both outcomes from the input — no setState during render, no stale errors
   const opp = useMemo<{ shared?: ReturnType<typeof decodeParty>; error?: string }>(() => {
     if (!oppCode.trim()) return {}
     try {
@@ -53,27 +54,36 @@ function Setup() {
     startGame({ name: mine.name, entries: mine.entries }, opponent, scenarioId)
   }
 
-  const pick = (active: boolean) =>
-    `w-full rounded-xl border-2 px-3 py-2 text-left font-semibold ${
-      active ? 'border-zinc-900 bg-amber-300 dark:border-amber-300 dark:bg-amber-700' : 'border-zinc-300 dark:border-zinc-700'
-    }`
+  const pick = (active: boolean) => `mf-card w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
 
   return (
     <div className="mx-auto max-w-lg p-4">
-      <h1 className="font-display mb-1 text-2xl font-black">Game Night</h1>
-      <p className="mb-4 text-sm opacity-70">Track HP, Action Tokens, Energy and conditions at the table.</p>
+      <h1 className="mb-1" style={{ fontSize: 'var(--text-2xl)' }}>
+        Game Night
+      </h1>
+      <p className="mb-4" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)' }}>
+        Track HP, Action Tokens, Energy and conditions at the table.
+      </p>
 
-      <h2 className="font-display mb-1.5 font-bold tracking-wide uppercase opacity-70">Your party</h2>
+      <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-base)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+        Your party
+      </h2>
       <div className="mb-4 grid gap-1.5">
         {list.map((p) => (
-          <button key={p.id} type="button" className={pick(mineId === p.id)} onClick={() => setMineId(p.id)}>
+          <button
+            key={p.id}
+            type="button"
+            className={pick(mineId === p.id)}
+            style={mineId === p.id ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
+            onClick={() => setMineId(p.id)}
+          >
             {p.name}
           </button>
         ))}
         {list.length === 0 && (
-          <p className="text-sm opacity-70">
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
             No saved parties yet —{' '}
-            <Link href="/builder" className="font-medium text-amber-700 underline dark:text-amber-400">
+            <Link href="/builder" className="font-semibold underline" style={{ color: 'var(--accent-text)' }}>
               build one first
             </Link>
             .
@@ -81,13 +91,16 @@ function Setup() {
         )}
       </div>
 
-      <h2 className="font-display mb-1.5 font-bold tracking-wide uppercase opacity-70">Opponent's party</h2>
+      <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-base)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+        Opponent's party
+      </h2>
       <div className="mb-2 grid gap-1.5">
         {list.map((p) => (
           <button
             key={p.id}
             type="button"
             className={pick(theirsId === p.id && !oppFromCode)}
+            style={theirsId === p.id && !oppFromCode ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
             onClick={() => {
               setTheirsId(p.id)
               setOppCode('')
@@ -104,33 +117,44 @@ function Setup() {
           if (e.target.value.trim()) setTheirsId(null)
         }}
         placeholder="…or paste their party code / share link"
-        className="mb-1 w-full rounded-xl border-2 border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+        className="mf-input mb-1"
       />
-      {opp.error && <p className="mb-2 text-sm text-amber-700 dark:text-amber-400">{opp.error}</p>}
+      {opp.error && (
+        <p className="mb-2" style={{ fontSize: 'var(--text-sm)', color: 'var(--warning-text)' }}>
+          {opp.error}
+        </p>
+      )}
       {oppFromCode && (
-        <p className="mb-2 text-sm font-medium">
+        <p className="mb-2 font-medium" style={{ fontSize: 'var(--text-sm)' }}>
           ✓ {oppFromCode.n || 'Opponent'} — {oppFromCode.e.reduce((n, [, c]) => n + c, 0)} monsters
         </p>
       )}
 
-      <h2 className="font-display mt-3 mb-1.5 font-bold tracking-wide uppercase opacity-70">Scenario</h2>
+      <h2 className="mt-3 mb-1.5" style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-base)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
+        Scenario
+      </h2>
       <div className="mb-5 grid gap-1.5">
         {scenarios.map((s) => (
-          <button key={s.id} type="button" className={pick(scenarioId === s.id)} onClick={() => setScenarioId(s.id)}>
+          <button
+            key={s.id}
+            type="button"
+            className={pick(scenarioId === s.id)}
+            style={scenarioId === s.id ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 1px var(--primary) inset' } : undefined}
+            onClick={() => setScenarioId(s.id)}
+          >
             {s.name}
-            <span className="block text-xs font-normal opacity-70">{s.winCondition}</span>
+            <span className="block" style={{ fontWeight: 400, fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+              {s.winCondition}
+            </span>
           </button>
         ))}
       </div>
 
-      <button
-        type="button"
-        disabled={!canStart}
-        onClick={start}
-        className="font-display w-full rounded-2xl border-2 border-zinc-900 bg-amber-300 py-3 text-lg font-black shadow-[3px_3px_0_0_rgba(0,0,0,1)] disabled:opacity-40 dark:border-amber-300 dark:bg-amber-600"
-      >
-        Start the Battle!
-      </button>
+      <div className="flex justify-center">
+        <TornButton variant="gold" cut={1} tilt="sm" leftIcon="dice" disabled={!canStart} onClick={start} style={!canStart ? { opacity: 0.4 } : undefined}>
+          Start the Battle!
+        </TornButton>
+      </div>
     </div>
   )
 }
@@ -152,28 +176,34 @@ function Tracker() {
 
   return (
     <div className="mx-auto max-w-lg p-4 pb-24">
-      <div className="mb-2 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between gap-2">
         <div>
-          <div className="font-display text-xl font-black">Round {game.round}</div>
-          {scenario && <div className="text-xs opacity-70">{scenario.name}: {scenario.winCondition}</div>}
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 800 }}>Round {game.round}</div>
+          {scenario && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+              {scenario.name}: {scenario.winCondition}
+            </div>
+          )}
         </div>
-        <div className="flex gap-1.5">
-          <button
-            type="button"
+        <div className="flex items-center gap-1.5">
+          <TornButton
+            variant="gold"
+            size="sm"
+            cut={1}
+            tilt="sm"
             onClick={() => {
-              if (confirm('Start the next Round? All monsters refill Action Tokens and both players refill to 10 Energy.'))
-                advanceRound()
+              if (confirm('Start the next Round? All monsters refill Action Tokens and both players refill to 10 Energy.')) advanceRound()
             }}
-            className="rounded-xl border-2 border-zinc-900 bg-amber-300 px-3 py-1.5 text-sm font-bold dark:border-amber-300 dark:bg-amber-700"
           >
-            Next Round ↻
-          </button>
+            Next Round
+          </TornButton>
           <button
             type="button"
             onClick={() => {
               if (confirm('End this game? The tracker state will be cleared.')) endGame()
             }}
-            className="rounded-xl border border-zinc-400 px-2.5 py-1.5 text-sm font-semibold opacity-80 dark:border-zinc-600"
+            className="rounded-xl px-2.5 py-1.5 font-semibold"
+            style={{ fontSize: 'var(--text-sm)', border: '1px solid var(--border-soft)', color: 'var(--text-muted)' }}
           >
             End
           </button>
@@ -181,21 +211,23 @@ function Tracker() {
       </div>
 
       {winner && (
-        <div className="mb-3 rounded-xl border-2 border-zinc-900 bg-amber-300 p-3 text-center font-display text-lg font-black dark:border-amber-300 dark:bg-amber-600">
-          🏆 {winner} wins — the other party has no monsters left!
+        <div
+          className="mb-3 flex items-center justify-center gap-2 rounded-xl p-3 text-center"
+          style={{ background: 'var(--primary)', color: 'var(--on-primary)', fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)', border: '2px solid var(--border)' }}
+        >
+          <Icon name="trophy" size={22} /> {winner} wins!
         </div>
       )}
 
       {/* side switcher */}
-      <div className="mb-2 grid grid-cols-2 overflow-hidden rounded-xl border-2 border-zinc-900 dark:border-zinc-100">
+      <div className="mf-card mb-2 grid grid-cols-2 overflow-hidden p-0">
         {(['mine', 'theirs'] as const).map((s) => (
           <button
             key={s}
             type="button"
             onClick={() => setSide(s)}
-            className={`truncate px-2 py-2 font-bold ${
-              side === s ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900' : 'bg-white dark:bg-zinc-900'
-            }`}
+            className="truncate px-2 py-2 font-bold"
+            style={side === s ? { background: 'var(--text)', color: 'var(--text-inverse)' } : { background: 'transparent', color: 'var(--text)' }}
           >
             {game[s].name}
           </button>
@@ -203,21 +235,15 @@ function Tracker() {
       </div>
 
       {/* energy + party rules */}
-      <div className="mb-3 flex items-center justify-between rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900">
-        <Stepper
-          big
-          label="⚡ Energy"
-          value={cur.energy}
-          min={0}
-          max={MAX_ENERGY}
-          onChange={(v) => setEnergy(side, v)}
-        />
+      <div className="mf-card mb-3 flex items-center justify-between p-3">
+        <Stepper big label="⚡ Energy" value={cur.energy} min={0} max={MAX_ENERGY} onChange={(v) => setEnergy(side, v)} />
         <button
           type="button"
           onClick={() => setRulesOpen(true)}
-          className="rounded-lg border border-zinc-400 px-2.5 py-1.5 text-sm font-semibold dark:border-zinc-600"
+          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold"
+          style={{ fontSize: 'var(--text-sm)', border: '1px solid var(--border-soft)' }}
         >
-          📚 Party rules
+          <Icon name="book" size={16} /> Party rules
         </button>
       </div>
 
@@ -241,25 +267,28 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
   const m = monsterById.get(unit.monsterId)
 
   return (
-    <div
-      className={`rounded-xl border-2 p-3 ${
-        unit.dead
-          ? 'border-zinc-300 bg-zinc-100 opacity-60 dark:border-zinc-700 dark:bg-zinc-900'
-          : 'border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900'
-      }`}
-    >
+    <div className="mf-card p-3" style={unit.dead ? { opacity: 0.55 } : undefined}>
       <div className="flex items-center justify-between gap-2">
-        <button type="button" onClick={onShowCard} className="font-display truncate text-left font-bold underline decoration-dotted">
+        <button
+          type="button"
+          onClick={onShowCard}
+          className="truncate text-left"
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', textDecoration: 'underline', textDecorationStyle: 'dotted' }}
+        >
           {unit.label}
         </button>
         <button
           type="button"
           onClick={() => toggleDead(side, unit.uid)}
-          className={`rounded-lg border px-2 py-1 text-sm font-bold ${
-            unit.dead ? 'border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900' : 'border-zinc-400 dark:border-zinc-600'
-          }`}
+          className="flex items-center gap-1 rounded-lg px-2 py-1 font-bold"
+          style={
+            unit.dead
+              ? { background: 'var(--punk-red)', color: '#fff', border: '1px solid var(--border)', fontSize: 'var(--text-sm)' }
+              : { border: '1px solid var(--border-soft)', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }
+          }
         >
-          {unit.dead ? 'KO’d 💀' : '💀'}
+          <Icon name="skull" size={16} />
+          {unit.dead ? "KO'd" : ''}
         </button>
       </div>
 
@@ -270,24 +299,18 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
             <Stepper label="AcT" value={unit.act} min={0} onChange={(v) => adjustAct(side, unit.uid, v - unit.act)} />
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">
-            {conditions.map((c) => {
-              const on = unit.conditions.includes(c.id)
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  title={c.short}
-                  onClick={() => toggleCondition(side, unit.uid, c.id)}
-                  className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${
-                    on
-                      ? 'border-zinc-900 bg-amber-300 dark:border-amber-300 dark:bg-amber-700'
-                      : 'border-zinc-300 opacity-60 dark:border-zinc-700'
-                  }`}
-                >
-                  {c.name}
-                </button>
-              )
-            })}
+            {conditions.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                title={c.short}
+                onClick={() => toggleCondition(side, unit.uid, c.id)}
+                className="mf-chip mf-chip--condition"
+                data-active={unit.conditions.includes(c.id)}
+              >
+                {c.name}
+              </button>
+            ))}
           </div>
         </>
       )}
@@ -327,12 +350,18 @@ function PartyRulesSheet({ open, onClose, side }: { open: boolean; onClose: () =
   const actives = ms.flatMap((m) => m.abilities.filter((a) => !a.reaction).map((a) => ({ a, owner: m.name })))
   const kwIds = [...new Set(ms.flatMap((m) => [...m.keywords, ...m.attacks.flatMap((at) => at.tags.map((t) => t.tag))]))]
 
+  const head = (t: string) => (
+    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
+      {t}
+    </h3>
+  )
+
   return (
     <Sheet open={open} onClose={onClose} title={`${game[side].name} — all rules`}>
       <div className="grid gap-2.5">
         {reactions.length > 0 && (
           <>
-            <h3 className="font-display font-bold tracking-wide uppercase opacity-70">Usable out of turn</h3>
+            {head('Usable out of turn')}
             {reactions.map(({ a, owner }) => (
               <AbilityCard key={`${owner}-${a.id}`} ability={a} owner={owner} />
             ))}
@@ -340,7 +369,7 @@ function PartyRulesSheet({ open, onClose, side }: { open: boolean; onClose: () =
         )}
         {actives.length > 0 && (
           <>
-            <h3 className="font-display font-bold tracking-wide uppercase opacity-70">On their activation</h3>
+            {head('On their activation')}
             {actives.map(({ a, owner }) => (
               <AbilityCard key={`${owner}-${a.id}`} ability={a} owner={owner} />
             ))}
@@ -348,17 +377,16 @@ function PartyRulesSheet({ open, onClose, side }: { open: boolean; onClose: () =
         )}
         {kwIds.length > 0 && (
           <>
-            <h3 className="font-display font-bold tracking-wide uppercase opacity-70">Keywords in this party</h3>
+            {head('Keywords in this party')}
             <KeywordChips ids={kwIds} />
           </>
         )}
-        <h3 className="font-display font-bold tracking-wide uppercase opacity-70">Generic abilities (anyone)</h3>
+        {head('Generic abilities (anyone)')}
         {genericAbilities.map((a) => (
           <AbilityCard key={a.id} ability={a} />
         ))}
-        <div className="text-xs opacity-70">
-          <b>Conditions:</b>{' '}
-          {conditions.map((c) => `${c.name} — ${conditionById.get(c.id)?.short}`).join(' · ')}
+        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+          <b>Conditions:</b> {conditions.map((c) => `${c.name} — ${conditionById.get(c.id)?.short}`).join(' · ')}
         </div>
       </div>
     </Sheet>

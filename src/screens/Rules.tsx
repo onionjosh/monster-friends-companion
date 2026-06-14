@@ -3,6 +3,7 @@ import { Link, useRoute } from 'wouter'
 import { ruleSections, ruleSectionById, keywords, monsters, genericAbilities } from '../data'
 import { RichText } from '../lib/markup'
 import { useUiStore } from '../stores/ui'
+import { Icon } from '../components/Icon'
 
 interface SearchHit {
   kind: 'rule' | 'keyword' | 'monster' | 'generic'
@@ -56,66 +57,64 @@ export function Rules() {
 
   return (
     <div className="mx-auto max-w-lg p-4">
-      <h1 className="font-display mb-3 text-2xl font-black">Rules</h1>
+      <h1 className="mb-3" style={{ fontSize: 'var(--text-2xl)' }}>
+        Rules
+      </h1>
 
-      <input
-        type="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search rules, keywords, abilities…"
-        className="mb-3 w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900"
-      />
+      <div className="relative mb-3">
+        <span className="absolute" style={{ left: 13, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
+          <Icon name="search" size={19} />
+        </span>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search rules, keywords, abilities…"
+          className="mf-input"
+          style={{ paddingLeft: 40 }}
+        />
+      </div>
 
       {query.trim().length >= 2 ? (
         <div className="grid gap-2">
           {hits.map((h, i) =>
             h.keywordId ? (
-              <button
-                key={i}
-                type="button"
-                onClick={() => openKeyword(h.keywordId!)}
-                className="rounded-xl border-2 border-zinc-900 bg-white p-3 text-left dark:border-zinc-100 dark:bg-zinc-900"
-              >
+              <button key={i} type="button" onClick={() => openKeyword(h.keywordId!)} className="mf-card p-3 text-left">
                 <div className="font-bold">{h.title}</div>
-                <div className="text-sm opacity-70">{h.snippet}</div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{h.snippet}</div>
               </button>
             ) : (
-              <Link
-                key={i}
-                href={h.href!}
-                className="rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900"
-              >
+              <Link key={i} href={h.href!} className="mf-card p-3">
                 <div className="font-bold">{h.title}</div>
-                <div className="text-sm opacity-70">{h.snippet}</div>
+                <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{h.snippet}</div>
               </Link>
             ),
           )}
-          {hits.length === 0 && <p className="py-6 text-center opacity-70">Nothing found for "{query}".</p>}
+          {hits.length === 0 && (
+            <p className="py-6 text-center" style={{ color: 'var(--text-muted)' }}>
+              Nothing found for "{query}".
+            </p>
+          )}
         </div>
       ) : (
         <>
           <div className="grid gap-1.5">
             {ruleSections.map((r, i) => (
-              <Link
-                key={r.id}
-                href={`/rules/${r.id}`}
-                className="flex items-center gap-3 rounded-xl border-2 border-zinc-900 bg-white px-3 py-2.5 font-semibold dark:border-zinc-100 dark:bg-zinc-900"
-              >
-                <span className="font-display w-6 text-right font-black opacity-40">{i + 1}</span>
+              <Link key={r.id} href={`/rules/${r.id}`} className="mf-card flex items-center gap-3 px-3 py-2.5 font-semibold">
+                <span className="w-6 text-right font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-muted)', opacity: 0.5 }}>
+                  {i + 1}
+                </span>
                 {r.title}
               </Link>
             ))}
           </div>
 
-          <h2 className="font-display mt-6 mb-2 font-bold tracking-wide uppercase opacity-70">Glossary</h2>
-          <div className="flex flex-wrap gap-1.5">
+          <h2 className="mt-6 mb-2" style={{ fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', fontSize: 'var(--text-base)' }}>
+            Glossary
+          </h2>
+          <div className="flex flex-wrap gap-2">
             {glossary.map((k) => (
-              <button
-                key={k.id}
-                type="button"
-                onClick={() => openKeyword(k.id)}
-                className="rounded-full border-2 border-zinc-900 bg-white px-2.5 py-1 text-sm font-semibold dark:border-zinc-100 dark:bg-zinc-900"
-              >
+              <button key={k.id} type="button" onClick={() => openKeyword(k.id)} className="mf-chip mf-chip--keyword">
                 {k.name}
               </button>
             ))}
@@ -133,8 +132,10 @@ export function RuleSection() {
   if (!section) {
     return (
       <div className="mx-auto max-w-lg p-4">
-        <p className="py-8 text-center opacity-70">Section not found.</p>
-        <Link href="/rules" className="block text-center font-medium text-amber-700 underline">
+        <p className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>
+          Section not found.
+        </p>
+        <Link href="/rules" className="block text-center font-semibold underline" style={{ color: 'var(--accent-text)' }}>
           ← Rules
         </Link>
       </div>
@@ -147,21 +148,23 @@ export function RuleSection() {
 
   return (
     <div className="mx-auto max-w-lg p-4">
-      <Link href="/rules" className="text-sm font-medium opacity-70">
-        ← Rules
+      <Link href="/rules" className="flex items-center gap-1" style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 'var(--text-sm)', fontWeight: 700 }}>
+        <Icon name="chevronLeft" size={18} /> RULES
       </Link>
-      <h1 className="font-display mt-2 mb-3 text-2xl font-black">{section.title}</h1>
+      <h1 className="mt-2 mb-3" style={{ fontSize: 'var(--text-2xl)', color: 'var(--punk-red)' }}>
+        {section.title}
+      </h1>
       <RichText text={section.body} />
-      <div className="mt-6 flex justify-between gap-2 text-sm font-semibold">
+      <div className="mt-6 flex justify-between gap-2" style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>
         {prev ? (
-          <Link href={`/rules/${prev.id}`} className="text-amber-700 underline dark:text-amber-400">
+          <Link href={`/rules/${prev.id}`} className="underline" style={{ color: 'var(--accent-text)' }}>
             ← {prev.title}
           </Link>
         ) : (
           <span />
         )}
         {next && (
-          <Link href={`/rules/${next.id}`} className="text-right text-amber-700 underline dark:text-amber-400">
+          <Link href={`/rules/${next.id}`} className="text-right underline" style={{ color: 'var(--accent-text)' }}>
             {next.title} →
           </Link>
         )}

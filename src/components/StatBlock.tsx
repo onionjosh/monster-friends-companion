@@ -1,15 +1,15 @@
 import type { Monster, Attack, Ability } from '../lib/schemas'
-import { SIZE_LABELS } from '../data'
+import { SIZE_LABELS, keywordById } from '../data'
 import { formatBonus, formatAbilityCost, formatMovement } from '../lib/format'
 import { RichText } from '../lib/markup'
 import { useUiStore } from '../stores/ui'
-import { keywordById } from '../data'
+import { Icon } from './Icon'
 
 export function StatPill({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="flex flex-col items-center rounded-xl border-2 border-zinc-900 bg-white px-2 py-1.5 dark:border-zinc-100 dark:bg-zinc-900">
-      <span className="text-[10px] font-bold tracking-wider uppercase opacity-70">{label}</span>
-      <span className="font-display text-lg leading-tight font-bold">{value}</span>
+    <div className="mf-statpill">
+      <span className="mf-statpill__label">{label}</span>
+      <span className="mf-statpill__value">{value}</span>
     </div>
   )
 }
@@ -28,51 +28,14 @@ export function StatRow({ monster }: { monster: Monster }) {
 export function DefenseLine({ monster }: { monster: Monster }) {
   const d = monster.defense
   return (
-    <div className="flex items-center gap-3 rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900">
-      <span className="text-xl">🛡</span>
+    <div className="mf-statpill mf-statpill--row">
+      <Icon name="shield" size={22} style={{ color: 'var(--info-text)' }} />
       <div>
-        <div className="text-[10px] font-bold tracking-wider uppercase opacity-70">Defense Dice</div>
-        <div className="font-display font-bold">
+        <div className="mf-statpill__label">Defense</div>
+        <div className="mf-statpill__value">
           {d.die} · Bonus {formatBonus(d.bonus)} · Crit {formatBonus(d.critBonus)}
         </div>
       </div>
-    </div>
-  )
-}
-
-export function AttackCard({ attack }: { attack: Attack }) {
-  return (
-    <div className="rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900">
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="font-display font-bold">
-          {attack.type === 'ranged' ? '🏹' : '⚔️'} {attack.name}
-        </span>
-        <span className="text-xs font-semibold uppercase opacity-70">
-          {attack.type === 'ranged' ? `Ranged ${attack.range ?? '?'}"` : 'Melee'}
-        </span>
-      </div>
-      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-sm">
-        <span>
-          <b>{attack.swings}</b> swing{attack.swings === 1 ? '' : 's'}
-        </span>
-        <span>
-          Attack Dice <b>{attack.die}</b>
-        </span>
-        <span>
-          Bonus <b>{formatBonus(attack.bonus)}</b>
-        </span>
-        <span>
-          Crit <b>{formatBonus(attack.critBonus)}</b>
-        </span>
-      </div>
-      {attack.tags.length > 0 && (
-        <div className="mt-1.5 flex flex-wrap gap-1.5">
-          {attack.tags.map((t) => (
-            <AttackTagChip key={t.tag} tag={t.tag} value={t.value} />
-          ))}
-        </div>
-      )}
-      {attack.notes && <p className="mt-1 text-sm opacity-80">{attack.notes}</p>}
     </div>
   )
 }
@@ -82,34 +45,96 @@ function AttackTagChip({ tag, value }: { tag: string; value?: number }) {
   const kw = keywordById.get(tag)
   const label = `${kw?.name ?? tag}${value !== undefined ? ` (${value}")` : ''}`
   return (
-    <button
-      type="button"
-      onClick={() => kw && openKeyword(tag)}
-      className="rounded-full border border-amber-600 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-400"
-    >
+    <button type="button" onClick={() => kw && openKeyword(tag)} className="mf-chip mf-chip--keyword">
       {label}
     </button>
   )
 }
 
-export function AbilityCard({ ability, owner }: { ability: Ability; owner?: string }) {
+export function AttackCard({ attack }: { attack: Attack }) {
   return (
-    <div className="rounded-xl border-2 border-zinc-900 bg-white p-3 dark:border-zinc-100 dark:bg-zinc-900">
-      <div className="flex items-baseline justify-between gap-2">
-        <span className="font-display font-bold">★ {ability.name}</span>
-        <span className="shrink-0 rounded-full bg-zinc-900 px-2 py-0.5 text-xs font-bold text-white dark:bg-zinc-100 dark:text-zinc-900">
-          {formatAbilityCost(ability.cost)}
+    <div className="mf-card p-3">
+      <div className="flex items-center justify-between gap-2">
+        <span
+          className="flex items-center gap-2"
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}
+        >
+          <Icon name={attack.type === 'ranged' ? 'bow' : 'sword'} size={20} style={{ color: 'var(--punk-red)' }} />
+          {attack.name}
+        </span>
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 10,
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: 'var(--text-muted)',
+          }}
+        >
+          {attack.type === 'ranged' ? `Ranged ${attack.range ?? '?'}"` : 'Melee'}
         </span>
       </div>
-      {ability.reaction && (
-        <div className="mt-1 text-xs font-semibold tracking-wide text-amber-700 uppercase dark:text-amber-400">
-          Usable outside this monster's activation
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1" style={{ fontSize: 'var(--text-sm)' }}>
+        <span>
+          {attack.swings} swing{attack.swings === 1 ? '' : 's'}
+        </span>
+        <span>
+          Dice <b>{attack.die}</b>
+        </span>
+        <span>
+          Bonus <b>{formatBonus(attack.bonus)}</b>
+        </span>
+        <span>
+          Crit <b>{formatBonus(attack.critBonus)}</b>
+        </span>
+      </div>
+      {attack.tags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {attack.tags.map((t) => (
+            <AttackTagChip key={t.tag} tag={t.tag} value={t.value} />
+          ))}
         </div>
       )}
-      <div className="mt-1 text-sm">
+    </div>
+  )
+}
+
+export function AbilityCard({ ability, owner }: { ability: Ability; owner?: string }) {
+  return (
+    <div className="mf-card p-3">
+      <div className="flex items-center justify-between gap-2">
+        <span
+          className="flex items-center gap-2"
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}
+        >
+          <Icon name="star" size={18} style={{ color: 'var(--primary)', fill: 'var(--primary)' }} />
+          {ability.name}
+        </span>
+        <span className="mf-badge mf-badge--solid shrink-0">{formatAbilityCost(ability.cost)}</span>
+      </div>
+      {ability.reaction && (
+        <div
+          className="mt-1.5"
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 10,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            color: 'var(--punk-red)',
+          }}
+        >
+          Usable out of turn
+        </div>
+      )}
+      <div className="mt-1.5" style={{ fontSize: 'var(--text-sm)' }}>
         <RichText text={ability.text} />
       </div>
-      {owner && <div className="mt-1 text-xs opacity-60">{owner}</div>}
+      {owner && (
+        <div className="mt-1" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+          {owner}
+        </div>
+      )}
     </div>
   )
 }
@@ -118,14 +143,9 @@ export function KeywordChips({ ids }: { ids: string[] }) {
   const openKeyword = useUiStore((s) => s.openKeyword)
   if (ids.length === 0) return null
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className="flex flex-wrap gap-2">
       {ids.map((id) => (
-        <button
-          key={id}
-          type="button"
-          onClick={() => openKeyword(id)}
-          className="rounded-full border-2 border-zinc-900 bg-amber-300 px-2.5 py-0.5 text-xs font-bold dark:border-amber-300 dark:bg-amber-700"
-        >
+        <button key={id} type="button" onClick={() => openKeyword(id)} className="mf-chip mf-chip--keyword">
           {keywordById.get(id)?.name ?? id}
         </button>
       ))}
@@ -135,8 +155,20 @@ export function KeywordChips({ ids }: { ids: string[] }) {
 
 export function SizeBadge({ size }: { size: Monster['size'] }) {
   return (
-    <span className="rounded-md border border-zinc-400 px-1.5 py-0.5 text-xs font-bold uppercase" title={SIZE_LABELS[size]}>
+    <span className="mf-badge mf-badge--outline" title={SIZE_LABELS[size]}>
       {size}
     </span>
+  )
+}
+
+/** Section header: torn red icon bump + caps label (Basic Attacks / Special Abilities). */
+export function SectionHead({ icon, children }: { icon: 'swords' | 'star' | 'book' | 'dice'; children: React.ReactNode }) {
+  return (
+    <div className="mf-section">
+      <span className="mf-section__ico">
+        <Icon name={icon} size={15} />
+      </span>
+      <h2>{children}</h2>
+    </div>
   )
 }

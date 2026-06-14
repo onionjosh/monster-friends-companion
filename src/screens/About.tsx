@@ -60,61 +60,64 @@ export function About() {
     }
   }
 
-  const btn =
-    'w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2.5 text-left font-semibold dark:border-zinc-100 dark:bg-zinc-900'
+  const btn = 'mf-card w-full px-3 py-2.5 text-left font-semibold'
 
   return (
     <div className="mx-auto max-w-lg p-4">
-      <h1 className="font-display mb-1 text-2xl font-black">About</h1>
-      <p className="mb-4 text-sm opacity-80">
+      <h1 className="mb-1" style={{ fontSize: 'var(--text-2xl)' }}>
+        About
+      </h1>
+      <p className="mb-4" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
         The unofficial-official companion app for <b>Monster Friends: Battle for New Florida</b>. Works offline — add it
         to your home screen and take it to game night.
       </p>
 
-      <div className="mb-4 rounded-xl border-2 border-zinc-900 bg-white p-3 text-sm dark:border-zinc-100 dark:bg-zinc-900">
+      <div className="mf-card mb-4 p-3" style={{ fontSize: 'var(--text-sm)' }}>
         <div>
-          Monster cards: <b>v{gameData.dataVersion}</b>
+          Monster cards: <b style={{ color: 'var(--accent-text)' }}>v{gameData.dataVersion}</b>
         </div>
         <div>
-          Core rules: <b>v{gameData.rulesVersion}</b>
+          Core rules: <b style={{ color: 'var(--accent-text)' }}>v{gameData.rulesVersion}</b>
         </div>
-        <div>
-          {gameData.monsters.length} monsters · {gameData.keywords.length} glossary entries · {gameData.rules.length} rules
-          sections
+        <div style={{ color: 'var(--text-muted)' }}>
+          {gameData.monsters.length} monsters · {gameData.keywords.length} glossary entries · {gameData.rules.length} rules sections
         </div>
       </div>
 
-      <h2 className="font-display mb-1.5 font-bold tracking-wide uppercase opacity-70">Your data</h2>
+      <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', fontSize: 'var(--text-base)' }}>
+        Your data
+      </h2>
       <div className="grid gap-2">
         <button type="button" className={btn} onClick={backup}>
-          📦 Copy a backup of my parties
+          Copy a backup of my parties
         </button>
         <button type="button" className={btn} onClick={() => fileRef.current?.focus()}>
-          📥 Restore from a backup (paste below)
+          Restore from a backup (paste below)
         </button>
         <textarea
           ref={fileRef}
           rows={2}
           placeholder="Paste a backup here…"
           onPaste={(e) => restore(e.clipboardData.getData('text'))}
-          className="w-full rounded-xl border-2 border-zinc-300 bg-white px-3 py-2 text-xs dark:border-zinc-700 dark:bg-zinc-900"
+          className="mf-input"
+          style={{ fontSize: 'var(--text-xs)' }}
         />
-        {msg && <p className="text-sm font-medium">{msg}</p>}
+        {msg && <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600 }}>{msg}</p>}
       </div>
 
       {unverified.length > 0 && (
         <>
-          <h2 className="font-display mt-5 mb-1.5 font-bold tracking-wide uppercase opacity-70">
+          <h2 className="mt-5 mb-1.5" style={{ fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', fontSize: 'var(--text-base)' }}>
             Data needing verification
           </h2>
-          <p className="mb-2 text-xs opacity-70">
+          <p className="mb-2" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
             These values were recovered from the printed PDFs and should be checked against the design source files.
           </p>
-          <div className="grid gap-1.5 text-sm">
+          <div className="grid gap-1.5" style={{ fontSize: 'var(--text-sm)' }}>
             {unverified.map((m) => (
-              <div key={m.id} className="rounded-lg border border-dashed border-zinc-400 p-2">
+              <div key={m.id} className="rounded-lg p-2" style={{ border: '1px dashed var(--border-soft)' }}>
                 <b>{m.name}</b>
-                <ul className="list-disc pl-5 text-xs opacity-80">
+                <ul className="list-disc pl-5" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
                   {m.unverified.map((u) => (
                     <li key={u}>{u}</li>
                   ))}

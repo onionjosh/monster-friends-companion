@@ -1,4 +1,6 @@
-/** Large-tap-target numeric stepper for at-the-table tracking. */
+import { Icon } from './Icon'
+
+/** Large-tap-target +/- control for at-the-table tracking. */
 export function Stepper({
   value,
   onChange,
@@ -14,23 +16,30 @@ export function Stepper({
   label?: string
   big?: boolean
 }) {
-  const btn = `flex items-center justify-center rounded-lg bg-zinc-200 font-bold active:bg-amber-300 dark:bg-zinc-700 dark:active:bg-amber-600 ${
-    big ? 'h-10 w-10 text-xl' : 'h-8 w-8 text-lg'
-  }`
+  const atMin = value <= min
+  const atMax = max !== undefined && value >= max
+  const ic = big ? 24 : 20
   return (
-    <div className="flex items-center gap-1.5">
-      {label && <span className="mr-1 text-xs font-semibold tracking-wide uppercase opacity-70">{label}</span>}
-      <button type="button" className={btn} aria-label={`decrease ${label ?? 'value'}`} onClick={() => onChange(Math.max(min, value - 1))}>
-        −
-      </button>
-      <span className={`min-w-[2ch] text-center font-bold tabular-nums ${big ? 'text-xl' : ''}`}>{value}</span>
+    <div className={`mf-stepper ${big ? 'mf-stepper--big' : 'mf-stepper--md'}`}>
+      {label && <span className="mf-stepper__label">{label}</span>}
       <button
         type="button"
-        className={btn}
-        aria-label={`increase ${label ?? 'value'}`}
-        onClick={() => onChange(max !== undefined ? Math.min(max, value + 1) : value + 1)}
+        className="mf-stepper__btn"
+        aria-label={`decrease ${label ?? 'value'}`}
+        disabled={atMin}
+        onClick={() => !atMin && onChange(Math.max(min, value - 1))}
       >
-        +
+        <Icon name="minus" size={ic} />
+      </button>
+      <span className="mf-stepper__val">{value}</span>
+      <button
+        type="button"
+        className="mf-stepper__btn"
+        aria-label={`increase ${label ?? 'value'}`}
+        disabled={atMax}
+        onClick={() => !atMax && onChange(max !== undefined ? Math.min(max, value + 1) : value + 1)}
+      >
+        <Icon name="plus" size={ic} />
       </button>
     </div>
   )

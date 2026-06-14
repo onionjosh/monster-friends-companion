@@ -1,29 +1,17 @@
 @import 'tailwindcss';
+@import './styles/fonts.css';
+@import './styles/ds.css';
+
+/* App is theme-driven by data-theme (dark by default), not OS preference.
+   Make Tailwind's dark: variant follow it so any utility stays consistent. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 @theme {
-  --font-display: 'Trebuchet MS', 'Segoe UI', ui-rounded, system-ui, sans-serif;
+  --font-display: 'Baloo 2', 'Trebuchet MS', ui-rounded, system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-marker: 'Patrick Hand', 'Comic Sans MS', sans-serif;
 }
 
 html {
   -webkit-text-size-adjust: 100%;
-}
-
-body {
-  @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
-  overscroll-behavior-y: none;
-}
-
-/* Big tap targets for at-the-table use */
-button {
-  touch-action: manipulation;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  body {
-    background: white !important;
-    color: black !important;
-  }
 }

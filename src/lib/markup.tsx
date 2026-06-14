@@ -16,7 +16,8 @@ function KeywordChip({ id, children }: { id: string; children: ReactNode }) {
     <button
       type="button"
       onClick={() => openKeyword(id)}
-      className="inline cursor-pointer border-b border-dotted border-amber-600 font-medium text-amber-700 dark:text-amber-400"
+      className="inline cursor-pointer font-semibold"
+      style={{ color: 'var(--accent-text)', borderBottom: '1px dotted var(--accent-text)' }}
     >
       {children}
     </button>
@@ -69,7 +70,7 @@ export function renderInline(text: string, doAutoLink = true): ReactNode[] {
       )
     } else if (m[1] === 'rule') {
       nodes.push(
-        <Link key={key++} href={`/rules/${m[2]}`} className="font-medium text-amber-700 underline dark:text-amber-400">
+        <Link key={key++} href={`/rules/${m[2]}`} className="font-semibold underline" style={{ color: 'var(--accent-text)' }}>
           {m[3] || m[2]}
         </Link>,
       )
@@ -108,7 +109,8 @@ export function RichText({ text, autoLink: doAutoLink = true }: { text: string; 
           return (
             <blockquote
               key={i}
-              className="my-3 rounded-r-lg border-l-4 border-amber-400 bg-amber-50 px-3 py-2 dark:bg-amber-950/40"
+              className="my-3 rounded-r-lg border-l-4 px-3 py-2"
+              style={{ borderColor: 'var(--punk-red)', background: 'var(--surface-sunk)' }}
             >
               {inner.map((l, j) =>
                 l.startsWith('- ') ? (

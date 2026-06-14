@@ -20,7 +20,8 @@ export function KeywordSheet() {
             <Link
               href={`/rules/${kw.ruleRef}`}
               onClick={closeKeyword}
-              className="mt-3 inline-block font-medium text-amber-700 underline dark:text-amber-400"
+              className="mt-3 inline-block font-semibold underline"
+              style={{ color: 'var(--accent-text)' }}
             >
               Read the full rule →
             </Link>

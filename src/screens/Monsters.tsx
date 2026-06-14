@@ -4,9 +4,85 @@ import { searchMonsters, SIZE_LABELS } from '../data'
 import type { Monster } from '../lib/schemas'
 import { useFavoritesStore } from '../stores/favorites'
 import { SizeBadge } from '../components/StatBlock'
+import { Icon } from '../components/Icon'
 
 type SizeFilter = 'all' | Monster['size']
 type TypeFilter = 'all' | 'melee' | 'ranged'
+
+function MonsterRow({ m, fav, onFav }: { m: Monster; fav: boolean; onFav: () => void }) {
+  const ranged = m.attacks.some((a) => a.type === 'ranged')
+  return (
+    <div className="relative">
+      <Link href={`/monsters/${m.id}`} className="mf-card flex items-stretch overflow-hidden">
+        <div className="relative shrink-0 self-stretch" style={{ width: 84, background: 'var(--surface-sunk)', borderRight: '2px solid var(--border)' }}>
+          {m.image ? (
+            <img
+              src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <span className="absolute inset-0 flex items-center justify-center" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>
+              <Icon name="ghost" size={28} />
+            </span>
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 items-center gap-2.5 px-3 py-2.5">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2">
+              <span
+                className="truncate"
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', color: 'var(--text)' }}
+              >
+                {m.name}
+              </span>
+              <SizeBadge size={m.size} />
+            </div>
+            <div className="mt-0.5 flex items-center gap-2" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+              <span>
+                <b style={{ color: 'var(--text)' }}>{m.hp}</b> HP
+              </span>
+              <span>·</span>
+              <span>
+                <b style={{ color: 'var(--text)' }}>{m.act}</b> AcT
+              </span>
+              <span>·</span>
+              <Icon name={ranged ? 'bow' : 'sword'} size={12} />
+            </div>
+          </div>
+        </div>
+      </Link>
+      {/* torn gold PP tag */}
+      <span className="pointer-events-none absolute" style={{ top: -6, right: 10 }}>
+        <span
+          className="inline-flex items-center gap-1"
+          style={{
+            clipPath: 'var(--clip-tag)',
+            background: 'var(--primary)',
+            color: 'var(--on-primary)',
+            padding: '5px 11px',
+            filter: 'drop-shadow(2px 2px 0 var(--shadow-ink))',
+            transform: 'rotate(2deg)',
+          }}
+        >
+          <b style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-base)' }}>{m.partyPoints}</b>
+          <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em' }}>PP</span>
+        </span>
+      </span>
+      {/* fav */}
+      <button
+        type="button"
+        aria-label={fav ? 'remove favorite' : 'add favorite'}
+        onClick={onFav}
+        className="absolute flex items-center justify-center"
+        style={{ bottom: 6, right: 8, width: 34, height: 34, background: 'transparent', border: 0, color: fav ? 'var(--primary)' : 'var(--text-muted)', opacity: fav ? 1 : 0.5 }}
+      >
+        <Icon name="star" size={20} style={fav ? { fill: 'var(--primary)' } : undefined} />
+      </button>
+    </div>
+  )
+}
 
 export function Monsters() {
   const [query, setQuery] = useState('')
@@ -24,89 +100,72 @@ export function Monsters() {
     return list
   }, [query, size, type, onlyFavs, favs])
 
-  const chip = (active: boolean) =>
-    `rounded-full border-2 px-2.5 py-1 text-xs font-bold ${
-      active
-        ? 'border-zinc-900 bg-amber-300 dark:border-amber-300 dark:bg-amber-700'
-        : 'border-zinc-300 bg-white opacity-70 dark:border-zinc-700 dark:bg-zinc-900'
-    }`
-
   return (
     <div className="mx-auto max-w-lg p-4">
-      <h1 className="font-display mb-3 text-2xl font-black">Monsters</h1>
+      <h1 className="mb-3" style={{ fontSize: 'var(--text-2xl)' }}>
+        Monsters
+      </h1>
 
-      <input
-        type="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search names, attacks, abilities…"
-        className="mb-2 w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2 dark:border-zinc-100 dark:bg-zinc-900"
-      />
+      <div className="relative mb-2.5">
+        <span className="absolute" style={{ left: 13, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }}>
+          <Icon name="search" size={19} />
+        </span>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search the roster…"
+          className="mf-input"
+          style={{ paddingLeft: 40 }}
+        />
+      </div>
 
-      <div className="mb-3 flex flex-wrap gap-1.5">
-        {(['all', 'S', 'M', 'L'] as const).map((s) => (
-          <button key={s} type="button" className={chip(size === s)} onClick={() => setSize(s)}>
-            {s === 'all' ? 'All sizes' : SIZE_LABELS[s]}
+      <div className="mb-3 flex flex-wrap gap-2">
+        {(
+          [
+            ['all', 'All'],
+            ['S', 'Small'],
+            ['M', 'Medium'],
+            ['L', 'Large'],
+          ] as const
+        ).map(([v, l]) => (
+          <button key={v} type="button" className="mf-chip mf-chip--filter" data-active={size === v} onClick={() => setSize(v)}>
+            {l}
           </button>
         ))}
-        {(['melee', 'ranged'] as const).map((t) => (
-          <button key={t} type="button" className={chip(type === t)} onClick={() => setType(type === t ? 'all' : t)}>
-            {t === 'melee' ? '⚔️ Melee' : '🏹 Ranged'}
-          </button>
-        ))}
-        <button type="button" className={chip(onlyFavs)} onClick={() => setOnlyFavs((v) => !v)}>
-          ★ Favorites
+        <button
+          type="button"
+          className="mf-chip mf-chip--filter"
+          data-active={type === 'melee'}
+          onClick={() => setType(type === 'melee' ? 'all' : 'melee')}
+        >
+          <Icon name="sword" size={15} /> Melee
+        </button>
+        <button
+          type="button"
+          className="mf-chip mf-chip--filter"
+          data-active={type === 'ranged'}
+          onClick={() => setType(type === 'ranged' ? 'all' : 'ranged')}
+        >
+          <Icon name="bow" size={15} /> Ranged
+        </button>
+        <button type="button" className="mf-chip mf-chip--filter" data-active={onlyFavs} onClick={() => setOnlyFavs((v) => !v)}>
+          <Icon name="star" size={15} /> Favorites
         </button>
       </div>
 
-      <div className="grid gap-2">
+      <div className="grid gap-3">
         {results.map((m) => (
-          <div
-            key={m.id}
-            className="flex items-stretch overflow-hidden rounded-xl border-2 border-zinc-900 bg-white dark:border-zinc-100 dark:bg-zinc-900"
-          >
-            <Link href={`/monsters/${m.id}`} className="flex min-w-0 flex-1 items-stretch gap-3">
-              {m.image ? (
-                <div className="relative aspect-square shrink-0 self-stretch border-r-2 border-zinc-900 dark:border-zinc-100">
-                  <img
-                    src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
-                    alt=""
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </div>
-              ) : (
-                <div className="flex aspect-square shrink-0 self-stretch items-center justify-center border-r-2 border-dashed border-zinc-300 text-2xl opacity-40 dark:border-zinc-700">
-                  👾
-                </div>
-              )}
-              <div className="flex min-w-0 flex-1 items-center gap-3 py-3">
-                <div className="min-w-0 flex-1">
-                  <div className="font-display flex items-center gap-2 font-bold">
-                    <span className="truncate">{m.name}</span>
-                    <SizeBadge size={m.size} />
-                  </div>
-                  <div className="text-xs opacity-70">
-                    HP {m.hp} · AcT {m.act} · Move {m.movement > 0 ? `${m.movement}"` : '—'} · {m.abilities.length} abilit{m.abilities.length === 1 ? 'y' : 'ies'}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="font-display text-xl font-black">{m.partyPoints}</div>
-                  <div className="text-[10px] font-bold uppercase opacity-70">PP</div>
-                </div>
-              </div>
-            </Link>
-            <button
-              type="button"
-              onClick={() => toggleFav(m.id)}
-              aria-label={favs.includes(m.id) ? 'remove favorite' : 'add favorite'}
-              className={`flex items-center px-3 text-2xl ${favs.includes(m.id) ? 'text-amber-500' : 'opacity-30'}`}
-            >
-              ★
-            </button>
-          </div>
+          <MonsterRow key={m.id} m={m} fav={favs.includes(m.id)} onFav={() => toggleFav(m.id)} />
         ))}
-        {results.length === 0 && <p className="py-8 text-center opacity-70">No monsters match.</p>}
+        {results.length === 0 && (
+          <p className="py-8 text-center" style={{ color: 'var(--text-muted)' }}>
+            No monsters match.
+          </p>
+        )}
+        <p className="py-1 text-center" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+          {SIZE_LABELS ? `${results.length} monster${results.length === 1 ? '' : 's'}` : ''}
+        </p>
       </div>
     </div>
   )
