@@ -281,14 +281,18 @@ function AddMonsterSheet({
         placeholder="Search…"
         className="mf-input my-2.5"
       />
-      <div className="grid gap-3">
-        {list.map((m) => {
+      <div>
+        {list.map((m, i) => {
           const count = countOf(m.id)
           return (
-            <div key={m.id} className="mf-torn-card mf-torn-card--row flex items-stretch overflow-hidden">
+            <div
+              key={m.id}
+              className="flex items-center gap-3 py-2.5"
+              style={i < list.length - 1 ? { borderBottom: '1px solid var(--border-soft)' } : undefined}
+            >
               <div
-                className="relative shrink-0 self-stretch"
-                style={{ width: 60, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
+                className="relative shrink-0"
+                style={{ width: 54, height: 54, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
               >
                 {m.image ? (
                   <img
@@ -303,21 +307,19 @@ function AddMonsterSheet({
                   </span>
                 )}
               </div>
-              <div className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-                      {m.name}
-                    </span>
-                    <SizeBadge size={m.size} />
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-                    {m.partyPoints} PP each
-                    {count > 0 && <span style={{ color: 'var(--accent-text)' }}> · {count} in party</span>}
-                  </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
+                    {m.name}
+                  </span>
+                  <SizeBadge size={m.size} />
                 </div>
-                <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
+                  {m.partyPoints} PP each
+                  {count > 0 && <span style={{ color: 'var(--accent-text)' }}> · {count} in party</span>}
+                </div>
               </div>
+              <Stepper value={count} onChange={(n) => onSet(m.id, n)} />
             </div>
           )
         })}
