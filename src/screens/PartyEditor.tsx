@@ -254,17 +254,22 @@ function AddMonsterSheet({
   const [q, setQ] = useState('')
   const list = monsters.filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
   return (
-    <Sheet open={open} onClose={onClose}>
+    <Sheet open={open} onClose={onClose} bg="var(--bg)">
       <div
         className="sticky top-0 z-10 -mx-4 px-4 pb-2.5"
-        style={{ borderBottom: '1px solid var(--border-soft)', background: 'var(--surface)' }}
+        style={{ borderBottom: '1px solid var(--border-soft)', background: 'var(--bg)' }}
       >
         <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
           Add monsters
         </h2>
         <div
           className="px-3 py-2 text-center"
-          style={{ fontWeight: 800, clipPath: 'var(--clip-torn-2)', background: over ? 'var(--warning)' : 'var(--surface-sunk)', color: over ? '#fff' : 'var(--text)' }}
+          style={{
+            fontWeight: 800,
+            clipPath: 'var(--clip-torn-2)',
+            background: over ? 'var(--warning)' : 'var(--primary)',
+            color: over ? '#fff' : 'var(--on-primary)',
+          }}
         >
           <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)' }}>
             {total} / {budget}
@@ -355,6 +360,16 @@ function AddMonsterSheet({
             </p>
           )}
         </div>
+      </div>
+
+      {/* confirm — closes the sheet (changes save live as you tap +/-) */}
+      <div
+        className="sticky bottom-0 z-10 -mx-4 px-4 pt-3"
+        style={{ background: 'var(--bg)', borderTop: '1px solid var(--border-soft)', paddingBottom: 'max(4px, env(safe-area-inset-bottom))' }}
+      >
+        <TornButton variant="gold" tilt="none" leftIcon="check" onClick={onClose} style={{ width: '100%', padding: '16px 18px' }}>
+          OK!
+        </TornButton>
       </div>
     </Sheet>
   )
