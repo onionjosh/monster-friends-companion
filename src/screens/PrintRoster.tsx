@@ -50,7 +50,7 @@ export function PrintRoster() {
 
       <header className="mb-4 flex items-start justify-between gap-4 border-b-4 border-black pb-3">
         <div>
-          <h1 className="text-2xl font-black">{party.name}</h1>
+          <h1 className="text-2xl font-black">{party.name || 'Untitled Party'}</h1>
           <p className="text-sm">
             Monster Friends: Battle for New Florida · {check.totalPoints}/{party.budget} Party Points ·{' '}
             {check.modelCount} monsters · cards v{party.dataVersion}

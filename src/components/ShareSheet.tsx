@@ -27,7 +27,7 @@ export function ShareSheet({ party, open, onClose }: { party: Party; open: boole
     'w-full rounded-xl border-2 border-zinc-900 bg-white px-3 py-2.5 text-left font-semibold active:bg-amber-200 dark:border-zinc-100 dark:bg-zinc-900 dark:active:bg-amber-800'
 
   return (
-    <Sheet open={open} onClose={onClose} title={`Share "${party.name}"`}>
+    <Sheet open={open} onClose={onClose} title={`Share "${party.name || 'Untitled Party'}"`}>
       <div className="grid gap-2">
         <div className="flex justify-center py-2">
           <QrCode value={url} />

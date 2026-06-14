@@ -51,6 +51,7 @@ export function PartyEditor() {
           value={party.name}
           onChange={(e) => updateParty(party.id, { name: e.target.value })}
           aria-label="party name"
+          placeholder="Enter Party Name Here…"
           className="mf-input"
           style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', padding: '12px 14px' }}
         />
@@ -159,7 +160,7 @@ export function PartyEditor() {
             cut={3}
             tilt="sm"
             onClick={() => {
-              if (confirm(`Delete "${party.name}"? This can't be undone.`)) {
+              if (confirm(`Delete "${party.name || 'Untitled Party'}"? This can't be undone.`)) {
                 navigate('/parties')
                 deleteParty(party.id)
               }
@@ -293,7 +294,11 @@ function AddMonsterSheet({
             const count = countOf(m.id)
             const ranged = m.attacks.some((a) => a.type === 'ranged')
             return (
-              <div key={m.id} className="mf-torn-card mf-torn-card--row flex items-stretch overflow-hidden">
+              <div
+                key={m.id}
+                className="flex items-stretch overflow-hidden"
+                style={{ clipPath: 'var(--clip-torn-row)', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
+              >
                 <div
                   className="relative shrink-0 self-stretch"
                   style={{ width: 64, background: 'var(--surface-sunk)', clipPath: 'var(--clip-torn-photo)' }}
@@ -367,7 +372,7 @@ function AddMonsterSheet({
         className="sticky bottom-0 z-10 -mx-4 px-4 pt-3"
         style={{ background: 'var(--bg)', borderTop: '1px solid var(--border-soft)', paddingBottom: 'max(4px, env(safe-area-inset-bottom))' }}
       >
-        <TornButton variant="gold" tilt="none" leftIcon="check" onClick={onClose} style={{ width: '100%', padding: '16px 18px' }}>
+        <TornButton variant="red" tilt="none" leftIcon="check" onClick={onClose} style={{ width: '100%', padding: '16px 18px' }}>
           OK!
         </TornButton>
       </div>

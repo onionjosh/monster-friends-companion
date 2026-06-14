@@ -25,7 +25,7 @@ export const usePartiesStore = create<PartiesState>()(
         const now = Date.now()
         const party: Party = {
           id: newId(),
-          name: init?.name ?? 'New Party',
+          name: init?.name ?? '',
           budget: init?.budget ?? 50,
           dataVersion: init?.dataVersion ?? gameData.dataVersion,
           entries: init?.entries ?? [],

@@ -38,8 +38,11 @@ export function Parties() {
             <div key={p.id} className="mf-torn-card p-3">
               <Link href={`/parties/${p.id}`} className="block">
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
-                    {p.name}
+                  <span
+                    className="truncate"
+                    style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', color: p.name ? undefined : 'var(--text-muted)' }}
+                  >
+                    {p.name || 'Untitled Party'}
                   </span>
                   <span
                     className="mf-nums whitespace-nowrap font-bold"
@@ -70,7 +73,7 @@ export function Parties() {
                   icon="skull"
                   danger
                   onClick={() => {
-                    if (confirm(`Delete "${p.name}"? This can't be undone.`)) deleteParty(p.id)
+                    if (confirm(`Delete "${p.name || 'Untitled Party'}"? This can't be undone.`)) deleteParty(p.id)
                   }}
                 >
                   Delete
