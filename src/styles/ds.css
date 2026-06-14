@@ -50,8 +50,10 @@
   /* Monster row: STRAIGHT left wall (protects the photo) + flat top/bottom over
      the photo column; torn only on the text side & right edge. */
   --clip-torn-row: polygon(0% 0%, 22% 0%, 40% 3%, 60% 0%, 80% 4%, 95% 1%, 100% 6%, 99% 38%, 100% 70%, 99% 93%, 100% 100%, 80% 97%, 60% 100%, 38% 96%, 22% 100%, 0% 100%);
-  /* Gentle torn — ~20% of the raggedness of the frame clips. For photos. */
-  --clip-torn-soft: polygon(0% 1%, 25% 0%, 50% 1.4%, 75% 0%, 100% 1%, 99.2% 25%, 100% 50%, 99.2% 75%, 100% 99%, 75% 100%, 50% 98.6%, 25% 100%, 0% 99%, 0.8% 50%);
+  /* Gentle torn — ~35% of the raggedness of the frame clips. For photos, inputs, chips. */
+  --clip-torn-soft: polygon(0% 1.8%, 25% 0%, 50% 2.5%, 75% 0%, 100% 1.8%, 98.5% 25%, 100% 50%, 98.5% 75%, 100% 98.2%, 75% 100%, 50% 97.5%, 25% 100%, 0% 98.2%, 1.5% 50%);
+  /* Ragged TOP edge only (straight bottom + sides) — for the bottom tab bar. */
+  --clip-torn-top: polygon(0% 12%, 10% 3%, 25% 10%, 42% 2%, 58% 9%, 75% 2%, 90% 9%, 100% 3%, 100% 100%, 0% 100%);
   --tilt-sm: -1.5deg;
   --tilt-md: -2.5deg;
   --tilt-rev: 2deg;
@@ -268,20 +270,21 @@ button {
     drop-shadow(5px 5px 0 var(--shadow-ink));
 }
 
-/* ---- Input ---- */
+/* ---- Input (torn, no white outline) ---- */
 .mf-input {
   width: 100%;
   box-sizing: border-box;
   padding: 11px 14px;
-  border: var(--border-w) solid var(--border);
-  border-radius: var(--radius-md);
-  background: var(--surface);
+  clip-path: var(--clip-torn-soft);
+  background: var(--surface-sunk);
   color: var(--text);
   font-family: var(--font-body);
   font-size: var(--text-sm);
+  border: 0;
+  filter: drop-shadow(2px 2px 0 var(--shadow-ink));
 }
 .mf-input::placeholder { color: var(--text-muted); }
-.mf-input:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 1px; }
+.mf-input:focus { outline: none; background: var(--surface); }
 
 /* ---- Torn shapes (CTAs, tags, callouts) ---- */
 .mf-torn {
@@ -352,20 +355,20 @@ button {
   font-weight: 700;
   font-size: var(--text-xs);
   line-height: 1;
-  border-radius: var(--radius-pill);
+  clip-path: var(--clip-torn-soft);
   cursor: pointer;
-  padding: 7px 12px;
+  padding: 8px 13px;
   min-height: 34px;
-  border: var(--border-w) solid transparent;
-  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-base), border-color var(--dur-base);
+  border: 0;
+  filter: drop-shadow(2px 2px 0 var(--shadow-ink));
+  transition: transform var(--dur-fast) var(--ease-out), background var(--dur-base), filter var(--dur-fast);
 }
-.mf-chip:active { transform: scale(0.95); }
-.mf-chip:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
-.mf-chip--keyword { background: var(--primary); color: var(--on-primary); border-color: var(--border); }
-.mf-chip--filter { background: var(--surface); color: var(--text); border-color: var(--border-soft); opacity: 0.75; }
-.mf-chip--filter[data-active='true'] { background: var(--primary); color: var(--on-primary); border-color: var(--border); opacity: 1; }
-.mf-chip--condition { background: transparent; color: var(--text); border-color: var(--border-soft); border-width: var(--border-w-thin); opacity: 0.7; font-weight: 600; }
-.mf-chip--condition[data-active='true'] { background: var(--primary); color: var(--on-primary); border-color: var(--border); opacity: 1; font-weight: 700; }
+.mf-chip:active { transform: translate(2px, 2px); filter: none; }
+.mf-chip--keyword { background: var(--primary); color: var(--on-primary); }
+.mf-chip--filter { background: var(--surface-sunk); color: var(--text); opacity: 0.85; }
+.mf-chip--filter[data-active='true'] { background: var(--primary); color: var(--on-primary); opacity: 1; }
+.mf-chip--condition { background: var(--surface-sunk); color: var(--text); opacity: 0.7; font-weight: 600; }
+.mf-chip--condition[data-active='true'] { background: var(--primary); color: var(--on-primary); opacity: 1; font-weight: 700; }
 
 /* ---- Badge ---- */
 .mf-badge { display: inline-flex; align-items: center; gap: 0.3em; font-family: var(--font-body); font-weight: 700; line-height: 1; font-size: var(--text-xs); white-space: nowrap; }
@@ -377,8 +380,8 @@ button {
 .mf-section__ico { display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center; clip-path: var(--clip-torn-3); background: var(--punk-red); color: #fff; flex-shrink: 0; }
 .mf-section h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-base); text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); }
 
-/* ---- Tab bar ---- */
-.mf-tabbar { display: flex; background: var(--surface); border-top: var(--border-w) solid var(--border); padding-bottom: env(safe-area-inset-bottom); }
+/* ---- Tab bar (torn top edge, no straight white line) ---- */
+.mf-tabbar { display: flex; background: var(--surface); clip-path: var(--clip-torn-top); padding-top: 9px; padding-bottom: env(safe-area-inset-bottom); filter: drop-shadow(0 -2px 0 var(--shadow-ink)); }
 .mf-tabbar__item { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 2px 7px; background: none; border: 0; cursor: pointer; font-family: var(--font-body); font-weight: 700; font-size: var(--text-2xs); color: var(--text-muted); position: relative; min-height: var(--tap-comfortable); }
 .mf-tabbar__item[data-active='true'] { color: var(--accent-text); }
 .mf-tabbar__item[data-active='true']::after { content: ''; position: absolute; bottom: 4px; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); border: 1px solid var(--border); }
@@ -386,8 +389,9 @@ button {
 /* ---- Stepper (+/- tracking control) ---- */
 .mf-stepper { display: inline-flex; align-items: center; gap: 8px; }
 .mf-stepper__label { margin-right: 2px; font-size: var(--text-2xs); font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; }
-.mf-stepper__btn { display: flex; align-items: center; justify-content: center; border: var(--border-w) solid var(--border); border-radius: var(--radius-md); background: var(--surface-sunk); color: var(--text); cursor: pointer; transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
-.mf-stepper__btn:active { background: var(--primary); color: var(--on-primary); transform: scale(0.92); }
+.mf-stepper__btn { display: flex; align-items: center; justify-content: center; clip-path: var(--clip-torn-2); background: var(--surface-sunk); color: var(--text); cursor: pointer; filter: drop-shadow(2px 2px 0 var(--shadow-ink)); transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+.mf-stepper__btn:hover { filter: drop-shadow(3px 3px 0 var(--shadow-ink)); }
+.mf-stepper__btn:active { background: var(--primary); color: var(--on-primary); transform: translate(2px, 2px); filter: none; }
 .mf-stepper__btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
 .mf-stepper__btn[disabled] { opacity: 0.35; pointer-events: none; }
 .mf-stepper__val { font-family: var(--font-display); font-weight: 800; text-align: center; font-variant-numeric: tabular-nums; min-width: 2ch; color: var(--text); }

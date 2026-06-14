@@ -306,6 +306,16 @@ function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () 
     <Sheet open={!!unit && !!m} onClose={onClose} title={m?.name}>
       {m && (
         <div className="grid gap-2.5">
+          {m.image && (
+            <div style={{ clipPath: 'var(--clip-torn-soft)', aspectRatio: '4 / 3', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}>
+              <img
+                src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
+                alt={m.name}
+                loading="lazy"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          )}
           <StatRow monster={m} />
           <DefenseLine monster={m} />
           {m.keywords.length > 0 && <KeywordChips ids={m.keywords} />}
