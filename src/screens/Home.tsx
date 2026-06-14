@@ -51,7 +51,7 @@ export function Home() {
 
         {/* resume */}
         {game && (
-          <Link href="/play" className="mf-torn-card block p-4" style={{ background: 'var(--punk-red)', color: '#fff' }}>
+          <Link href="/play" className="mf-torn-card block" style={{ background: 'var(--punk-red)', color: '#fff', padding: 18 }}>
             <div className="flex items-center justify-between gap-2">
               <span className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
                 <Icon name="dice" size={22} /> Resume Game
@@ -67,14 +67,19 @@ export function Home() {
         {/* hub grid */}
         <div className="grid grid-cols-2 gap-2.5">
           {HUB.map((t, i) => (
-            <Link key={t.href} href={t.href} className={`mf-torn-card block ${i % 2 ? 'mf-torn-card--2' : 'mf-torn-card--3'} p-4`}>
+            <Link
+              key={t.href}
+              href={t.href}
+              className={`mf-torn-card block ${i % 2 ? 'mf-torn-card--2' : 'mf-torn-card--3'}`}
+              style={{ background: 'var(--surface-sunk)', padding: '20px 18px', minHeight: 120 }}
+            >
               <span
                 className="inline-flex items-center justify-center"
-                style={{ width: 42, height: 42, clipPath: 'var(--clip-torn-2)', background: 'var(--punk-red)', color: '#fff' }}
+                style={{ width: 48, height: 48, clipPath: 'var(--clip-torn-2)', background: 'var(--punk-red)', color: '#fff' }}
               >
-                <Icon name={t.icon} size={24} />
+                <Icon name={t.icon} size={26} />
               </span>
-              <div className="mt-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
+              <div className="mt-2.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
                 {t.title}
               </div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>{t.sub}</div>
@@ -82,15 +87,19 @@ export function Home() {
           ))}
         </div>
 
-        <Link href="/scenarios" className="mf-torn-card mf-torn-card--2 flex items-center gap-3 p-3">
+        <Link
+          href="/scenarios"
+          className="mf-torn-card mf-torn-card--2 flex items-center gap-3.5"
+          style={{ background: 'var(--surface-sunk)', padding: 18 }}
+        >
           <span
-            className="inline-flex items-center justify-center"
-            style={{ width: 38, height: 38, clipPath: 'var(--clip-torn-1)', background: 'var(--primary)', color: 'var(--on-primary)' }}
+            className="inline-flex shrink-0 items-center justify-center"
+            style={{ width: 46, height: 46, clipPath: 'var(--clip-torn-1)', background: 'var(--primary)', color: 'var(--on-primary)' }}
           >
-            <Icon name="trophy" size={22} />
+            <Icon name="trophy" size={26} />
           </span>
           <span>
-            <span className="block" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
+            <span className="block" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
               Scenarios
             </span>
             <span className="block" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
