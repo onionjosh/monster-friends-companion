@@ -2,7 +2,7 @@ import { Link, useLocation } from 'wouter'
 import { usePlayStore } from '../stores/play'
 import { gameData } from '../data'
 import { Icon, type IconName } from '../components/Icon'
-import { TornButton, TornTag, TornCallout } from '../components/Torn'
+import { TornButton, TornCallout } from '../components/Torn'
 
 const HUB: { href: string; icon: IconName; title: string; sub: string }[] = [
   { href: '/monsters', icon: 'ghost', title: 'Monsters', sub: 'Every card' },
@@ -18,51 +18,28 @@ export function Home() {
   return (
     <div className="mx-auto max-w-lg p-4">
       <div className="grid gap-4">
-        {/* wordmark + version tag */}
-        <div className="flex items-start justify-between">
-          <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 30, lineHeight: 0.95, color: 'var(--text)' }}>
-              Monster
-              <br />
-              Friends
-            </div>
-            <div
-              className="mt-1.5"
-              style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--punk-red)' }}
-            >
-              Battle for New Florida
-            </div>
-          </div>
-          <TornTag variant="red" tilt="rev">
-            v{gameData.dataVersion}
-          </TornTag>
-        </div>
-
-        {/* hero */}
+        {/* hero — official logo */}
         <div
+          className="relative"
           style={{
-            position: 'relative',
-            borderRadius: 'var(--radius-lg)',
-            overflow: 'hidden',
-            border: '2px solid var(--border)',
+            clipPath: 'var(--clip-torn-1)',
             background: 'var(--poster-black)',
             backgroundImage: 'radial-gradient(rgba(255,255,255,.05) 1.1px, transparent 1.2px)',
             backgroundSize: '8px 8px',
-            padding: '20px 18px',
-            boxShadow: 'var(--shadow-sticker)',
+            padding: '20px 18px 22px',
+            filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))',
           }}
         >
-          <div
-            className="flex items-center gap-2.5"
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 38, lineHeight: 0.9, color: 'var(--poster-cream)' }}
-          >
-            HELLO <Icon name="skull" size={34} style={{ color: '#cfe8f0' }} />
-          </div>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 38, lineHeight: 0.95, color: 'var(--punk-red)' }}>FRIENDS.</div>
-          <p className="my-3" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.5, color: 'rgba(242,236,221,.85)', maxWidth: 260 }}>
+          <img
+            src={`${import.meta.env.BASE_URL}brand/logo.webp`}
+            alt="Monster Friends — Battle for New Florida"
+            className="mx-auto block"
+            style={{ width: '100%', maxWidth: 300 }}
+          />
+          <p className="mt-3 text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.5, color: 'rgba(242,236,221,.85)' }}>
             Plan an army, learn the rules, and track HP at the table. Free to play.
           </p>
-          <div className="flex flex-wrap gap-3.5">
+          <div className="mt-3 flex flex-wrap justify-center gap-3.5">
             <TornButton variant="red" leftIcon="roster" cut={1} tilt="sm" onClick={() => navigate('/builder')}>
               Build a Party
             </TornButton>
