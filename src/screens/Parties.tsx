@@ -36,7 +36,7 @@ export function Parties() {
           const over = check.totalPoints > p.budget
           return (
             <div key={p.id} className="mf-card p-3">
-              <Link href={`/parties/${p.id}`} className="block">
+              <Link href={`/parties/${p.id}`} className="mf-press block">
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
                     {p.name}
@@ -109,12 +109,8 @@ function ActionBtn({
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-semibold"
-      style={{
-        fontSize: 'var(--text-xs)',
-        border: '1px solid var(--border-soft)',
-        color: danger ? 'var(--warning-text)' : 'var(--text)',
-      }}
+      className="mf-btn px-2.5 py-1"
+      style={{ fontSize: 'var(--text-xs)', color: danger ? 'var(--warning-text)' : 'var(--text)' }}
     >
       <Icon name={icon} size={13} />
       {children}

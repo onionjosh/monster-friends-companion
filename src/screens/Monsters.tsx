@@ -13,7 +13,7 @@ function MonsterRow({ m, fav, onFav }: { m: Monster; fav: boolean; onFav: () => 
   const ranged = m.attacks.some((a) => a.type === 'ranged')
   return (
     <div className="relative">
-      <Link href={`/monsters/${m.id}`} className="mf-card flex items-stretch overflow-hidden">
+      <Link href={`/monsters/${m.id}`} className="mf-card mf-card--interactive flex items-stretch overflow-hidden">
         <div className="relative shrink-0 self-stretch" style={{ width: 84, background: 'var(--surface-sunk)', borderRight: '2px solid var(--border)' }}>
           {m.image ? (
             <img

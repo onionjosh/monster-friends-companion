@@ -63,6 +63,7 @@ export function PartyEditor() {
             <button
               key={b}
               type="button"
+              className="mf-press"
               onClick={() => updateParty(party.id, { budget: b })}
               style={{
                 fontFamily: 'var(--font-display)',
@@ -116,7 +117,7 @@ export function PartyEditor() {
         <button
           type="button"
           onClick={() => setAdding(true)}
-          className="flex w-full items-center justify-center gap-1.5 rounded-xl p-4"
+          className="mf-press flex w-full items-center justify-center gap-1.5 rounded-xl p-4"
           style={{ border: '2px dashed var(--text-muted)', color: 'var(--text-muted)', fontFamily: 'var(--font-display)', fontWeight: 700, background: 'transparent' }}
         >
           <Icon name="plus" size={20} /> Add a monster

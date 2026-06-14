@@ -54,7 +54,7 @@ function Setup() {
     startGame({ name: mine.name, entries: mine.entries }, opponent, scenarioId)
   }
 
-  const pick = (active: boolean) => `mf-card w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
+  const pick = (active: boolean) => `mf-card mf-card--interactive w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
 
   return (
     <div className="mx-auto max-w-lg p-4">
@@ -202,8 +202,8 @@ function Tracker() {
             onClick={() => {
               if (confirm('End this game? The tracker state will be cleared.')) endGame()
             }}
-            className="rounded-xl px-2.5 py-1.5 font-semibold"
-            style={{ fontSize: 'var(--text-sm)', border: '1px solid var(--border-soft)', color: 'var(--text-muted)' }}
+            className="mf-btn px-2.5 py-1.5"
+            style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}
           >
             End
           </button>
@@ -226,7 +226,7 @@ function Tracker() {
             key={s}
             type="button"
             onClick={() => setSide(s)}
-            className="truncate px-2 py-2 font-bold"
+            className="mf-press truncate px-2 py-2 font-bold"
             style={side === s ? { background: 'var(--text)', color: 'var(--text-inverse)' } : { background: 'transparent', color: 'var(--text)' }}
           >
             {game[s].name}
@@ -237,12 +237,7 @@ function Tracker() {
       {/* energy + party rules */}
       <div className="mf-card mb-3 flex items-center justify-between p-3">
         <Stepper big label="⚡ Energy" value={cur.energy} min={0} max={MAX_ENERGY} onChange={(v) => setEnergy(side, v)} />
-        <button
-          type="button"
-          onClick={() => setRulesOpen(true)}
-          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-semibold"
-          style={{ fontSize: 'var(--text-sm)', border: '1px solid var(--border-soft)' }}
-        >
+        <button type="button" onClick={() => setRulesOpen(true)} className="mf-btn px-2.5 py-1.5" style={{ fontSize: 'var(--text-sm)' }}>
           <Icon name="book" size={16} /> Party rules
         </button>
       </div>
@@ -280,11 +275,11 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
         <button
           type="button"
           onClick={() => toggleDead(side, unit.uid)}
-          className="flex items-center gap-1 rounded-lg px-2 py-1 font-bold"
+          className="mf-btn px-2 py-1"
           style={
             unit.dead
-              ? { background: 'var(--punk-red)', color: '#fff', border: '1px solid var(--border)', fontSize: 'var(--text-sm)' }
-              : { border: '1px solid var(--border-soft)', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }
+              ? { background: 'var(--punk-red)', color: '#fff', fontSize: 'var(--text-sm)' }
+              : { color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }
           }
         >
           <Icon name="skull" size={16} />

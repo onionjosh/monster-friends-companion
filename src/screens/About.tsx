@@ -60,7 +60,7 @@ export function About() {
     }
   }
 
-  const btn = 'mf-card w-full px-3 py-2.5 text-left font-semibold'
+  const btn = 'mf-card mf-card--interactive w-full px-3 py-2.5 text-left font-semibold'
 
   return (
     <div className="mx-auto max-w-lg p-4">

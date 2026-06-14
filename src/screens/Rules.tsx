@@ -79,12 +79,12 @@ export function Rules() {
         <div className="grid gap-2">
           {hits.map((h, i) =>
             h.keywordId ? (
-              <button key={i} type="button" onClick={() => openKeyword(h.keywordId!)} className="mf-card p-3 text-left">
+              <button key={i} type="button" onClick={() => openKeyword(h.keywordId!)} className="mf-card mf-card--interactive p-3 text-left">
                 <div className="font-bold">{h.title}</div>
                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{h.snippet}</div>
               </button>
             ) : (
-              <Link key={i} href={h.href!} className="mf-card p-3">
+              <Link key={i} href={h.href!} className="mf-card mf-card--interactive p-3">
                 <div className="font-bold">{h.title}</div>
                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>{h.snippet}</div>
               </Link>
@@ -100,7 +100,7 @@ export function Rules() {
         <>
           <div className="grid gap-1.5">
             {ruleSections.map((r, i) => (
-              <Link key={r.id} href={`/rules/${r.id}`} className="mf-card flex items-center gap-3 px-3 py-2.5 font-semibold">
+              <Link key={r.id} href={`/rules/${r.id}`} className="mf-card mf-card--interactive flex items-center gap-3 px-3 py-2.5 font-semibold">
                 <span className="w-6 text-right font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--text-muted)', opacity: 0.5 }}>
                   {i + 1}
                 </span>

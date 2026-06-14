@@ -187,14 +187,45 @@ button {
 }
 .mf-card--interactive {
   cursor: pointer;
-  transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   text-align: left;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
-.mf-card--interactive:active {
-  transform: translate(3px, 3px);
-  box-shadow: none;
+.mf-card--interactive:hover { box-shadow: var(--shadow-sticker-lg); }
+.mf-card--interactive:active { transform: translate(3px, 3px); box-shadow: none; }
+.mf-card--interactive:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
+
+/* ---- Pressable: the zine "press into the table" feel for any clickable frame
+   that isn't a full card (small buttons, budget chips, dashed add, toggles). */
+.mf-press {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    filter var(--dur-fast) var(--ease-out), background var(--dur-base) var(--ease-out);
 }
+.mf-press:active { transform: translate(2px, 2px); box-shadow: none; }
+.mf-press:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
+
+/* Small bordered "mini-sticker" button (action rows, toggles, secondary CTAs). */
+.mf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  box-shadow: var(--shadow-sticker-sm);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.mf-btn:hover { box-shadow: var(--shadow-sticker); }
+.mf-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.mf-btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 2px; }
 
 /* ---- Input ---- */
 .mf-input {
