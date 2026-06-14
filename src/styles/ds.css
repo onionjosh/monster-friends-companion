@@ -45,6 +45,14 @@
   --clip-torn-1: polygon(1% 6%, 23% 0%, 52% 7%, 78% 1%, 99% 5%, 100% 34%, 99% 64%, 100% 95%, 74% 100%, 47% 94%, 21% 100%, 2% 96%, 0% 67%, 1% 33%);
   --clip-torn-2: polygon(0% 4%, 27% 2%, 49% 8%, 73% 0%, 98% 6%, 100% 38%, 99% 70%, 100% 97%, 71% 95%, 44% 100%, 24% 95%, 3% 99%, 1% 62%, 0% 30%);
   --clip-torn-3: polygon(2% 2%, 25% 7%, 50% 1%, 76% 6%, 100% 2%, 99% 33%, 100% 66%, 98% 98%, 73% 94%, 49% 100%, 22% 95%, 1% 98%, 0% 64%, 2% 31%);
+  /* Content card: torn edge with a CONSTANT px depth (not % of height), so the
+     ragged notches never bite into text/badges on tall attack/ability cards. */
+  --clip-torn-card: polygon(
+    0px 7px, 24% 2px, 49% 8px, 73% 1px, 100% 6px,
+    calc(100% - 4px) 34%, 100% 67%,
+    100% calc(100% - 6px), 74% calc(100% - 1px), 47% calc(100% - 8px), 21% calc(100% - 2px), 0px calc(100% - 5px),
+    4px 67%, 0px 34%
+  );
   --clip-tag: polygon(0% 8%, 96% 0%, 100% 84%, 90% 100%, 4% 94%);
   --clip-callout: polygon(0% 6%, 18% 0%, 52% 5%, 84% 0%, 100% 7%, 99% 70%, 100% 96%, 70% 100%, 35% 95%, 8% 100%, 1% 64%);
   /* Monster row: STRAIGHT left wall (protects the photo) + flat top/bottom over
@@ -196,7 +204,7 @@ button {
 /* ---- Card (torn info box, no white outline) ---- */
 .mf-card {
   background: var(--surface);
-  clip-path: var(--clip-torn-2);
+  clip-path: var(--clip-torn-card);
   filter: drop-shadow(3px 3px 0 var(--shadow-ink));
 }
 /* Inside a scrolling sheet, drop the offset shadow on torn boxes — the
