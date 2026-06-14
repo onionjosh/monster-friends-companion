@@ -85,10 +85,13 @@ export function PartyEditor() {
           <BudgetInput key={party.budget} value={party.budget} onCommit={(b) => updateParty(party.id, { budget: b })} />
         </div>
 
-        {party.entries.map((e) => {
+        {party.entries.map((e, i) => {
           const m = monsterById.get(e.monsterId)
           return (
-            <div key={e.monsterId} className="mf-card flex items-center gap-2.5 p-3">
+            <div
+              key={e.monsterId}
+              className={`mf-torn-card ${['', 'mf-torn-card--2', 'mf-torn-card--3'][i % 3]} flex items-center gap-2.5 p-3`}
+            >
               <div className="min-w-0 flex-1">
                 {m ? (
                   <Link href={`/monsters/${m.id}`} className="flex items-center gap-2">
@@ -117,8 +120,8 @@ export function PartyEditor() {
         <button
           type="button"
           onClick={() => setAdding(true)}
-          className="mf-press flex w-full items-center justify-center gap-1.5 rounded-xl p-4"
-          style={{ border: '2px dashed var(--text-muted)', color: 'var(--text-muted)', fontFamily: 'var(--font-display)', fontWeight: 700, background: 'transparent' }}
+          className="mf-torn-card mf-torn-card--2 flex w-full items-center justify-center gap-1.5 p-4"
+          style={{ background: 'var(--surface-sunk)', color: 'var(--text-muted)', fontFamily: 'var(--font-display)', fontWeight: 700 }}
         >
           <Icon name="plus" size={20} /> Add a monster
         </button>
@@ -260,8 +263,8 @@ function AddMonsterSheet({
           Add monsters
         </h2>
         <div
-          className="rounded-lg px-3 py-2 text-center"
-          style={{ fontWeight: 800, background: over ? 'var(--warning)' : 'var(--surface-sunk)', color: over ? '#fff' : 'var(--text)' }}
+          className="px-3 py-2 text-center"
+          style={{ fontWeight: 800, clipPath: 'var(--clip-torn-2)', background: over ? 'var(--warning)' : 'var(--surface-sunk)', color: over ? '#fff' : 'var(--text)' }}
         >
           <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)' }}>
             {total} / {budget}
@@ -279,13 +282,12 @@ function AddMonsterSheet({
         className="mf-input my-2.5"
       />
       <div className="grid gap-1.5">
-        {list.map((m) => {
+        {list.map((m, i) => {
           const count = countOf(m.id)
           return (
             <div
               key={m.id}
-              className="mf-card flex items-center gap-2 p-3"
-              style={count > 0 ? { borderColor: 'var(--primary)' } : undefined}
+              className={`mf-torn-card ${['', 'mf-torn-card--2', 'mf-torn-card--3'][i % 3]} ${count > 0 ? 'mf-pick--on' : ''} flex items-center gap-2 p-3`}
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">

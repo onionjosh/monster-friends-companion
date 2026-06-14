@@ -50,6 +50,8 @@
   /* Monster row: STRAIGHT left wall (protects the photo) + flat top/bottom over
      the photo column; torn only on the text side & right edge. */
   --clip-torn-row: polygon(0% 0%, 22% 0%, 40% 3%, 60% 0%, 80% 4%, 95% 1%, 100% 6%, 99% 38%, 100% 70%, 99% 93%, 100% 100%, 80% 97%, 60% 100%, 38% 96%, 22% 100%, 0% 100%);
+  /* Gentle torn — ~20% of the raggedness of the frame clips. For photos. */
+  --clip-torn-soft: polygon(0% 1%, 25% 0%, 50% 1.4%, 75% 0%, 100% 1%, 99.2% 25%, 100% 50%, 99.2% 75%, 100% 99%, 75% 100%, 50% 98.6%, 25% 100%, 0% 99%, 0.8% 50%);
   --tilt-sm: -1.5deg;
   --tilt-md: -2.5deg;
   --tilt-rev: 2deg;
