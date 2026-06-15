@@ -95,12 +95,14 @@ export function PartyEditor() {
             >
               <div className="min-w-0 flex-1">
                 {m ? (
-                  <Link href={`/monsters/${m.id}`} className="flex items-center gap-2">
-                    <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
-                      {m.name}
-                    </span>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <Link href={`/monsters/${m.id}`} className="flex min-w-0">
+                      <span className="truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>
+                        {m.name}
+                      </span>
+                    </Link>
                     <SizeBadge size={m.size} />
-                  </Link>
+                  </div>
                 ) : (
                   <span style={{ fontWeight: 700, color: 'var(--text-muted)' }}>Unknown: {e.monsterId}</span>
                 )}
