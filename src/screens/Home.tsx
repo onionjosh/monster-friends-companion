@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useLocation } from 'wouter'
 import { usePlayStore } from '../stores/play'
 import { gameData } from '../data'
@@ -25,6 +26,17 @@ const ACTIONS: BtnSpec[] = [
 export function Home() {
   const game = usePlayStore((s) => s.game)
   const [, navigate] = useLocation()
+  const [pressing, setPressing] = useState<string | null>(null)
+
+  // Let the tapped button visibly plunge before we navigate away.
+  const go = (href: string, key: string = href) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      navigate(href)
+      return
+    }
+    setPressing(key)
+    window.setTimeout(() => navigate(href), 150)
+  }
 
   return (
     <div className="mx-auto max-w-lg p-4">
@@ -73,7 +85,8 @@ export function Home() {
               leftIcon={b.icon}
               cut={b.cut}
               tilt="none"
-              onClick={() => navigate(b.href)}
+              className={pressing === b.href ? 'mf-plunge' : undefined}
+              onClick={() => go(b.href)}
               style={{ width: '100%', padding: '28px 18px' }}
             >
               {b.label}
@@ -84,8 +97,8 @@ export function Home() {
           {game && (
             <button
               type="button"
-              onClick={() => navigate('/play')}
-              className="mf-torn mf-torn--red mf-torn--btn"
+              onClick={() => go('/play', 'resume')}
+              className={`mf-torn mf-torn--red mf-torn--btn${pressing === 'resume' ? ' mf-plunge' : ''}`}
               style={{
                 width: '100%',
                 clipPath: 'var(--clip-torn-2)',
@@ -113,7 +126,8 @@ export function Home() {
               leftIcon={b.icon}
               cut={b.cut}
               tilt="none"
-              onClick={() => navigate(b.href)}
+              className={pressing === b.href ? 'mf-plunge' : undefined}
+              onClick={() => go(b.href)}
               style={{ width: '100%', padding: '28px 18px' }}
             >
               {b.label}

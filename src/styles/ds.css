@@ -284,6 +284,15 @@ button {
   .mf-cta-ready { animation: none; filter: drop-shadow(3px 3px 0 var(--shadow-ink)) drop-shadow(0 0 8px var(--primary)); }
 }
 
+/* Plunge: a quick press-into-the-table when a main button is tapped. */
+@keyframes mf-plunge {
+  0%   { transform: translate(0, 0); filter: drop-shadow(3px 3px 0 var(--shadow-ink)); }
+  40%  { transform: translate(3px, 3px); filter: none; }
+  100% { transform: translate(0, 0); filter: drop-shadow(3px 3px 0 var(--shadow-ink)); }
+}
+.mf-plunge { animation: mf-plunge 150ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .mf-plunge { animation: none; } }
+
 /* ---- Input (torn, no white outline) ---- */
 .mf-input {
   width: 100%;
