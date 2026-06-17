@@ -235,6 +235,21 @@ function BudgetInput({ value, onCommit }: { value: number; onCommit: (b: number)
   )
 }
 
+type SortKey = 'name' | 'pp' | 'hp' | 'size'
+const SIZE_ORDER: Record<string, number> = { S: 0, M: 1, L: 2 }
+const SORTS: { key: SortKey; label: string }[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'pp', label: 'PP' },
+  { key: 'hp', label: 'HP' },
+  { key: 'size', label: 'Size' },
+]
+const SIZE_FILTERS: { v: 'all' | 'S' | 'M' | 'L'; l: string }[] = [
+  { v: 'all', l: 'All' },
+  { v: 'S', l: 'Small' },
+  { v: 'M', l: 'Medium' },
+  { v: 'L', l: 'Large' },
+]
+
 function AddMonsterSheet({
   open,
   onClose,
@@ -255,7 +270,50 @@ function AddMonsterSheet({
   onSet: (id: string, count: number) => void
 }) {
   const [q, setQ] = useState('')
-  const list = monsters.filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
+  const [sortKey, setSortKey] = useState<SortKey>('name')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
+  const [sizeFilter, setSizeFilter] = useState<'all' | 'S' | 'M' | 'L'>('all')
+
+  const setSort = (key: SortKey) => {
+    if (key === sortKey) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+    else {
+      setSortKey(key)
+      setSortDir('asc')
+    }
+  }
+
+  // Anything that costs more than what's left in the budget can't be added
+  // without going over — grey it out and sink it to the bottom. Monsters
+  // already in the party stay put so you can still adjust them.
+  const remaining = budget - total
+  const rows = monsters
+    .filter((m) => m.name.toLowerCase().includes(q.toLowerCase()))
+    .filter((m) => sizeFilter === 'all' || m.size === sizeFilter)
+    .map((m) => {
+      const count = countOf(m.id)
+      return { m, count, affordable: count > 0 || m.partyPoints <= remaining }
+    })
+  const dir = sortDir === 'asc' ? 1 : -1
+  rows.sort((a, b) => {
+    if (a.affordable !== b.affordable) return a.affordable ? -1 : 1
+    let r: number
+    switch (sortKey) {
+      case 'pp':
+        r = a.m.partyPoints - b.m.partyPoints
+        break
+      case 'hp':
+        r = a.m.hp - b.m.hp
+        break
+      case 'size':
+        r = SIZE_ORDER[a.m.size] - SIZE_ORDER[b.m.size]
+        break
+      default:
+        r = a.m.name.localeCompare(b.m.name)
+    }
+    r *= dir
+    return r !== 0 ? r : a.m.name.localeCompare(b.m.name)
+  })
+
   return (
     <Sheet open={open} onClose={onClose} bg="var(--bg)" scrim="var(--bg)">
       <div
@@ -289,17 +347,34 @@ function AddMonsterSheet({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search…"
-          className="mf-input mb-3"
+          className="mf-input mb-2.5"
         />
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)' }}>
+            Sort
+          </span>
+          {SORTS.map(({ key, label }) => (
+            <button key={key} type="button" className="mf-chip mf-chip--filter" data-active={sortKey === key} onClick={() => setSort(key)}>
+              {label}
+              {sortKey === key ? (sortDir === 'asc' ? ' ↑' : ' ↓') : ''}
+            </button>
+          ))}
+        </div>
+        <div className="mb-3 flex flex-wrap gap-1.5">
+          {SIZE_FILTERS.map(({ v, l }) => (
+            <button key={v} type="button" className="mf-chip mf-chip--filter" data-active={sizeFilter === v} onClick={() => setSizeFilter(v)}>
+              {l}
+            </button>
+          ))}
+        </div>
         <div className="grid gap-3">
-          {list.map((m) => {
-            const count = countOf(m.id)
+          {rows.map(({ m, count, affordable }) => {
             const ranged = m.attacks.some((a) => a.type === 'ranged')
             return (
               <div
                 key={m.id}
                 className="flex items-stretch overflow-hidden"
-                style={{ clipPath: 'var(--clip-torn-row)', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
+                style={{ clipPath: 'var(--clip-torn-row)', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))', opacity: affordable ? 1 : 0.45 }}
               >
                 <div
                   className="relative shrink-0 self-stretch"
@@ -361,7 +436,7 @@ function AddMonsterSheet({
               </div>
             )
           })}
-          {list.length === 0 && (
+          {rows.length === 0 && (
             <p className="py-6 text-center" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
               No monsters match.
             </p>
