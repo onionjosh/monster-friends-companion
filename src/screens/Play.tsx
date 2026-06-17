@@ -151,7 +151,7 @@ function Setup() {
 function Tracker() {
   const game = usePlayStore((s) => s.game)!
   const endGame = usePlayStore((s) => s.endGame)
-  const advanceRound = usePlayStore((s) => s.advanceRound)
+  const newGame = usePlayStore((s) => s.newGame)
   const setEnergy = usePlayStore((s) => s.setEnergy)
   const [side, setSide] = useState<Side>('mine')
   const [cardUnit, setCardUnit] = useState<UnitState | null>(null)
@@ -165,10 +165,10 @@ function Tracker() {
     <div className="mx-auto max-w-lg p-4 pb-24">
       <div className="mb-2 flex items-center justify-between gap-2">
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 800 }}>Round {game.round}</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 800 }}>{scenario?.name ?? 'Battle'}</div>
           {scenario && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-              {scenario.name}: {scenario.winCondition}
+              {scenario.winCondition}
             </div>
           )}
         </div>
@@ -179,10 +179,10 @@ function Tracker() {
             cut={1}
             tilt="sm"
             onClick={() => {
-              if (confirm('Start the next Round? All monsters refill Action Tokens and both players refill to 10 Energy.')) advanceRound()
+              if (confirm('Start a new game? This resets all HP, Action Tokens, Energy, conditions and KOs.')) newGame()
             }}
           >
-            Next Round
+            New Game
           </TornButton>
           <button
             type="button"
@@ -246,7 +246,6 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
   const adjustAct = usePlayStore((s) => s.adjustAct)
   const toggleDead = usePlayStore((s) => s.toggleDead)
   const toggleCondition = usePlayStore((s) => s.toggleCondition)
-  const m = monsterById.get(unit.monsterId)
 
   return (
     <div className="mf-card p-3" style={unit.dead ? { opacity: 0.55 } : undefined}>
@@ -255,7 +254,7 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
           type="button"
           onClick={onShowCard}
           className="truncate text-left"
-          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)', textDecoration: 'underline', textDecorationStyle: 'dotted' }}
+          style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}
         >
           {unit.label}
         </button>
@@ -266,7 +265,7 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
           style={
             unit.dead
               ? { background: 'var(--punk-red)', color: '#fff', fontSize: 'var(--text-sm)' }
-              : { color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }
+              : { color: 'var(--punk-red)', fontSize: 'var(--text-sm)' }
           }
         >
           <Icon name="skull" size={16} />
@@ -277,7 +276,7 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
       {!unit.dead && (
         <>
           <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-            <Stepper big label={`HP/${m?.hp ?? '?'}`} value={unit.hp} min={0} onChange={(v) => adjustHp(side, unit.uid, v - unit.hp)} />
+            <Stepper big label="HP" value={unit.hp} min={0} onChange={(v) => adjustHp(side, unit.uid, v - unit.hp)} />
             <Stepper label="AcT" value={unit.act} min={0} onChange={(v) => adjustAct(side, unit.uid, v - unit.act)} />
           </div>
           <div className="mt-2 flex flex-wrap gap-1.5">

@@ -83,6 +83,32 @@ export function nextRound(game: GameState, monsterById: Map<string, Monster>): G
   }
 }
 
+/** Restore one side to its opening state: full HP & AcT, alive, no conditions. */
+function resetSide(side: SideState, monsterById: Map<string, Monster>): SideState {
+  return {
+    ...side,
+    energy: MAX_ENERGY,
+    units: side.units.map((u) => {
+      const m = monsterById.get(u.monsterId)
+      return { ...u, hp: m?.hp ?? u.hp, act: m?.act ?? u.act, conditions: [], dead: false }
+    }),
+  }
+}
+
+/**
+ * New Game: re-run the current matchup from scratch. Every monster goes back to
+ * full HP and Action Tokens, all KOs and conditions clear, both players refill
+ * to full Energy. (Rounds aren't tracked as a mechanic — this just resets.)
+ */
+export function restartGame(game: GameState, monsterById: Map<string, Monster>): GameState {
+  return {
+    ...game,
+    round: 1,
+    mine: resetSide(game.mine, monsterById),
+    theirs: resetSide(game.theirs, monsterById),
+  }
+}
+
 export function adjustUnit(
   side: SideState,
   uid: string,

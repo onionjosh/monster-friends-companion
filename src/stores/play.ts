@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { GameState, PartyEntry, UnitState } from '../lib/types'
-import { buildSide, createGame, nextRound, adjustUnit, MAX_ENERGY } from '../lib/play'
+import { buildSide, createGame, restartGame, adjustUnit, MAX_ENERGY } from '../lib/play'
 import { monsterById } from '../data'
 
 export type Side = 'mine' | 'theirs'
@@ -14,7 +14,7 @@ interface PlayState {
     scenarioId: string | null,
   ) => void
   endGame: () => void
-  advanceRound: () => void
+  newGame: () => void
   setEnergy: (side: Side, value: number) => void
   adjustHp: (side: Side, uid: string, delta: number) => void
   adjustAct: (side: Side, uid: string, delta: number) => void
@@ -48,8 +48,8 @@ export const usePlayStore = create<PlayState>()(
 
       endGame: () => set({ game: null }),
 
-      advanceRound: () =>
-        set((s) => (s.game ? { game: nextRound(s.game, monsterById) } : s)),
+      newGame: () =>
+        set((s) => (s.game ? { game: restartGame(s.game, monsterById) } : s)),
 
       setEnergy: (side, value) =>
         set((s) =>

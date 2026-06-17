@@ -100,7 +100,7 @@ export function Home() {
               <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2, lineHeight: 1.1 }}>
                 <span>Resume Game</span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 400, fontSize: 11, textTransform: 'none', letterSpacing: 0, opacity: 0.9 }}>
-                  Round {game.round} · {game.mine.name} vs {game.theirs.name}
+                  {game.mine.name} vs {game.theirs.name}
                 </span>
               </span>
             </button>

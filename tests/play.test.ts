@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildSide, createGame, nextRound, clampHp, sideDefeated, MAX_ENERGY } from '../src/lib/play'
+import { buildSide, createGame, nextRound, restartGame, clampHp, sideDefeated, MAX_ENERGY } from '../src/lib/play'
 import type { Monster } from '../src/lib/schemas'
 
 function fakeMonster(id: string, overrides: Partial<Monster> = {}): Monster {
@@ -90,6 +90,41 @@ describe('nextRound', () => {
     expect(next.mine.units[0].hp).toBe(3)
     expect(next.mine.units[1].dead).toBe(true)
     expect(next.mine.units[1].act).toBe(0)
+  })
+})
+
+describe('restartGame (New Game)', () => {
+  it('resets HP & AcT to max, revives the dead, clears all conditions and refills energy', () => {
+    const mine = buildSide('Me', [{ monsterId: 'gnorc', count: 2 }], byId)
+    const theirs = buildSide('Them', [{ monsterId: 'troll', count: 1 }], byId)
+    let game = createGame(mine, theirs, 'fighting-is-fun', 0)
+    game = nextRound(game, byId) // round 2
+
+    game = {
+      ...game,
+      mine: {
+        ...game.mine,
+        energy: 1,
+        units: [
+          { ...game.mine.units[0], act: 0, hp: 1, conditions: ['guarding', 'last-life'] },
+          { ...game.mine.units[1], dead: true, hp: 0, act: 0 },
+        ],
+      },
+    }
+
+    const fresh = restartGame(game, byId)
+    expect(fresh.round).toBe(1)
+    expect(fresh.mine.energy).toBe(10)
+    expect(fresh.theirs.energy).toBe(10)
+    // gnorc max hp 6 / act 2 (from byId)
+    expect(fresh.mine.units[0].hp).toBe(6)
+    expect(fresh.mine.units[0].act).toBe(2)
+    expect(fresh.mine.units[0].conditions).toEqual([])
+    expect(fresh.mine.units[0].dead).toBe(false)
+    // the KO'd unit comes back alive at full HP
+    expect(fresh.mine.units[1].dead).toBe(false)
+    expect(fresh.mine.units[1].hp).toBe(6)
+    expect(fresh.mine.units[1].act).toBe(2)
   })
 })
 
