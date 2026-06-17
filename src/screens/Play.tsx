@@ -268,18 +268,16 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
   return (
     <div className="mf-card p-3" style={unit.dead ? { opacity: 0.55 } : undefined}>
       <div className="flex items-center justify-between gap-2">
-        <button
-          type="button"
-          onClick={onShowCard}
-          className="truncate text-left"
+        <span
+          className="min-w-0 truncate"
           style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--text-lg)' }}
         >
           {unit.label}
-        </button>
+        </span>
         <button
           type="button"
           onClick={() => toggleDead(side, unit.uid)}
-          className="mf-btn px-2 py-1"
+          className="mf-btn shrink-0 px-2 py-1"
           style={
             unit.dead
               ? { background: 'var(--punk-red)', color: '#fff', fontSize: 'var(--text-sm)' }
@@ -292,13 +290,17 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
       </div>
 
       {!unit.dead && (
-        <>
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-            <Stepper big label="HP" value={unit.hp} min={0} onChange={(v) => adjustHp(side, unit.uid, v - unit.hp)} />
-            <Stepper label="AcT" value={unit.act} min={0} onChange={(v) => adjustAct(side, unit.uid, v - unit.act)} />
-          </div>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {conditions.map((c) => (
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+          <Stepper big label="HP" value={unit.hp} min={0} onChange={(v) => adjustHp(side, unit.uid, v - unit.hp)} />
+          <Stepper label="AcT" value={unit.act} min={0} onChange={(v) => adjustAct(side, unit.uid, v - unit.act)} />
+        </div>
+      )}
+
+      {/* conditions (left) + the only way into the full card: a parchment button (bottom-right) */}
+      <div className="mt-2 flex items-end justify-between gap-2">
+        <div className="flex flex-wrap gap-1.5">
+          {!unit.dead &&
+            conditions.map((c) => (
               <button
                 key={c.id}
                 type="button"
@@ -310,9 +312,18 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
                 {c.name}
               </button>
             ))}
-          </div>
-        </>
-      )}
+        </div>
+        <button
+          type="button"
+          aria-label="View monster card"
+          title="View monster card"
+          onClick={onShowCard}
+          className="mf-btn shrink-0 px-2.5 py-1.5"
+          style={{ fontSize: 'var(--text-sm)', color: 'var(--accent-text)' }}
+        >
+          <Icon name="scroll" size={17} /> Card
+        </button>
+      </div>
     </div>
   )
 }
