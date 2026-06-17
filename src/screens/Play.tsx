@@ -54,7 +54,9 @@ function Setup() {
     startGame({ name: mine.name, entries: mine.entries }, opponent, scenarioId)
   }
 
-  const pick = (active: boolean) => `mf-torn-card w-full p-3 text-left font-semibold${active ? ' mf-pick--on' : ''}`
+  const pickCls = 'mf-torn-card w-full p-3 text-left font-semibold'
+  const pickStyle = (active: boolean) =>
+    active ? { background: 'var(--primary)', color: 'var(--on-primary)' } : undefined
 
   return (
     <div className="mx-auto max-w-lg p-4">
@@ -70,7 +72,7 @@ function Setup() {
       </h2>
       <div className="mb-4 grid gap-1.5">
         {list.map((p) => (
-          <button key={p.id} type="button" className={pick(mineId === p.id)} onClick={() => setMineId(p.id)}>
+          <button key={p.id} type="button" className={pickCls} style={pickStyle(mineId === p.id)} onClick={() => setMineId(p.id)}>
             {p.name}
           </button>
         ))}
@@ -93,7 +95,8 @@ function Setup() {
           <button
             key={p.id}
             type="button"
-            className={pick(theirsId === p.id && !oppFromCode)}
+            className={pickCls}
+            style={pickStyle(theirsId === p.id && !oppFromCode)}
             onClick={() => {
               setTheirsId(p.id)
               setOppCode('')
@@ -127,18 +130,33 @@ function Setup() {
         Scenario
       </h2>
       <div className="mb-5 grid gap-1.5">
-        {scenarios.map((s) => (
-          <button key={s.id} type="button" className={pick(scenarioId === s.id)} onClick={() => setScenarioId(s.id)}>
-            {s.name}
-            <span className="block" style={{ fontWeight: 400, fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-              {s.winCondition}
-            </span>
-          </button>
-        ))}
+        {scenarios.map((s) => {
+          const active = scenarioId === s.id
+          return (
+            <button key={s.id} type="button" className={pickCls} style={pickStyle(active)} onClick={() => setScenarioId(s.id)}>
+              {s.name}
+              <span
+                className="block"
+                style={{ fontWeight: 400, fontSize: 'var(--text-xs)', color: active ? 'var(--on-primary)' : 'var(--text-muted)', opacity: active ? 0.75 : 1 }}
+              >
+                {s.winCondition}
+              </span>
+            </button>
+          )
+        })}
       </div>
 
       <div className="flex justify-center">
-        <TornButton variant="gold" cut={1} tilt="sm" leftIcon="dice" disabled={!canStart} onClick={start} style={!canStart ? { opacity: 0.4 } : undefined}>
+        <TornButton
+          variant="gold"
+          cut={1}
+          tilt="sm"
+          leftIcon="dice"
+          disabled={!canStart}
+          onClick={start}
+          className={canStart ? 'mf-cta-ready' : undefined}
+          style={!canStart ? { opacity: 0.45, filter: 'grayscale(0.85) drop-shadow(3px 3px 0 var(--shadow-ink))' } : undefined}
+        >
           Start the Battle!
         </TornButton>
       </div>

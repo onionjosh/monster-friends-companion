@@ -272,16 +272,16 @@ button {
 .mf-torn-card--3 { clip-path: var(--clip-torn-3); }
 .mf-torn-card--row { clip-path: var(--clip-torn-row); }
 
-/* Selected torn frame: gold ragged outline (party picks, active choices). */
-.mf-pick--on {
-  filter: drop-shadow(2px 0 0 var(--primary)) drop-shadow(-2px 0 0 var(--primary))
-    drop-shadow(0 2px 0 var(--primary)) drop-shadow(0 -2px 0 var(--primary))
-    drop-shadow(3px 3px 0 var(--shadow-ink));
+/* Primary CTA "ready" pulse: gold glow once an action becomes available. */
+@keyframes mf-cta-glow {
+  0%, 100% { filter: drop-shadow(3px 3px 0 var(--shadow-ink)) drop-shadow(0 0 3px var(--primary)); }
+  50%      { filter: drop-shadow(3px 3px 0 var(--shadow-ink)) drop-shadow(0 0 13px var(--primary)); }
 }
-.mf-pick--on:hover {
-  filter: drop-shadow(2px 0 0 var(--primary)) drop-shadow(-2px 0 0 var(--primary))
-    drop-shadow(0 2px 0 var(--primary)) drop-shadow(0 -2px 0 var(--primary))
-    drop-shadow(5px 5px 0 var(--shadow-ink));
+.mf-cta-ready { animation: mf-cta-glow 1.4s ease-in-out infinite; }
+/* On hover, pause the pulse and keep the lift shadow + a strong steady glow. */
+.mf-cta-ready:hover { animation: none; filter: drop-shadow(5px 5px 0 var(--shadow-ink)) drop-shadow(0 0 13px var(--primary)); }
+@media (prefers-reduced-motion: reduce) {
+  .mf-cta-ready { animation: none; filter: drop-shadow(3px 3px 0 var(--shadow-ink)) drop-shadow(0 0 8px var(--primary)); }
 }
 
 /* ---- Input (torn, no white outline) ---- */
@@ -322,6 +322,7 @@ button {
 .mf-torn:hover { transform: translate(-1px, -1px) rotate(var(--_tilt, 0deg)); filter: drop-shadow(5px 5px 0 var(--shadow-ink)); }
 .mf-torn:active { transform: translate(3px, 3px) rotate(var(--_tilt, 0deg)) !important; filter: none; }
 .mf-torn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; }
+.mf-torn:disabled { cursor: not-allowed; }
 .mf-torn--red { background: var(--punk-red); color: #fff; }
 .mf-torn--cream { background: var(--poster-cream); color: var(--poster-black); }
 .mf-torn--gold { background: var(--primary); color: var(--on-primary); }
