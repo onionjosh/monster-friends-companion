@@ -3,7 +3,7 @@ import { Link } from 'wouter'
 import { usePartiesStore } from '../stores/parties'
 import { usePlayStore, type Side } from '../stores/play'
 import { monsterById, conditions, conditionById, scenarios, scenarioById, genericAbilities } from '../data'
-import type { UnitState } from '../lib/types'
+import type { GameState, UnitState } from '../lib/types'
 import { sideDefeated, MAX_ENERGY } from '../lib/play'
 import { decodeParty, DecodeError } from '../lib/codec'
 import { Sheet } from '../components/Sheet'
@@ -166,6 +166,59 @@ function Setup() {
 
 /* ---------------- Tracker ---------------- */
 
+// Per-team colour coding, shared by the energy zone and the side switcher.
+const TEAM_BG: Record<Side, string> = { mine: 'var(--mf-sky-700)', theirs: 'var(--mf-devil-700)' }
+const TEAM_CLIP: Record<Side, string> = { mine: 'var(--clip-torn-2)', theirs: 'var(--clip-torn-3)' }
+
+/** MTG-life-counter-style energy: each team owns a colour-coded half; tap the top
+ *  half to add Energy, the bottom half to subtract. Both teams always visible. */
+function EnergyZone({ game, setEnergy }: { game: GameState; setEnergy: (side: Side, value: number) => void }) {
+  return (
+    <div className="mb-3 grid grid-cols-2 gap-2" style={{ height: '30vh', minHeight: 200, maxHeight: 320 }}>
+      {(['mine', 'theirs'] as const).map((s) => {
+        const st = game[s]
+        const atMax = st.energy >= MAX_ENERGY
+        const atMin = st.energy <= 0
+        return (
+          <div
+            key={s}
+            className="relative select-none overflow-hidden"
+            style={{ background: TEAM_BG[s], clipPath: TEAM_CLIP[s], color: '#fff', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
+          >
+            <button
+              type="button"
+              aria-label={`Add Energy — ${st.name}`}
+              disabled={atMax}
+              onClick={() => setEnergy(s, st.energy + 1)}
+              className="absolute inset-x-0 top-0 flex items-center justify-center"
+              style={{ height: '50%', background: 'transparent', border: 0, color: 'rgba(255,255,255,0.55)', opacity: atMax ? 0.25 : 1, cursor: atMax ? 'default' : 'pointer', touchAction: 'manipulation' }}
+            >
+              <Icon name="plus" size={28} />
+            </button>
+            <button
+              type="button"
+              aria-label={`Subtract Energy — ${st.name}`}
+              disabled={atMin}
+              onClick={() => setEnergy(s, st.energy - 1)}
+              className="absolute inset-x-0 bottom-0 flex items-center justify-center"
+              style={{ height: '50%', background: 'transparent', border: 0, color: 'rgba(255,255,255,0.55)', opacity: atMin ? 0.25 : 1, cursor: atMin ? 'default' : 'pointer', touchAction: 'manipulation' }}
+            >
+              <Icon name="minus" size={28} />
+            </button>
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-2" style={{ pointerEvents: 'none' }}>
+              <span className="w-full truncate text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.9 }}>
+                {st.name}
+              </span>
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(42px, 12vw, 60px)', lineHeight: 1 }}>{st.energy}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.85 }}>⚡ Energy</span>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function Tracker() {
   const game = usePlayStore((s) => s.game)!
   const endGame = usePlayStore((s) => s.endGame)
@@ -224,7 +277,10 @@ function Tracker() {
         </div>
       )}
 
-      {/* side switcher */}
+      {/* energy — tap a team's top half to add, bottom half to subtract */}
+      <EnergyZone game={game} setEnergy={setEnergy} />
+
+      {/* side switcher — picks whose units show below; colours match the energy zones */}
       <div className="mf-card mb-2 grid grid-cols-2 overflow-hidden p-0">
         {(['mine', 'theirs'] as const).map((s) => (
           <button
@@ -232,16 +288,14 @@ function Tracker() {
             type="button"
             onClick={() => setSide(s)}
             className="mf-press truncate px-2 py-2 font-bold"
-            style={side === s ? { background: 'var(--text)', color: 'var(--text-inverse)' } : { background: 'transparent', color: 'var(--text)' }}
+            style={side === s ? { background: TEAM_BG[s], color: '#fff' } : { background: 'transparent', color: 'var(--text)' }}
           >
             {game[s].name}
           </button>
         ))}
       </div>
 
-      {/* energy + party rules */}
-      <div className="mf-card mb-3 flex items-center justify-between p-3">
-        <Stepper big label="⚡ Energy" value={cur.energy} min={0} max={MAX_ENERGY} onChange={(v) => setEnergy(side, v)} />
+      <div className="mb-3 flex justify-end">
         <button type="button" onClick={() => setRulesOpen(true)} className="mf-btn px-2.5 py-1.5" style={{ fontSize: 'var(--text-sm)' }}>
           <Icon name="book" size={16} /> Party rules
         </button>
