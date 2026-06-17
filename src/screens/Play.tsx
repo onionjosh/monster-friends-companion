@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'wouter'
 import { usePartiesStore } from '../stores/parties'
 import { usePlayStore, type Side } from '../stores/play'
 import { monsterById, conditions, conditionById, scenarios, scenarioById, genericAbilities } from '../data'
-import type { GameState, UnitState } from '../lib/types'
+import type { GameState, SideState, UnitState } from '../lib/types'
 import { sideDefeated, MAX_ENERGY } from '../lib/play'
 import { decodeParty, DecodeError } from '../lib/codec'
 import { Sheet } from '../components/Sheet'
@@ -168,53 +168,64 @@ function Setup() {
 
 // Per-team colour coding, shared by the energy zone and the side switcher.
 const TEAM_BG: Record<Side, string> = { mine: 'var(--mf-sky-700)', theirs: 'var(--mf-devil-700)' }
-const TEAM_CLIP: Record<Side, string> = { mine: 'var(--clip-torn-2)', theirs: 'var(--clip-torn-3)' }
 
-/** MTG-life-counter-style energy: each team owns a colour-coded half; tap the top
- *  half to add Energy, the bottom half to subtract. Both teams always visible. */
+/** One team's tap-counter half: tap the top to add Energy, the bottom to subtract.
+ *  Briefly flashes whenever this team's Energy changes. */
+function EnergyHalf({ side, st, setEnergy }: { side: Side; st: SideState; setEnergy: (side: Side, value: number) => void }) {
+  const [flashKey, setFlashKey] = useState(0)
+  const prev = useRef(st.energy)
+  useEffect(() => {
+    if (prev.current !== st.energy) {
+      prev.current = st.energy
+      setFlashKey((k) => k + 1)
+    }
+  }, [st.energy])
+
+  const atMax = st.energy >= MAX_ENERGY
+  const atMin = st.energy <= 0
+  return (
+    <div
+      className="relative select-none overflow-hidden"
+      style={{ background: TEAM_BG[side], clipPath: 'var(--clip-torn-soft)', color: '#fff', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
+    >
+      <button
+        type="button"
+        aria-label={`Add Energy — ${st.name}`}
+        disabled={atMax}
+        onClick={() => setEnergy(side, st.energy + 1)}
+        className="absolute inset-x-0 top-0 flex items-start justify-center"
+        style={{ height: '50%', background: 'transparent', border: 0, paddingTop: 14, color: 'rgba(255,255,255,0.55)', opacity: atMax ? 0.25 : 1, cursor: atMax ? 'default' : 'pointer', touchAction: 'manipulation' }}
+      >
+        <Icon name="plus" size={28} />
+      </button>
+      <button
+        type="button"
+        aria-label={`Subtract Energy — ${st.name}`}
+        disabled={atMin}
+        onClick={() => setEnergy(side, st.energy - 1)}
+        className="absolute inset-x-0 bottom-0 flex items-end justify-center"
+        style={{ height: '50%', background: 'transparent', border: 0, paddingBottom: 14, color: 'rgba(255,255,255,0.55)', opacity: atMin ? 0.25 : 1, cursor: atMin ? 'default' : 'pointer', touchAction: 'manipulation' }}
+      >
+        <Icon name="minus" size={28} />
+      </button>
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-2" style={{ pointerEvents: 'none' }}>
+        <span className="w-full truncate text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.9 }}>
+          {st.name}
+        </span>
+        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(42px, 12vw, 60px)', lineHeight: 1 }}>{st.energy}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.85 }}>⚡ Energy</span>
+      </div>
+      {flashKey > 0 && <span key={flashKey} className="mf-energy-flash" aria-hidden="true" />}
+    </div>
+  )
+}
+
+/** MTG-life-counter-style energy: each team owns a colour-coded half. Both visible. */
 function EnergyZone({ game, setEnergy }: { game: GameState; setEnergy: (side: Side, value: number) => void }) {
   return (
     <div className="mb-3 grid grid-cols-2 gap-2" style={{ height: '30vh', minHeight: 200, maxHeight: 320 }}>
-      {(['mine', 'theirs'] as const).map((s) => {
-        const st = game[s]
-        const atMax = st.energy >= MAX_ENERGY
-        const atMin = st.energy <= 0
-        return (
-          <div
-            key={s}
-            className="relative select-none overflow-hidden"
-            style={{ background: TEAM_BG[s], clipPath: TEAM_CLIP[s], color: '#fff', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}
-          >
-            <button
-              type="button"
-              aria-label={`Add Energy — ${st.name}`}
-              disabled={atMax}
-              onClick={() => setEnergy(s, st.energy + 1)}
-              className="absolute inset-x-0 top-0 flex items-center justify-center"
-              style={{ height: '50%', background: 'transparent', border: 0, color: 'rgba(255,255,255,0.55)', opacity: atMax ? 0.25 : 1, cursor: atMax ? 'default' : 'pointer', touchAction: 'manipulation' }}
-            >
-              <Icon name="plus" size={28} />
-            </button>
-            <button
-              type="button"
-              aria-label={`Subtract Energy — ${st.name}`}
-              disabled={atMin}
-              onClick={() => setEnergy(s, st.energy - 1)}
-              className="absolute inset-x-0 bottom-0 flex items-center justify-center"
-              style={{ height: '50%', background: 'transparent', border: 0, color: 'rgba(255,255,255,0.55)', opacity: atMin ? 0.25 : 1, cursor: atMin ? 'default' : 'pointer', touchAction: 'manipulation' }}
-            >
-              <Icon name="minus" size={28} />
-            </button>
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-2" style={{ pointerEvents: 'none' }}>
-              <span className="w-full truncate text-center" style={{ fontFamily: 'var(--font-mono)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.9 }}>
-                {st.name}
-              </span>
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(42px, 12vw, 60px)', lineHeight: 1 }}>{st.energy}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.12em', opacity: 0.85 }}>⚡ Energy</span>
-            </div>
-          </div>
-        )
-      })}
+      <EnergyHalf side="mine" st={game.mine} setEnergy={setEnergy} />
+      <EnergyHalf side="theirs" st={game.theirs} setEnergy={setEnergy} />
     </div>
   )
 }
@@ -431,7 +442,18 @@ function PartyRulesSheet({ open, onClose, side }: { open: boolean; onClose: () =
   )
 
   return (
-    <Sheet open={open} onClose={onClose} title={`${game[side].name} — all rules`}>
+    <Sheet open={open} onClose={onClose}>
+      <button
+        type="button"
+        onClick={onClose}
+        className="mb-2 flex items-center gap-1"
+        style={{ color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)' }}
+      >
+        <Icon name="chevronLeft" size={18} /> Back
+      </button>
+      <h2 className="mb-3" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
+        {game[side].name} — all rules
+      </h2>
       <div className="grid gap-2.5">
         {reactions.length > 0 && (
           <>

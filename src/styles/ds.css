@@ -293,6 +293,11 @@ button {
 .mf-plunge { animation: mf-plunge 150ms ease-out; }
 @media (prefers-reduced-motion: reduce) { .mf-plunge { animation: none; } }
 
+/* Energy change feedback: a brief white flash over a team's counter half. */
+@keyframes mf-energy-flash { from { opacity: 0.5; } to { opacity: 0; } }
+.mf-energy-flash { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: mf-energy-flash 320ms ease-out forwards; }
+@media (prefers-reduced-motion: reduce) { .mf-energy-flash { animation: none; opacity: 0; } }
+
 /* ---- Input (torn, no white outline) ---- */
 .mf-input {
   width: 100%;
