@@ -4,7 +4,7 @@ import { usePartiesStore } from '../stores/parties'
 import { usePlayStore, type Side } from '../stores/play'
 import { monsterById, conditions, conditionById, scenarios, scenarioById, genericAbilities } from '../data'
 import type { GameState, SideState, UnitState } from '../lib/types'
-import { sideDefeated, MAX_ENERGY } from '../lib/play'
+import { sideDefeated } from '../lib/play'
 import { decodeParty, DecodeError } from '../lib/codec'
 import { Sheet } from '../components/Sheet'
 import { Stepper } from '../components/Stepper'
@@ -181,7 +181,6 @@ function EnergyHalf({ side, st, setEnergy }: { side: Side; st: SideState; setEne
     }
   }, [st.energy])
 
-  const atMax = st.energy >= MAX_ENERGY
   const atMin = st.energy <= 0
   return (
     <div
@@ -191,10 +190,9 @@ function EnergyHalf({ side, st, setEnergy }: { side: Side; st: SideState; setEne
       <button
         type="button"
         aria-label={`Add Energy — ${st.name}`}
-        disabled={atMax}
         onClick={() => setEnergy(side, st.energy + 1)}
         className="absolute inset-x-0 top-0 flex items-start justify-center"
-        style={{ height: '50%', background: 'transparent', border: 0, paddingTop: 14, color: 'rgba(255,255,255,0.55)', opacity: atMax ? 0.25 : 1, cursor: atMax ? 'default' : 'pointer', touchAction: 'manipulation' }}
+        style={{ height: '50%', background: 'transparent', border: 0, paddingTop: 14, color: 'rgba(255,255,255,0.55)', cursor: 'pointer', touchAction: 'manipulation' }}
       >
         <Icon name="plus" size={28} />
       </button>

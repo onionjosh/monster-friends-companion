@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { GameState, PartyEntry, UnitState } from '../lib/types'
-import { buildSide, createGame, restartGame, adjustUnit, MAX_ENERGY } from '../lib/play'
+import { buildSide, createGame, restartGame, adjustUnit } from '../lib/play'
 import { monsterById } from '../data'
 
 export type Side = 'mine' | 'theirs'
@@ -54,7 +54,7 @@ export const usePlayStore = create<PlayState>()(
       setEnergy: (side, value) =>
         set((s) =>
           s.game
-            ? { game: { ...s.game, [side]: { ...s.game[side], energy: Math.max(0, Math.min(MAX_ENERGY, value)) } } }
+            ? { game: { ...s.game, [side]: { ...s.game[side], energy: Math.max(0, value) } } }
             : s,
         ),
 
