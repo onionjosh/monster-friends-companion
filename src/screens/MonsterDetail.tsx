@@ -1,5 +1,5 @@
 import { Link, useRoute } from 'wouter'
-import { monsterById, SIZE_LABELS, BASE_SIZES } from '../data'
+import { monsterById, BASE_SIZES } from '../data'
 import { StatRow, DefenseLine, AttackCard, AbilityCard, KeywordChips, SizeBadge, SectionHead } from '../components/StatBlock'
 import { Icon } from '../components/Icon'
 import { useFavoritesStore } from '../stores/favorites'
@@ -40,7 +40,7 @@ export function MonsterDetail() {
           <div>
             <h1 style={{ fontSize: 'var(--text-2xl)', color: 'var(--punk-red)', lineHeight: 1 }}>{monster.name}</h1>
             <div className="mt-1.5 flex items-center gap-2" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)' }}>
-              <SizeBadge size={monster.size} /> {SIZE_LABELS[monster.size]} · {BASE_SIZES[monster.size]} base
+              <SizeBadge size={monster.size} /> {BASE_SIZES[monster.size]} base
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">

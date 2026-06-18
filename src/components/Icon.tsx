@@ -4,6 +4,14 @@ import type { CSSProperties, ReactNode } from 'react'
  * Monster Friends icon set — curated line icons (24×24, round strokes) in the
  * Lucide idiom. Ships inline so the offline PWA needs no CDN. Replaces emoji.
  */
+
+// TEMP: these three line-icons render wrong, so fall back to emoji for now.
+const EMOJI: Record<string, string> = {
+  swords: '⚔️',
+  sword: '🗡️',
+  bow: '🏹',
+}
+
 const P: Record<string, ReactNode> = {
   home: <path d="M3 10.5 12 3l9 7.5M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5" />,
   ghost: (
@@ -97,6 +105,31 @@ export function Icon({
   className?: string
   style?: CSSProperties
 }) {
+  const emoji = EMOJI[name as string]
+  if (emoji) {
+    return (
+      <span
+        className={className}
+        role="img"
+        aria-hidden="true"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          width: size,
+          height: size,
+          fontSize: size * 0.92,
+          lineHeight: 1,
+          verticalAlign: 'middle',
+          ...style,
+        }}
+      >
+        {emoji}
+      </span>
+    )
+  }
+
   const glyph = P[name as string]
   if (!glyph) return null
   return (
