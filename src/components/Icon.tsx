@@ -5,11 +5,12 @@ import type { CSSProperties, ReactNode } from 'react'
  * Lucide idiom. Ships inline so the offline PWA needs no CDN. Replaces emoji.
  */
 
-// TEMP: these three line-icons render wrong, so fall back to emoji for now.
+// TEMP: these line-icons render wrong, so fall back to emoji for now.
 const EMOJI: Record<string, string> = {
   swords: '⚔️',
   sword: '🗡️',
   bow: '🏹',
+  shield: '🛡️',
 }
 
 const P: Record<string, ReactNode> = {
