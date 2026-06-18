@@ -207,10 +207,6 @@ button {
   clip-path: var(--clip-torn-card);
   filter: drop-shadow(3px 3px 0 var(--shadow-ink));
 }
-/* Inside a scrolling sheet, drop the offset shadow on torn boxes — the
-   clip-path + drop-shadow combo leaves stray shadow-line artifacts there. */
-.mf-sheet .mf-card,
-.mf-sheet .mf-statpill { filter: none; }
 .mf-card--interactive {
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
