@@ -35,7 +35,7 @@ export function PartyRules() {
       className="mb-2 flex items-center gap-1"
       style={{ color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)' }}
     >
-      <Icon name="chevronLeft" size={18} /> PLAY
+      <Icon name="chevronLeft" size={18} /> Back
     </Link>
   )
 
@@ -100,7 +100,7 @@ export function PartyRules() {
         </button>
         <span aria-hidden="true" style={{ width: 1, height: 18, background: 'var(--border-soft)', margin: '0 2px' }} />
         <button type="button" className="mf-chip mf-chip--filter" data-active={reactionsOnly} onClick={() => setReactionsOnly((v) => !v)}>
-          Reactions only
+          Usable out of turn
         </button>
       </div>
 
