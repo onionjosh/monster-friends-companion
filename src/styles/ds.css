@@ -66,7 +66,9 @@
   --clip-torn-top: polygon(0% 12%, 10% 3%, 25% 10%, 42% 2%, 58% 9%, 75% 2%, 90% 9%, 100% 3%, 100% 100%, 0% 100%);
   /* Bottom sheet: torn side "walls" + gentle torn top, straight bottom (off-screen).
      Small deviations so the tall panel doesn't clip its own content. */
-  --clip-torn-sheet: polygon(0% 0.6%, 30% 0%, 60% 0.6%, 100% 0%, 98.4% 20%, 100% 40%, 98.4% 60%, 100% 80%, 99% 99%, 100% 100%, 0% 100%, 1% 99%, 0% 80%, 1.6% 60%, 0% 40%, 1.6% 20%);
+  /* Torn TOP edge only; sides/bottom kept straight so they don't clip the
+     scroll container's native scrollbar (which sits at the right edge). */
+  --clip-torn-sheet: polygon(0% 0.8%, 20% 0%, 40% 0.8%, 60% 0.1%, 80% 0.8%, 100% 0%, 100% 100%, 0% 100%);
   --tilt-sm: -1.5deg;
   --tilt-md: -2.5deg;
   --tilt-rev: 2deg;
@@ -459,7 +461,12 @@ button {
   padding: 18px 16px;
   padding-bottom: max(16px, env(safe-area-inset-bottom));
   filter: drop-shadow(0 8px 24px rgba(var(--shadow-rgb), 0.55));
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-soft) transparent;
 }
+.mf-sheet::-webkit-scrollbar { width: 8px; }
+.mf-sheet::-webkit-scrollbar-thumb { background: var(--border-soft); border-radius: 8px; }
+.mf-sheet::-webkit-scrollbar-track { background: transparent; }
 
 @media print {
   .no-print { display: none !important; }
