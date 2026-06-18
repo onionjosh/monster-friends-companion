@@ -5,9 +5,9 @@ The companion app for **Monster Friends: Battle for New Florida** — card datab
 ## Features
 
 - **Monster cards** — every monster, searchable across names, attacks, ability text and keywords; size/type/favorite filters; tappable keyword popups everywhere.
-- **Party builder** — pick a Party Point budget (50 / 75 / 100 / custom), add monsters, see the live total. Validation flags problems in plain language but never blocks saving.
+- **Party builder** — pick a Party Point budget (50 / 75 / 100 / custom), add monsters (sort by name / PP / HP / size, filter by size; picks you can't afford grey out and drop to the bottom), see the live total. Validation flags problems in plain language but never blocks saving.
 - **Sharing** — every party exports as plain text, a share link, and a QR code. No accounts, no server: the whole list is encoded in the link (`#/import/MF1.…`).
-- **Game night tracker** — per-monster HP / Action Tokens / conditions, per-player Energy, round advance (auto-refills AcT + Energy), KO tracking with win detection, opponent list import, and a one-screen "Party rules" view of everything your party can do.
+- **Game night tracker** — a big MTG-life-counter-style Energy zone (tap a team's top half to add, bottom half to subtract) for both players, per-monster HP / Action Tokens / conditions, KO tracking with win detection, opponent list import, a one-tap **New Game** reset, and a **Party Rules** page that groups every rule your party can use by character or by type (with a "usable out of turn" filter).
 - **Rulebook** — the full core rules as structured, hyperlinked sections with a glossary and global search (rules + keywords + every ability in the game).
 - **Print** — a print-friendly roster with full profiles and a scan-to-import QR code.
 
