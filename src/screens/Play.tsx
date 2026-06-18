@@ -8,7 +8,8 @@ import { sideDefeated } from '../lib/play'
 import { decodeParty, DecodeError } from '../lib/codec'
 import { Sheet } from '../components/Sheet'
 import { Stepper } from '../components/Stepper'
-import { StatRow, DefenseLine, AttackCard, AbilityCard, KeywordChips } from '../components/StatBlock'
+import { MonsterCard, FavoriteStar } from '../components/MonsterCard'
+import { useFavoritesStore } from '../stores/favorites'
 import { Icon } from '../components/Icon'
 import { TornButton } from '../components/Torn'
 
@@ -390,32 +391,12 @@ function UnitCard({ side, unit, onShowCard }: { side: Side; unit: UnitState; onS
 }
 
 function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () => void }) {
+  const favs = useFavoritesStore((s) => s.ids)
+  const toggleFav = useFavoritesStore((s) => s.toggle)
   const m = unit ? monsterById.get(unit.monsterId) : undefined
   return (
-    <Sheet open={!!unit && !!m} onClose={onClose} title={m?.name}>
-      {m && (
-        <div className="grid gap-2.5">
-          {m.image && (
-            <div style={{ clipPath: 'var(--clip-torn-photo)', aspectRatio: '4 / 3', background: 'var(--surface)', filter: 'drop-shadow(3px 3px 0 var(--shadow-ink))' }}>
-              <img
-                src={`${import.meta.env.BASE_URL}monsters/${m.image}`}
-                alt={m.name}
-                loading="lazy"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </div>
-          )}
-          <StatRow monster={m} />
-          <DefenseLine monster={m} />
-          {m.keywords.length > 0 && <KeywordChips ids={m.keywords} />}
-          {m.attacks.map((a) => (
-            <AttackCard key={a.name} attack={a} />
-          ))}
-          {m.abilities.map((a) => (
-            <AbilityCard key={a.id} ability={a} />
-          ))}
-        </div>
-      )}
+    <Sheet open={!!unit && !!m} onClose={onClose}>
+      {m && <MonsterCard monster={m} action={<FavoriteStar on={favs.includes(m.id)} onToggle={() => toggleFav(m.id)} />} />}
     </Sheet>
   )
 }
