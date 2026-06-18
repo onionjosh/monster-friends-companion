@@ -396,7 +396,19 @@ function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () 
   const m = unit ? monsterById.get(unit.monsterId) : undefined
   return (
     <Sheet open={!!unit && !!m} onClose={onClose} bg="var(--bg)" scrim="var(--bg)">
-      {m && <MonsterCard monster={m} action={<FavoriteStar on={favs.includes(m.id)} onToggle={() => toggleFav(m.id)} />} />}
+      {m && (
+        <>
+          <button
+            type="button"
+            onClick={onClose}
+            className="mb-3 flex items-center gap-1"
+            style={{ color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)' }}
+          >
+            <Icon name="chevronLeft" size={18} /> Back
+          </button>
+          <MonsterCard monster={m} action={<FavoriteStar on={favs.includes(m.id)} onToggle={() => toggleFav(m.id)} />} />
+        </>
+      )}
     </Sheet>
   )
 }
