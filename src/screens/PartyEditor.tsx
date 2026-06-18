@@ -317,8 +317,7 @@ function AddMonsterSheet({
   return (
     <Sheet open={open} onClose={onClose} bg="var(--bg)" scrim="var(--bg)">
       <div
-        className="sticky top-0 z-10 -mx-4 px-4 pb-3"
-        style={{ background: 'linear-gradient(to bottom, var(--bg) calc(100% - 18px), transparent)' }}
+        className="mf-feather-frame sticky top-0 z-10 -mx-4 px-4 pt-1 pb-3"
       >
         <h2 className="mb-1.5" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-lg)' }}>
           Add monsters
@@ -446,8 +445,8 @@ function AddMonsterSheet({
 
       {/* confirm — closes the sheet (changes save live as you tap +/-) */}
       <div
-        className="sticky bottom-0 z-10 -mx-4 px-4 pt-4"
-        style={{ background: 'linear-gradient(to top, var(--bg) calc(100% - 18px), transparent)', paddingBottom: 'max(4px, env(safe-area-inset-bottom))' }}
+        className="mf-feather-frame sticky bottom-0 z-10 -mx-4 px-4 pt-4"
+        style={{ paddingBottom: 'max(8px, env(safe-area-inset-bottom))' }}
       >
         <TornButton variant="red" tilt="none" leftIcon="check" onClick={onClose} style={{ width: '100%', padding: '16px 18px' }}>
           OK!

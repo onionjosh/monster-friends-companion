@@ -298,6 +298,24 @@ button {
 .mf-energy-flash { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: mf-energy-flash 320ms ease-out forwards; }
 @media (prefers-reduced-motion: reduce) { .mf-energy-flash { animation: none; opacity: 0; } }
 
+/* Soft-faded dark fill that feathers on all four edges, drawn behind the frame via
+   ::before so the frame's own children (torn bar / button) are never masked. */
+.mf-feather-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent),
+    linear-gradient(to bottom, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 18px), transparent),
+    linear-gradient(to bottom, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  mask-composite: intersect;
+}
+
 /* ---- Input (torn, no white outline) ---- */
 .mf-input {
   width: 100%;
