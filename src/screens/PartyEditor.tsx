@@ -324,10 +324,11 @@ function AddMonsterSheet({
           Add monsters
         </h2>
         <div
-          className="px-3 py-2 text-center"
+          className="mf-feather px-3 py-2 text-center"
           style={{
             fontWeight: 800,
-            clipPath: 'var(--clip-torn-2)',
+            ['--fx' as string]: '10px',
+            ['--fy' as string]: '6px',
             background: over ? 'var(--warning)' : 'var(--primary)',
             color: over ? '#fff' : 'var(--on-primary)',
           }}
@@ -449,7 +450,14 @@ function AddMonsterSheet({
         className="sticky bottom-0 z-10 -mx-4 px-4 pt-3"
         style={{ background: 'var(--bg)', borderTop: '1px solid var(--border-soft)', paddingBottom: 'max(4px, env(safe-area-inset-bottom))' }}
       >
-        <TornButton variant="red" tilt="none" leftIcon="check" onClick={onClose} style={{ width: '100%', padding: '16px 18px' }}>
+        <TornButton
+          variant="red"
+          tilt="none"
+          leftIcon="check"
+          onClick={onClose}
+          className="mf-feather"
+          style={{ width: '100%', padding: '16px 18px', clipPath: 'none', filter: 'none', ['--fy' as string]: '10px' }}
+        >
           OK!
         </TornButton>
       </div>

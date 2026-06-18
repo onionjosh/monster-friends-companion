@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'wouter'
 import { usePartiesStore } from '../stores/parties'
 import { usePlayStore, type Side } from '../stores/play'
-import { monsterById, conditions, conditionById, scenarios, scenarioById, genericAbilities } from '../data'
+import { monsterById, conditions, scenarios, scenarioById } from '../data'
 import type { GameState, SideState, UnitState } from '../lib/types'
 import { sideDefeated } from '../lib/play'
 import { decodeParty, DecodeError } from '../lib/codec'
@@ -235,7 +235,6 @@ function Tracker() {
   const setEnergy = usePlayStore((s) => s.setEnergy)
   const [side, setSide] = useState<Side>('mine')
   const [cardUnit, setCardUnit] = useState<UnitState | null>(null)
-  const [rulesOpen, setRulesOpen] = useState(false)
 
   const scenario = game.scenarioId ? scenarioById.get(game.scenarioId) : undefined
   const cur = game[side]
@@ -305,9 +304,9 @@ function Tracker() {
       </div>
 
       <div className="mb-3 flex justify-end">
-        <button type="button" onClick={() => setRulesOpen(true)} className="mf-btn px-2.5 py-1.5" style={{ fontSize: 'var(--text-sm)' }}>
+        <Link href={`/play/rules/${side}`} className="mf-btn px-2.5 py-1.5" style={{ fontSize: 'var(--text-sm)' }}>
           <Icon name="book" size={16} /> Party rules
-        </button>
+        </Link>
       </div>
 
       <div className="grid gap-2">
@@ -317,7 +316,6 @@ function Tracker() {
       </div>
 
       <FullCardSheet unit={cardUnit} onClose={() => setCardUnit(null)} />
-      <PartyRulesSheet open={rulesOpen} onClose={() => setRulesOpen(false)} side={side} />
     </div>
   )
 }
@@ -422,67 +420,3 @@ function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () 
   )
 }
 
-/** One-screen view of everything the selected party can do (Command Bunker pattern). */
-function PartyRulesSheet({ open, onClose, side }: { open: boolean; onClose: () => void; side: Side }) {
-  const game = usePlayStore((s) => s.game)
-  if (!game) return null
-  const ids = [...new Set(game[side].units.map((u) => u.monsterId))]
-  const ms = ids.map((id) => monsterById.get(id)).filter((m) => m !== undefined)
-
-  const reactions = ms.flatMap((m) => m.abilities.filter((a) => a.reaction).map((a) => ({ a, owner: m.name })))
-  const actives = ms.flatMap((m) => m.abilities.filter((a) => !a.reaction).map((a) => ({ a, owner: m.name })))
-  const kwIds = [...new Set(ms.flatMap((m) => [...m.keywords, ...m.attacks.flatMap((at) => at.tags.map((t) => t.tag))]))]
-
-  const head = (t: string) => (
-    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>
-      {t}
-    </h3>
-  )
-
-  return (
-    <Sheet open={open} onClose={onClose}>
-      <button
-        type="button"
-        onClick={onClose}
-        className="mb-2 flex items-center gap-1"
-        style={{ color: 'var(--text-muted)', fontWeight: 700, fontSize: 'var(--text-sm)', fontFamily: 'var(--font-mono)' }}
-      >
-        <Icon name="chevronLeft" size={18} /> Back
-      </button>
-      <h2 className="mb-3" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--text-xl)' }}>
-        {game[side].name} — all rules
-      </h2>
-      <div className="grid gap-2.5">
-        {reactions.length > 0 && (
-          <>
-            {head('Usable out of turn')}
-            {reactions.map(({ a, owner }) => (
-              <AbilityCard key={`${owner}-${a.id}`} ability={a} owner={owner} />
-            ))}
-          </>
-        )}
-        {actives.length > 0 && (
-          <>
-            {head('On their activation')}
-            {actives.map(({ a, owner }) => (
-              <AbilityCard key={`${owner}-${a.id}`} ability={a} owner={owner} />
-            ))}
-          </>
-        )}
-        {kwIds.length > 0 && (
-          <>
-            {head('Keywords in this party')}
-            <KeywordChips ids={kwIds} />
-          </>
-        )}
-        {head('Generic abilities (anyone)')}
-        {genericAbilities.map((a) => (
-          <AbilityCard key={a.id} ability={a} />
-        ))}
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-          <b>Conditions:</b> {conditions.map((c) => `${c.name} — ${conditionById.get(c.id)?.short}`).join(' · ')}
-        </div>
-      </div>
-    </Sheet>
-  )
-}

@@ -298,6 +298,21 @@ button {
 .mf-energy-flash { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: mf-energy-flash 320ms ease-out forwards; }
 @media (prefers-reduced-motion: reduce) { .mf-energy-flash { animation: none; opacity: 0; } }
 
+/* Feathered edges: soft-fade a frame to transparency instead of a hard torn cut.
+   Tune the fade distance per element with --fx (left/right) and --fy (top/bottom). */
+.mf-feather {
+  --fx: 12px;
+  --fy: 9px;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 var(--fx), #000 calc(100% - var(--fx)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fy), #000 calc(100% - var(--fy)), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 var(--fx), #000 calc(100% - var(--fx)), transparent),
+    linear-gradient(to bottom, transparent, #000 var(--fy), #000 calc(100% - var(--fy)), transparent);
+  mask-composite: intersect;
+}
+
 /* ---- Input (torn, no white outline) ---- */
 .mf-input {
   width: 100%;

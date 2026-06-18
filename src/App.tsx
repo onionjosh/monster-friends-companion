@@ -9,6 +9,7 @@ import { Parties } from './screens/Parties'
 import { PartyEditor } from './screens/PartyEditor'
 import { PrintRoster } from './screens/PrintRoster'
 import { Play } from './screens/Play'
+import { PartyRules } from './screens/PartyRules'
 import { Rules, RuleSection } from './screens/Rules'
 import { Scenarios, ScenarioDetail } from './screens/Scenarios'
 import { Import } from './screens/Import'
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/parties/:id" component={PartyEditor} />
           <Route path="/parties/:id/print" component={PrintRoster} />
           <Route path="/play" component={Play} />
+          <Route path="/play/rules/:side" component={PartyRules} />
           <Route path="/rules" component={Rules} />
           <Route path="/rules/:id" component={RuleSection} />
           <Route path="/scenarios" component={Scenarios} />
