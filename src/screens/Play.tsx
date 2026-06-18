@@ -395,7 +395,7 @@ function FullCardSheet({ unit, onClose }: { unit: UnitState | null; onClose: () 
   const toggleFav = useFavoritesStore((s) => s.toggle)
   const m = unit ? monsterById.get(unit.monsterId) : undefined
   return (
-    <Sheet open={!!unit && !!m} onClose={onClose}>
+    <Sheet open={!!unit && !!m} onClose={onClose} bg="var(--bg)" scrim="var(--bg)">
       {m && <MonsterCard monster={m} action={<FavoriteStar on={favs.includes(m.id)} onToggle={() => toggleFav(m.id)} />} />}
     </Sheet>
   )
