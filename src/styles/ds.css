@@ -82,6 +82,7 @@
   --font-display: 'Baloo 2', 'Trebuchet MS', ui-rounded, system-ui, sans-serif;
   --font-body: 'Hanken Grotesk', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-marker: 'Patrick Hand', 'Comic Sans MS', var(--font-body);
+  --font-title: 'Bangers', 'Impact', var(--font-display);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --text-2xs: 0.6875rem;
@@ -188,6 +189,12 @@ h1, h2, h3, h4 {
   line-height: 1.1;
   letter-spacing: -0.01em;
   margin: 0;
+}
+/* Page/screen titles + monster names: stylized comic-book lettering. */
+h1 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 button {

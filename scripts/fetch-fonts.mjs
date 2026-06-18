@@ -9,6 +9,7 @@ const families = [
   'Baloo+2:wght@600;700;800',
   'Hanken+Grotesk:wght@400;500;600;700;800',
   'Patrick+Hand',
+  'Bangers',
 ]
 const url = `https://fonts.googleapis.com/css2?${families.map((f) => `family=${f}`).join('&')}&display=swap`
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'

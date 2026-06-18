@@ -245,7 +245,7 @@ function Tracker() {
     <div className="mx-auto max-w-lg p-4 pb-24">
       <div className="mb-2 flex items-center justify-between gap-2">
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 800 }}>{scenario?.name ?? 'Battle'}</div>
+          <div style={{ fontFamily: 'var(--font-title)', fontSize: 'var(--text-2xl)', fontWeight: 400, letterSpacing: '0.02em' }}>{scenario?.name ?? 'Battle'}</div>
           {scenario && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
               {scenario.winCondition}
